@@ -1,6 +1,6 @@
 <template>
   <div :class="classObj" class="app-wrapper">
-      <navbar />
+    <navbar class="fixed" />
     <!-- <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside" /> -->
     <sidebar class="sidebar-container" />
     <div :class="{hasTagsView:needTagsView}" class="main-container">
@@ -61,12 +61,12 @@ export default {
 <style lang="scss" scoped>
   @import "~@/styles/mixin.scss";
   @import "~@/styles/variables.scss";
-
   .app-wrapper {
     @include clearfix;
     position: relative;
     height: 100%;
     width: 100%;
+    background: #F0F2F5;
 
     &.mobile.openSidebar {
       position: fixed;

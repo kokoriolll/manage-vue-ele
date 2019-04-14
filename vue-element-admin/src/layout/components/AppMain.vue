@@ -1,10 +1,10 @@
 <template>
   <section class="app-main">
-    <transition name="fade-transform" mode="out-in">
+    <!-- <transition name="fade-transform" mode="out-in"> -->
       <keep-alive :include="cachedViews">
         <router-view :key="key" />
       </keep-alive>
-    </transition>
+    <!-- </transition> -->
   </section>
 </template>
 
@@ -29,6 +29,8 @@ export default {
   width: 100%;
   position: relative;
   overflow: hidden;
+  margin-top: 64px;
+  padding: 20px 25px 0 25px;
 }
 
 .fixed-header+.app-main {
