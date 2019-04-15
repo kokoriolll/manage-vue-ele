@@ -55,6 +55,7 @@
         background: linear-gradient(-90deg, #4e75ff, #0139fd) !important;
         font-size: 14px;
         color: #fff;
+        margin-bottom: 30px;
     }
 
     .el-message-box__message {

@@ -50,6 +50,7 @@
                 <markdown-editor v-model="content1" height="300px" />
             </div>
         </div>
+        <el-button type="text" @click="open3" class="addbtn">提交</el-button>
     </div>
 </template>
 
@@ -126,7 +127,12 @@
              color: #CDBFBF;   
         }
     }
-
+    .addbtn {
+        padding: 12px 40px 12px 40px;
+        background: linear-gradient(-90deg, #4e75ff, #0139fd) !important;
+        font-size: 14px;
+        color: #fff;
+    }
     .editor-container {
         margin-bottom: 30px;
     }

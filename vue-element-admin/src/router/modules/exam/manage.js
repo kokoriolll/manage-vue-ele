@@ -9,7 +9,7 @@ const examsRouter = {
   name: 'Exam',
   meta: {
     title: 'usermanagement',
-    icon: 'chart'
+    icon: 'form'
   },
   children: [
     {

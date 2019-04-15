@@ -7,10 +7,10 @@ Vue.use(Router)
 import Layout from '@/layout'
 
 /* Router Modules */
-import componentsRouter from './modules/components'
-import chartsRouter from './modules/charts'
-import tableRouter from './modules/table'
-import nestedRouter from './modules/nested'
+// import componentsRouter from './modules/components'
+// import chartsRouter from './modules/charts'
+// import tableRouter from './modules/table'
+// import nestedRouter from './modules/nested'
 /* 添加试题列表 */
 import examRouter from './modules/exam/exam'
 import userRouter from './modules/exam/user'
@@ -80,19 +80,19 @@ export const constantRoutes = [
     component: () => import('@/views/errorPage/401'),
     hidden: true
   },
-  {
-    path: '',
-    component: Layout,
-    redirect: 'dashboard',
-    children: [
-      {
-        path: 'dashboard',
-        component: () => import('@/views/exam/questions/add'),
-        name: 'Dashboard',
-        meta: { title: 'testquestions', icon: 'dashboard', noCache: true, affix: true }
-      }
-    ]
-  },
+  // {
+  //   path: '',
+  //   component: Layout,
+  //   redirect: 'Additem',
+  //   children: [
+  //     {
+  //       path: 'add',
+  //       component: () => import('@/views/exam/questions/add'),
+  //       name: 'add',
+  //       meta: { add: 'testquestions', icon: 'dashboard', noCache: true, affix: true }
+  //     }
+  //   ]
+  // },
   // {
   //   path: '/documentation',
   //   component: Layout,
@@ -180,7 +180,7 @@ export const asyncRoutes = [
   // },
 
   /** when your routing map is too long, you can split it into small modules **/
-  componentsRouter,
+  // componentsRouter,
   // chartsRouter,
   // nestedRouter,
   // tableRouter,

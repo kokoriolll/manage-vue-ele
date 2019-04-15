@@ -22,7 +22,7 @@
         width: 100%;
         background: #fff;
         border-radius: 20px;
-        padding: 25px 20px 0 20px;
+        padding: 25px 20px 25px 20px;
         box-sizing: border-box;
     }
     .title{
