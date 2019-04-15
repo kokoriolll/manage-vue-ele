@@ -13,21 +13,26 @@ const state = {
 
 const mutations = {
   userDatas(state, payload) {
-
+console.log(payload)
   },
   identitys(state, payload) {
+    console.log(payload)
 
   },
   apiAuthoritys(state, payload) {
+    console.log(payload)
 
   },
   identityApiAuthorityRelationss(state, payload) {
+    console.log(payload)
 
   },
   viewAuthoritys(state, payload) {
+    console.log(payload)
 
   },
   identityViewAuthorityRelations(state, payload) {
+    console.log(payload)
 
   }
 }

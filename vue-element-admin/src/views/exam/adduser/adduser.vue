@@ -149,6 +149,7 @@
 
 <script>
 import { mapState, mapActions, mapMutations } from "vuex";
+import { constants } from 'fs';
 export default {
   data() {
     return {
@@ -214,16 +215,55 @@ export default {
         this.viewJurisdictionId = "";
       }
     },
+    //用户校验
+    userVerify(){
+       if (!this.userName) {
+        this.$message({
+          showClose: true,
+          message: "请输入用户名",
+          type: "warning"
+        });
+        return false;
+      }
+      else if (!this.pwd) {
+        this.$message({
+          showClose: true,
+          message: "请输入用户密码",
+          type: "warning"
+        });
+        return false;
+      }
+      else if (!this.identityId) {
+        this.$message({
+          showClose: true,
+          message: "请选择身份id",
+          type: "warning"
+        });
+        return false;
+      }
+    },
     //用户
     async user() {
       console.log(this.userName, this.pwd, this.identityId);
       if (this.idx === 0) {
+        console.log(1111)
+        this.userVerify();
         await this.setAddUsers({
           user_name: this.userName,
           user_pwd: this.pwd,
           identity_id: this.identityId
         });
       } else {
+        console.log(2222)
+        this.userVerify();
+        if (!this.identityId) {
+          this.$message({
+            showClose: true,
+            message: "请选择用户id",
+            type: "warning"
+          });
+          return false;
+        }
         await this.setUpdataUserInfo({
           user_id: this.userId2,
           user_name: this.userName,
@@ -234,12 +274,44 @@ export default {
     },
     //身份
     async identity() {
-      await this.setAddIdentity({
+       if (!this.identityName) {
+          this.$message({
+            showClose: true,
+            message: "请输入身份名称",
+            type: "warning"
+          });
+          return false;
+        }
+        await this.setAddIdentity({
         identity_text: this.identityName
       });
     },
     //api接口权限
     async jurisdiction() {
+       if (!this.apiJurisdictionName) {
+          this.$message({
+            showClose: true,
+            message: "请输入api接口权限名称",
+            type: "warning"
+          });
+          return false;
+        }
+         if (!this.apiJurisdictionUrl) {
+          this.$message({
+            showClose: true,
+            message: "请输入api接口权限url",
+            type: "warning"
+          });
+          return false;
+        }
+         if (!this.apiJurisdictionMethod) {
+          this.$message({
+            showClose: true,
+            message: "请输入api接口权限方法",
+            type: "warning"
+          });
+          return false;
+        }
       await this.setAddAuthorityApi({
         api_authority_text: this.apiJurisdictionName,
         api_authority_url: this.apiJurisdictionUrl,
@@ -248,6 +320,14 @@ export default {
     },
     //视图接口权限
     async view() {
+       if (!this.existingView) {
+          this.$message({
+            showClose: true,
+            message: "请选择已有视图",
+            type: "warning"
+          });
+          return false;
+        }
       await this.setAddAuthorityView({
         view_authority_text: this.existingView
         // view_id: this. 视图id 字符串
@@ -255,6 +335,22 @@ export default {
     },
     // 给身份设置api接口权限
     async api() {
+       if (!this.identityId) {
+          this.$message({
+            showClose: true,
+            message: "请选择身份id",
+            type: "warning"
+          });
+          return false;
+        }
+         if (!this.apiJurisdictionId) {
+          this.$message({
+            showClose: true,
+            message: "请选择api接口权限id",
+            type: "warning"
+          });
+          return false;
+        }
       await this.setIdentityApi({
         identity_id: this.identityId,
         api_authority_id: this.apiJurisdictionId
@@ -262,6 +358,22 @@ export default {
     },
     //给身份设定视图权限
     async set() {
+       if (!this.identityId) {
+          this.$message({
+            showClose: true,
+            message: "请选择身份id",
+            type: "warning"
+          });
+          return false;
+        }
+         if (!this.viewJurisdictionId) {
+          this.$message({
+            showClose: true,
+            message: "请选择视图权限id",
+            type: "warning"
+          });
+          return false;
+        }
       await this.setIdentityView({
         identity_id: this.identityId,
         view_id: this.viewJurisdictionId
@@ -282,10 +394,11 @@ export default {
 .box {
   display: flex;
   flex-wrap: wrap;
-
+  height: 100%;
+  width: 100%;
   .user {
     min-height: 260px;
-    width: 440px;
+    width: 33%;
     border: 1px solid #ccc;
     box-sizing: border-box;
     padding: 0 10px;
@@ -300,6 +413,7 @@ export default {
       color: #0139fd;
       cursor: pointer;
     }
+
     .updataTit {
       border: 1px solid #ccc;
       color: #ccc;

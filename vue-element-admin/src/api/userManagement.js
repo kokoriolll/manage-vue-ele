@@ -68,7 +68,7 @@ export function identityView(data) {
 //展示用户数据
 export function userData() {
   return request({
-    url: '/user/user',
+    url: 'http://169.254.12.55:7001/user/user',
     method: 'get'
   })
 }
@@ -76,7 +76,7 @@ export function userData() {
 //展示身份数据
 export function identity() {
   return request({
-    url: '/user/identity',
+    url: 'http://169.254.12.55:7001/user/identity',
     method: 'get'
   })
 }
