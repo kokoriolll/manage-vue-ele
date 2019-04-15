@@ -17,14 +17,14 @@
             </ul>
             <ul class="select">
                 <li>
-                    <span>考试类型</span>
+                    <span>考试类型:</span>
                     <el-select v-model="value" placeholder="请选择">
                         <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
                         </el-option>
                     </el-select>
                 </li>
                 <li class="styles">
-                    <span>题目类型</span>
+                    <span>题目类型:</span>
                     <el-select v-model="value" placeholder="请选择">
                         <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
                         </el-option>
@@ -36,104 +36,6 @@
             </ul>
         </div>
         <div class="content">
-            <div class="content_list">
-                <div class="con_list_left">
-                    <span class="robot">机器人归位</span>
-                    <div class="tab_list">
-                        <span>代码补全</span>
-                        <span>javaScript上</span>
-                        <span>周考1</span>
-                    </div>
-                    <p class="name_issue">dingshaoshan发布</p>
-                </div>
-                <div class="con_list_right">
-                    <span>编辑</span>
-                </div>
-            </div>
-            <div class="content_list">
-                <div class="con_list_left">
-                    <span class="robot">机器人归位</span>
-                    <div class="tab_list">
-                        <span>代码补全</span>
-                        <span>javaScript上</span>
-                        <span>周考1</span>
-                    </div>
-                    <p class="name_issue">dingshaoshan发布</p>
-                </div>
-                <div class="con_list_right">
-                    <span>编辑</span>
-                </div>
-            </div>
-            <div class="content_list">
-                <div class="con_list_left">
-                    <span class="robot">机器人归位</span>
-                    <div class="tab_list">
-                        <span>代码补全</span>
-                        <span>javaScript上</span>
-                        <span>周考1</span>
-                    </div>
-                    <p class="name_issue">dingshaoshan发布</p>
-                </div>
-                <div class="con_list_right">
-                    <span>编辑</span>
-                </div>
-            </div>
-            <div class="content_list">
-                <div class="con_list_left">
-                    <span class="robot">机器人归位</span>
-                    <div class="tab_list">
-                        <span>代码补全</span>
-                        <span>javaScript上</span>
-                        <span>周考1</span>
-                    </div>
-                    <p class="name_issue">dingshaoshan发布</p>
-                </div>
-                <div class="con_list_right">
-                    <span>编辑</span>
-                </div>
-            </div>
-            <div class="content_list">
-                <div class="con_list_left">
-                    <span class="robot">机器人归位</span>
-                    <div class="tab_list">
-                        <span>代码补全</span>
-                        <span>javaScript上</span>
-                        <span>周考1</span>
-                    </div>
-                    <p class="name_issue">dingshaoshan发布</p>
-                </div>
-                <div class="con_list_right">
-                    <span>编辑</span>
-                </div>
-            </div>
-            <div class="content_list">
-                <div class="con_list_left">
-                    <span class="robot">机器人归位</span>
-                    <div class="tab_list">
-                        <span>代码补全</span>
-                        <span>javaScript上</span>
-                        <span>周考1</span>
-                    </div>
-                    <p class="name_issue">dingshaoshan发布</p>
-                </div>
-                <div class="con_list_right">
-                    <span>编辑</span>
-                </div>
-            </div>
-            <div class="content_list">
-                <div class="con_list_left">
-                    <span class="robot">机器人归位</span>
-                    <div class="tab_list">
-                        <span>代码补全</span>
-                        <span>javaScript上</span>
-                        <span>周考1</span>
-                    </div>
-                    <p class="name_issue">dingshaoshan发布</p>
-                </div>
-                <div class="con_list_right">
-                    <span>编辑</span>
-                </div>
-            </div>
             <div class="content_list">
                 <div class="con_list_left">
                     <span class="robot">机器人归位</span>
@@ -200,11 +102,11 @@
 
     .name_list {
         display: flex;
-
+        height: 20px;
         li {
             padding: 0 6px 0 6px;
-            font-size: 14px;
-
+            font-size: 12px;
+            line-height: 20px;
         }
 
         li:hover {
@@ -212,7 +114,8 @@
         }
 
         span {
-            font-size: 16px;
+            font-size: 14px;
+            line-height: 18px;
         }
     }
 
@@ -222,6 +125,11 @@
 
         .styles {
             margin-left: 40px;
+        }
+        li{
+            span{
+                font-size:14px;
+            }
         }
     }
 

@@ -8,7 +8,7 @@
 </template>
 
 <script>
-    import Addque from '@/components/Questions/addque.vue'
+    import Addque from '@/components/questions/addque.vue'
     export default {
         components:{
             Addque
@@ -22,7 +22,7 @@
         width: 100%;
         background: #fff;
         border-radius: 20px;
-        padding: 25px 20px 0 20px;
+        padding: 25px 20px 25px 20px;
         box-sizing: border-box;
     }
     .title{

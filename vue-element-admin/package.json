@@ -15,20 +15,6 @@
     "svgo": "svgo -f src/icons/svg --config=src/icons/svgo.yml",
     "new": "plop"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "keywords": [
-    "vue",
-    "admin",
-    "dashboard",
-    "element-ui",
-    "boilerplate",
-    "admin-template",
-    "management-system"
-  ],
   "dependencies": {
     "axios": "0.18.0",
     "clipboard": "2.0.4",
@@ -39,6 +25,7 @@
     "element-ui": "2.7.0",
     "file-saver": "2.0.1",
     "fuse.js": "3.4.4",
+    "install": "^0.12.2",
     "js-cookie": "2.2.0",
     "jsonlint": "1.6.3",
     "jszip": "3.2.1",
