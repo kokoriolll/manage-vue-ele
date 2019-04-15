@@ -3,7 +3,7 @@ import request from '@/utils/request'
 //添加用户
 export function addUsers(data) {
   return request({
-    url: '/user',
+    url: 'http://169.254.12.55:7001/user',
     method: 'post',
     data
   })
@@ -84,7 +84,7 @@ export function identity() {
 //展示api接口权限数据
 export function apiAuthority() {
   return request({
-    url: '/user/api_authority',
+    url: 'http://169.254.12.55:7001/user/api_authority',
     method: 'get'
 
   })

@@ -20,78 +20,9 @@
       <el-table-column prop="address" label="地址" width="190"></el-table-column>
       <el-table-column prop="address" label="地址" width="190"></el-table-column>
     </el-table>
-    <!-- <el-table v-loading="listLoading" :data="list" border fit highlight-current-row style="width: 100%">
-      <el-table-column align="center" label="ID" width="80">
-        <template slot-scope="scope">
-          <span>{{ scope.row.id }}</span>
-        </template>
-      </el-table-column>
-
-      <el-table-column width="180px" align="center" label="Date">
-        <template slot-scope="scope">
-          <span>{{ scope.row.timestamp | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
-        </template>
-      </el-table-column>
-
-      <el-table-column width="120px" align="center" label="Author">
-        <template slot-scope="scope">
-          <span>{{ scope.row.author }}</span>
-        </template>
-      </el-table-column>
-
-      <el-table-column width="100px" label="Importance">
-        <template slot-scope="scope">
-          <svg-icon v-for="n in +scope.row.importance" :key="n" icon-class="star" class="meta-item__icon" />
-        </template>
-      </el-table-column>
-
-      <el-table-column class-name="status-col" label="Status" width="110">
-        <template slot-scope="{row}">
-          <el-tag :type="row.status | statusFilter">
-            {{ row.status }}
-          </el-tag>
-        </template>
-      </el-table-column>
-
-      <el-table-column min-width="300px" label="Title">
-        <template slot-scope="{row}">
-          <router-link :to="'/example/edit/'+row.id" class="link-type">
-            <span>{{ row.title }}</span>
-          </router-link>
-        </template>
-      </el-table-column>
-
-      <el-table-column align="center" label="Actions" width="120">
-        <template slot-scope="scope">
-          <router-link :to="'/example/edit/'+scope.row.id">
-            <el-button type="primary" size="small" icon="el-icon-edit">
-              Edit
-            </el-button>
-          </router-link>
-        </template>
-      </el-table-column>
-    </el-table>-->
-
-    <!-- <pagination
-      v-show="total>0"
-      :total="total"
-      :page.sync="listQuery.page"
-      :limit.sync="listQuery.limit"
-      @pagination="getList"
-    />-->
-    <!-- <el-pagination
-      @current-change="handleCurrentChange"
-      :current-page="currentPage4"
-      :page-sizes="[100, 200, 300, 400]"
-      :page-size="100"
-      layout="total, sizes, prev, pager, next, jumper"
-      :total="400">
-    </el-pagination>-->
     <div class="pagination">
       <el-pagination
-        @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
-        background
         layout="prev, pager, next"
         :total="total"
       ></el-pagination>
@@ -186,11 +117,15 @@ export default {
   .nav {
     span {
       font-size: 14px;
-      background: #fff;
-      padding: 8px 10px;
       border: 1px solid #ccc;
       color: #ccc;
+      background: #fff;
+      padding: 0 10px;
+
       cursor: pointer;
+      display: inline-block;
+      height: 30px;
+      line-height: 30px;
     }
     span:hover {
       color: #0139fd;
@@ -206,4 +141,9 @@ export default {
     justify-content: flex-end;
   }
 }
+// .pagination .el-pagination .el-pager li.active{
+//       border: 1px solid #0139fd!important;
+//   // color: #0139fd!important;
+//   // background: #fff!important;
+// }
 </style>
