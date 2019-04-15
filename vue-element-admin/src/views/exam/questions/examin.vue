@@ -1,13 +1,21 @@
 <template>
     <div>
-        <p>查看试题</p>
+        <p class="title">查看试题</p>
+        <Checkitem />
     </div>
 </template>
 
 <script>
-
+    import Checkitem from '@/components/Questions/Checkitem.vue'
+    export default {
+        components: {
+            Checkitem
+        }
+    }
 </script>
 
 <style lang="scss" scoped>
-
+    .title{
+        font-size: 22px;
+    }
 </style>

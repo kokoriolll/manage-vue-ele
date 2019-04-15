@@ -64,9 +64,7 @@ export default {
   .app-wrapper {
     @include clearfix;
     position: relative;
-    height: 100%;
     width: 100%;
-    background: #F0F2F5;
 
     &.mobile.openSidebar {
       position: fixed;
