@@ -25,13 +25,19 @@ export default {
 <style lang="scss" scoped>
 .app-main {
   /* 50= navbar  50  */
-  min-height: calc(100vh - 50px);
+  /* min-height: calc(100vh - 50px); */
   width: 100%;
   position: relative;
   overflow: hidden;
   margin-top: 64px;
+<<<<<<< HEAD
   padding: 20px 25px 0 25px;
   box-sizing:border-box;
+=======
+  padding: 20px 25px 40px 25px;
+  box-sizing: border-box;
+  background: #F0F2F5;
+>>>>>>> 8ae80bb90032fbc00d21ddbea0e9f910cfaf7746
 }
 
 .fixed-header+.app-main {
@@ -39,11 +45,6 @@ export default {
 }
 
 .hasTagsView {
-  .app-main {
-    /* 84 = navbar + tags-view = 50 + 34 */
-    min-height: calc(100vh - 84px);
-  }
-
   .fixed-header+.app-main {
     padding-top: 84px;
   }
