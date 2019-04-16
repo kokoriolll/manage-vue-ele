@@ -1,132 +1,6 @@
 <template>
-<<<<<<< HEAD
   <div>
     <div class="header">
-      <ul class="name_list">
-        <span>课程类型:</span>
-        <li>All</li>
-        <li>javaScript上</li>
-        <li>javaScript下</li>
-        <li>模块化开发</li>
-        <li>移动端开发</li>
-        <li>node基础</li>
-        <li>组件化开发(vue)</li>
-        <li>渐进式开发(react)</li>
-        <li>项目实战</li>
-        <li>javaScript高级</li>
-        <li>node高级</li>
-      </ul>
-      <ul class="select">
-        <li>
-          <span>考试类型</span>
-          <el-select v-model="value" placeholder="请选择">
-            <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
-        </li>
-        <li class="styles">
-          <span>题目类型</span>
-          <el-select v-model="value" placeholder="请选择">
-            <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
-        </li>
-        <li class="styles">
-          <el-button type="text" @click="open3" class="addbtn">查询</el-button>
-        </li>
-      </ul>
-    </div>
-    <div class="content">
-      <div class="content_list">
-        <div class="con_list_left">
-          <span class="robot">机器人归位</span>
-          <div class="tab_list">
-            <span>代码补全</span>
-            <span>javaScript上</span>
-            <span>周考1</span>
-          </div>
-          <p class="name_issue">dingshaoshan发布</p>
-        </div>
-        <div class="con_list_right">
-          <span>编辑</span>
-        </div>
-      </div>
-      <div class="content_list">
-        <div class="con_list_left">
-          <span class="robot">机器人归位</span>
-          <div class="tab_list">
-            <span>代码补全</span>
-            <span>javaScript上</span>
-            <span>周考1</span>
-          </div>
-          <p class="name_issue">dingshaoshan发布</p>
-        </div>
-        <div class="con_list_right">
-          <span>编辑</span>
-        </div>
-      </div>
-      <div class="content_list">
-        <div class="con_list_left">
-          <span class="robot">机器人归位</span>
-          <div class="tab_list">
-            <span>代码补全</span>
-            <span>javaScript上</span>
-            <span>周考1</span>
-          </div>
-          <p class="name_issue">dingshaoshan发布</p>
-        </div>
-        <div class="con_list_right">
-          <span>编辑</span>
-        </div>
-      </div>
-      <div class="content_list">
-        <div class="con_list_left">
-          <span class="robot">机器人归位</span>
-          <div class="tab_list">
-            <span>代码补全</span>
-            <span>javaScript上</span>
-            <span>周考1</span>
-          </div>
-          <p class="name_issue">dingshaoshan发布</p>
-        </div>
-        <div class="con_list_right">
-          <span>编辑</span>
-        </div>
-      </div>
-      <div class="content_list">
-        <div class="con_list_left">
-          <span class="robot">机器人归位</span>
-          <div class="tab_list">
-            <span>代码补全</span>
-            <span>javaScript上</span>
-            <span>周考1</span>
-          </div>
-          <p class="name_issue">dingshaoshan发布</p>
-        </div>
-        <div class="con_list_right">
-          <span>编辑</span>
-        </div>
-      </div>
-      <div class="content_list">
-        <div class="con_list_left">
-          <span class="robot">机器人归位</span>
-          <div class="tab_list">
-            <span>代码补全</span>
-            <span>javaScript上</span>
-            <span>周考1</span>
-          </div>
-          <p class="name_issue">dingshaoshan发布</p>
-=======
-    <div>
-        <div class="header">
             <ul class="name_list">
                 <span>课程类型:</span>
                 <li>All</li>
@@ -178,7 +52,6 @@
                     </router-link>
                 </div>
             </div>
->>>>>>> c5537b9ce58eef175f6aec965952b86a551be010
         </div>
         <div class="con_list_right">
           <span>编辑</span>
@@ -212,12 +85,10 @@
           <span>编辑</span>
         </div>
       </div>
-    </div>
   </div>
 </template>
 
 <script>
-<<<<<<< HEAD
 export default {
   data() {
     return {
@@ -245,35 +116,9 @@ export default {
       ],
       value: ""
     };
-  }
+  },
+  methods: {}
 };
-=======
-    export default {
-        data() {
-            return {
-                options: [{
-                    value: '选项1',
-                    label: '黄金糕'
-                }, {
-                    value: '选项2',
-                    label: '双皮奶'
-                }, {
-                    value: '选项3',
-                    label: '蚵仔煎'
-                }, {
-                    value: '选项4',
-                    label: '龙须面'
-                }, {
-                    value: '选项5',
-                    label: '北京烤鸭'
-                }],
-                value: ''
-            }
-        },
-        methods: {
-        },
-    }
->>>>>>> c5537b9ce58eef175f6aec965952b86a551be010
 </script>
 
 <style lang="scss" scoped>
@@ -288,70 +133,38 @@ export default {
   padding: 30px 30px 30px 30px;
 }
 
-<<<<<<< HEAD
-.content {
-  width: 100%;
-  border-radius: 20px;
-  background: #fff;
-  margin-top: 20px;
-  padding: 30px 20px 30px 20px;
-}
-
 .name_list {
   display: flex;
-
+  height: 20px;
   li {
     padding: 0 6px 0 6px;
-    font-size: 14px;
+    font-size: 12px;
+    line-height: 20px;
   }
-=======
-    .name_list {
-        display: flex;
-        height: 20px;
-        li {
-            padding: 0 6px 0 6px;
-            font-size: 12px;
-            line-height: 20px;
-        }
->>>>>>> c5537b9ce58eef175f6aec965952b86a551be010
 
   li:hover {
     color: #7b91e2;
   }
 
-<<<<<<< HEAD
   span {
-    font-size: 16px;
+    font-size: 14px;
+    line-height: 18px;
   }
 }
-=======
-        span {
-            font-size: 14px;
-            line-height: 18px;
-        }
-    }
->>>>>>> c5537b9ce58eef175f6aec965952b86a551be010
 
 .select {
   margin-top: 40px;
   display: flex;
 
-<<<<<<< HEAD
   .styles {
     margin-left: 40px;
   }
-}
-=======
-        .styles {
-            margin-left: 40px;
-        }
-        li{
-            span{
-                font-size:14px;
-            }
-        }
+  li {
+    span {
+      font-size: 14px;
     }
->>>>>>> c5537b9ce58eef175f6aec965952b86a551be010
+  }
+}
 
 .addbtn {
   padding: 10px 40px 10px 40px;

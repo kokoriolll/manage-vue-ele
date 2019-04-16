@@ -1,12 +1,5 @@
 <template>
-<<<<<<< HEAD
   <div>
-    <p>题目信息</p>
-    <div class="stem">
-      <span class="stem_g">题干</span>
-      <input type="text" placeholder="请输入题目标题，不超过20个字" maxlength="20">
-=======
-    <div>
         <p>题目信息</p>
         <div class="stem">
             <span class="stem_g">题干</span>
@@ -58,7 +51,6 @@
             </div>
         </div>
         <el-button type="text" class="addbtn" @click='submit'>提交</el-button>
->>>>>>> c5537b9ce58eef175f6aec965952b86a551be010
     </div>
     <div class="theme">
       <span>题目主题</span>
@@ -109,10 +101,11 @@
 </template>
 
 <script>
-<<<<<<< HEAD
 import MarkdownEditor from "@/components/MarkdownEditor";
+import { mapState, mapMutations, mapActions } from "vuex";
 const content = ``;
 export default {
+  // props:['additem'],
   name: "MarkdownDemo",
   components: { MarkdownEditor },
   data() {
@@ -132,51 +125,11 @@ export default {
         {
           value: "选项1",
           label: "黄金糕"
-=======
-    import MarkdownEditor from '@/components/MarkdownEditor'
-    import {mapState,mapMutations,mapActions} from 'vuex'
-    const content = ``
-    export default {
-        // props:['additem'],
-        name: 'MarkdownDemo',
-        components: { MarkdownEditor },
-        data() {
-            return {
-                content1: content,
-                content2: content,
-                content3: content,
-                content4: content,
-                html: '',
-                languageTypeList: {
-                    'en': 'en_US',
-                    'zh': 'zh_CN',
-                    'es': 'es_ES'
-                },
-                value: '',
-                options: [{
-                    value: '选项1',
-                    label: '黄金糕'
-                }, {
-                    value: '选项2',
-                    label: '双皮奶'
-                }, {
-                    value: '选项3',
-                    label: '蚵仔煎'
-                }, {
-                    value: '选项4',
-                    label: '龙须面'
-                }, {
-                    value: '选项5',
-                    label: '北京烤鸭'
-                }]
-            }
->>>>>>> c5537b9ce58eef175f6aec965952b86a551be010
         },
         {
           value: "选项2",
           label: "双皮奶"
         },
-<<<<<<< HEAD
         {
           value: "选项3",
           label: "蚵仔煎"
@@ -188,34 +141,26 @@ export default {
         {
           value: "选项5",
           label: "北京烤鸭"
-=======
-        methods: {
-            getHtml() {
-                this.html = this.$refs.markdownEditor.getHtml()
-                console.log(this.html)
-            },
-            ...mapActions({
-                additem:'exam/additems'
-            }),
-            submit(){
-                this.additem({
-                    
-                });
-            }
->>>>>>> c5537b9ce58eef175f6aec965952b86a551be010
         }
       ]
     };
   },
-  computed: {
-    language() {
-      return this.languageTypeList[this.$store.getters.language];
-    }
-  },
+
   methods: {
     getHtml() {
       this.html = this.$refs.markdownEditor.getHtml();
       console.log(this.html);
+    },
+    ...mapActions({
+      additem: "exam/additems"
+    }),
+    submit() {
+      this.additem({});
+    }
+  },
+  computed: {
+    language() {
+      return this.languageTypeList[this.$store.getters.language];
     }
   }
 };
@@ -243,26 +188,19 @@ export default {
   }
 }
 
-<<<<<<< HEAD
+input::-webkit-input-placeholder {
+  color: #cdbfbf;
+}
+
+.addbtn {
+  padding: 12px 40px 12px 40px;
+  background: linear-gradient(-90deg, #4e75ff, #0139fd) !important;
+  font-size: 14px;
+  color: #fff;
+}
 .editor-container {
   margin-bottom: 30px;
 }
-=======
-        }
-        input::-webkit-input-placeholder{
-             color: #CDBFBF;   
-        }
-    }
-    .addbtn {
-        padding: 12px 40px 12px 40px;
-        background: linear-gradient(-90deg, #4e75ff, #0139fd) !important;
-        font-size: 14px;
-        color: #fff;
-    }
-    .editor-container {
-        margin-bottom: 30px;
-    }
->>>>>>> c5537b9ce58eef175f6aec965952b86a551be010
 
 .tag-title {
   margin-bottom: 5px;
