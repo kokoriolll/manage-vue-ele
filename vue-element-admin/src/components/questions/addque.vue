@@ -50,14 +50,16 @@
                 <markdown-editor v-model="content1" height="300px" />
             </div>
         </div>
-        <el-button type="text" class="addbtn">提交</el-button>
+        <el-button type="text" class="addbtn" @click='submit'>提交</el-button>
     </div>
 </template>
 
 <script>
     import MarkdownEditor from '@/components/MarkdownEditor'
+    import {mapState,mapMutations,mapActions} from 'vuex'
     const content = ``
     export default {
+        // props:['additem'],
         name: 'MarkdownDemo',
         components: { MarkdownEditor },
         data() {
@@ -100,6 +102,14 @@
             getHtml() {
                 this.html = this.$refs.markdownEditor.getHtml()
                 console.log(this.html)
+            },
+            ...mapActions({
+                additem:'exam/additems'
+            }),
+            submit(){
+                this.additem({
+                    
+                });
             }
         }
     }

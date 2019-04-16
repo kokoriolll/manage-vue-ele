@@ -31,7 +31,7 @@
                     </el-select>
                 </li>
                 <li class="styles">
-                    <el-button type="text" @click="open3" class="addbtn">查询</el-button>
+                    <el-button type="text" class="addbtn">查询</el-button>
                 </li>
             </ul>
         </div>
@@ -47,7 +47,9 @@
                     <p class="name_issue">dingshaoshan发布</p>
                 </div>
                 <div class="con_list_right">
-                    <span>编辑</span>
+                    <router-link to="/Additem/add" tag="p">
+                        <span>编辑</span>
+                    </router-link>
                 </div>
             </div>
         </div>
@@ -76,7 +78,9 @@
                 }],
                 value: ''
             }
-        }
+        },
+        methods: {
+        },
     }
 </script>
 
