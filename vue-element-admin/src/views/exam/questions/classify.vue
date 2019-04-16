@@ -6,7 +6,7 @@
 </template>
 
 <script>
-    import Classify from '@/components/Questions/classify.vue'
+    import Classify from '@/components/questions/classify.vue'
     export default {
         components:{
             Classify

@@ -8,7 +8,7 @@
 </template>
 
 <script>
-    import Addque from '@/components/Questions/addque.vue'
+    import Addque from '@/components/questions/addque.vue'
     export default {
         components:{
             Addque

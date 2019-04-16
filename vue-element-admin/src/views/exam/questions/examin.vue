@@ -6,10 +6,10 @@
 </template>
 
 <script>
-    import Checkitem from '@/components/Questions/Checkitem.vue'
+    import Checkitem from '@/components/questions/Checkitem.vue'
     export default {
         components: {
-            Checkitem
+            Checkitems
         }
     }
 </script>

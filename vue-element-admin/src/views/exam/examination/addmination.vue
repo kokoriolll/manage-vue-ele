@@ -4,11 +4,12 @@
     <div class="Allbox">
       <div class="NameExamination">
         <p>*试卷名称:</p>
-        <el-input placeholder="请输入内容" v-model="input10" clearable class="name"></el-input>
+        <input placeholder="请输入内容" @input="getValue" v-model="input10" class="name">
+        <div class="explain" v-show="isShow">请选择试卷名称</div>
       </div>
       <div class="examType">
         <p>*选择考试类型:</p>
-        <el-select v-model="value" placeholder="请选择" class="name">
+        <el-select @input="getValue1" v-model="value" placeholder="请选择" class="name">
           <el-option
             v-for="item in options"
             :key="item.value"
@@ -16,11 +17,12 @@
             :value="item.value"
           ></el-option>
         </el-select>
+        <div class="explain" v-show="isShow1">请选择考试类型</div>
       </div>
 
       <div class="classType">
         <p>*选择课程:</p>
-        <el-select v-model="values" placeholder="请选择" class="name">
+        <el-select @input="getValue2" v-model="values" placeholder="请选择" class="name">
           <el-option
             v-for="item in option"
             :key="item.value"
@@ -28,30 +30,47 @@
             :value="item.value"
           ></el-option>
         </el-select>
+        <div class="explain" v-show="isShow2">请选择课程</div>
       </div>
 
       <div class="Number">
         <p>*设置数量:</p>
         <el-input-number
           class="name"
-          v-model="num8"
+          @input="getValue3"
+          v-model="NumValue"
           controls-position="right"
           @change="handleChange"
           :min="1"
           :max="10"
         ></el-input-number>
+        <div class="explain" v-show="isShow3">请设置数量</div>
       </div>
 
       <div class="block">
         <div class="demonstration">考试时间:</div>
-        <el-date-picker v-model="value1" type="datetime" placeholder="开始时间"></el-date-picker>
-        <span>-</span>
-        <el-date-picker v-model="value2" type="datetime" placeholder="结束时间" class="els"></el-date-picker>
+        <div class="time">
+          <div>
+            <el-date-picker @input="getValue4" v-model="value1" type="datetime" placeholder="开始时间"></el-date-picker>
+            <div class="explain" v-show="isShow4">请选择考试开始时间</div>
+          </div>
+          <span>-</span>
+          <div>
+            <el-date-picker
+              @input="getValue5"
+              v-model="value2"
+              type="datetime"
+              placeholder="结束时间"
+              class="els"
+            ></el-date-picker>
+            <div class="explain" v-show="isShow5">请选择考试结束时间</div>
+          </div>
+        </div>
       </div>
 
       <div class="btn">
         <el-row>
-          <el-button type="primary">主要按钮</el-button>
+          <el-button type="primary" @click="handleBtn">创建试卷</el-button>
         </el-row>
       </div>
     </div>
@@ -83,6 +102,7 @@ export default {
       ],
       value: "",
       values: "",
+      NumValue: "",
       option: [
         {
           value: "选项1",
@@ -125,15 +145,102 @@ export default {
           label: "node高级"
         }
       ],
-      num8: 1,
       value1: "",
-      value2: ""
+      value2: "",
+      isShow: false,
+      isShow1: false,
+      isShow2: false,
+      isShow3: false,
+      isShow4: false,
+      isShow5: false,
+      inpVal: "",
+      inpVal1: "",
+      inpVal2: "",
+      inpVal3: "",
+      inpVal4: "",
+      inpVal5: ""
     };
+  },
+  watch: {
+    input10(e) {
+      if (e) {
+        this.isShow = false;
+      }
+    },
+    value(e) {
+      if (e) {
+        this.isShow1 = false;
+      }
+    },
+    values(e) {
+      if (e) {
+        this.isShow2 = false;
+      }
+    },
+    NumValue(e) {
+      if (e) {
+        this.isShow3 = false;
+      }
+    },
+    value1(e) {
+      if (e) {
+        this.isShow4 = false;
+      }
+    },
+    value2(e) {
+      if (e) {
+        this.isShow5 = false;
+      }
+    }
+  },
+  methods: {
+    getValue(e) {
+      this.inpVal = e.target.value;
+    },
+    getValue1(e) {
+      this.inpVal1 = e.target.value;
+    },
+    getValue2(e) {
+      this.inpVal2 = e.target.value;
+    },
+    getValue3(e) {
+      this.inpVal3 = e.target.value;
+    },
+    getValue4(e) {
+      this.inpVal4 = e.target.value;
+    },
+    getValue5(e) {
+      this.inpVal5 = e.target.value;
+    },
+    handleBtn(e) {
+      if (
+        this.inpVal == "" &&
+        this.inpVal1 == "" &&
+        this.inpVal2 == "" &&
+        this.inpVal3 == "" &&
+        this.inpVal4 == "" &&
+        this.inpVal5 == ""
+      ) {
+        this.isShow = true;
+        this.isShow1 = true;
+        this.isShow2 = true;
+        this.isShow3 = true;
+        this.isShow4 = true;
+        this.isShow5 = true;
+      } else {
+        this.isShow = false;
+        this.isShow1 = false;
+        this.isShow2 = false;
+        this.isShow3 = false;
+        this.isShow4 = false;
+        this.isShow5 = false;
+      }
+    }
   }
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" scoped> 
 .examination {
   width: 100%;
   height: 800px;
@@ -149,26 +256,36 @@ export default {
 
 .Allbox {
   width: 96%;
-  height: 650px;
+  height: 700px;
   background: #fff;
   margin: 0 auto;
   border-radius: 15px;
   display: flex;
   flex-direction: column;
   .NameExamination {
-    height: 100px;
+    height: 120px;
     margin-top: 12px;
     p {
       margin-left: 40px;
     }
     .name {
-      width: 150px;
-      height: 50px;
+      width: 450px;
+      height: 40px;
       margin-left: 40px;
+      border-radius: 10px;
+      border: solid 1px #ccc;
+      padding: 0 15px;
+      outline: none;
+    }
+    .explain {
+      margin-left: 40px;
+      color: red;
+      transition: color 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
+      margin-top: 2px;
     }
   }
   .examType {
-    height: 100px;
+    height: 120px;
     margin-top: 2px;
     p {
       margin-left: 40px;
@@ -177,11 +294,17 @@ export default {
       width: 150px;
       height: 50px;
       margin-left: 40px;
+    }
+    .explain {
+      margin-left: 40px;
+      color: red;
+      transition: color 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
+      margin-top: -8px;
     }
   }
 
   .classType {
-    height: 100px;
+    height: 120px;
     margin-top: 2px;
     p {
       margin-left: 40px;
@@ -191,10 +314,16 @@ export default {
       height: 50px;
       margin-left: 40px;
     }
+    .explain {
+      margin-left: 40px;
+      color: red;
+      transition: color 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
+      margin-top: -8px;
+    }
   }
 
   .Number {
-    height: 100px;
+    height: 120px;
     margin-top: 2px;
     p {
       margin-left: 40px;
@@ -203,6 +332,11 @@ export default {
       width: 150px;
       height: 36px;
       margin-left: 40px;
+    }
+    .explain {
+      margin-left: 40px;
+      color: red;
+      transition: color 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
     }
   }
 
@@ -213,13 +347,40 @@ export default {
       margin-left: 40px;
       margin-bottom: 15px;
     }
+    span {
+      margin-top: 8px;
+      margin-left: 10px;
+    }
     .els {
       margin: 0;
       padding: 0;
+      margin-left: -30px;
+    }
+
+    .time {
+      display: flex;
+      margin: 0;
+      margin-left: -38px;
+      div:first-child {
+        .explain {
+          margin-left: 40px;
+          color: red;
+          transition: color 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
+          margin-top: -8px;
+        }
+      }
+      div:last-child {
+        .explain {
+          margin-left: -30px;
+          margin-top: 7px;
+          color: red;
+          transition: color 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
+        }
+      }
     }
   }
 
-  .btn{
+  .btn {
     margin-top: 22px;
     margin-left: 40px;
   }
