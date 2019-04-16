@@ -10,14 +10,14 @@
                 </el-form-item>
                 <el-form-item label="教室号:" prop="classroom">
                     <el-select v-model="ruleForm.classroom" style="width:100%" placeholder="请选择教室名">
-                    <el-option label="区域一" value="shanghai" style="width:100%"></el-option>
-                    <el-option label="区域二" value="beijing" style="width:100%"></el-option>
+                    <el-option label="142102" value="142102" style="width:100%"></el-option>
+                    <el-option label="142102" value="142102" style="width:100%"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="课程号:" prop="classRegion">
                     <el-select v-model="ruleForm.classRegion" style="width:100%" placeholder="课程名">
-                    <el-option label="区域一" value="shanghai" style="width:100%"></el-option>
-                    <el-option label="区域二" value="beijing" style="width:100%"></el-option>
+                    <el-option label="js上" value="js上" style="width:100%"></el-option>
+                    <el-option label="js下" value="js下" style="width:100%"></el-option>
                     </el-select>
                 </el-form-item>
             </el-form>
@@ -28,6 +28,7 @@
             </el-dialog>
             <el-table
             :data="tableData"
+            
             style="width: 100%">
             <el-table-column
             prop="class"
@@ -38,7 +39,7 @@
             label="课程名">
             </el-table-column>
             <el-table-column
-            prop="name"
+            prop="address"
             label="教室号">
             </el-table-column>
             <el-table-column
@@ -47,7 +48,7 @@
             style="colo:#000">
             <template slot-scope="scope">
                 <el-button type="text" size="small" style="color:#0139FD" @click="dialogVisible('edit')">修改</el-button>
-                <el-button type="text" size="small" style="color:#0139FD">删除</el-button>
+                <el-button type="text" size="small" style="color:#0139FD" @click="curDelete">删除</el-button>
             </template>
             </el-table-column>
            </el-table>
@@ -72,32 +73,39 @@
          },
           dialogFormVisible: false,
           tableData: [{
+            id:0,
+            class: '1609B',
+            name: 'JAVASCRIPT上',
+            address: '13011'
+          }, {
+            id:1,
+            class: '1609B',
+            name: 'JAVASCRIPT上',
+            address: '13011'
+          }, {
+            id:2,
             class: '1608A',
             name: '王小虎',
             address: '13011'
           }, {
-            class: '1608A',
-            name: '王小虎',
+            id:3,
+            class: '1609B',
+            name: 'JAVASCRIPT上',
             address: '13011'
-          }, {
-            class: '1608A',
-            name: '王小虎',
-            address: '13011'
-          }, {
+          },{
+            id:4,
             class: '1608A',
             name: '王小虎',
             address: '13011'
           },{
+            id:5,
             class: '1608A',
             name: '王小虎',
             address: '13011'
           },{
-            class: '1608A',
-            name: '王小虎',
-            address: '13011'
-          },{
-            class: '1608A',
-            name: '王小虎',
+            id:6,
+            class: '1609B',
+            name: 'JAVASCRIPT上',
             address: '13011'
           }
           ],
@@ -109,11 +117,19 @@
     
    },
    methods: {
+      curDelete(e){
+          console.log(e)
+      },
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            console.log(valid)
-            alert('submit!');
+            this.tableData = [...this.tableData,{
+              class:this.ruleForm.class,
+              address:this.ruleForm.classroom,
+              name:this.ruleForm.classRegion
+            }]
+            this.dialogFormVisible = false
+            //alert('submit!');
           } else {
             console.log('error submit!!');
             return false;
