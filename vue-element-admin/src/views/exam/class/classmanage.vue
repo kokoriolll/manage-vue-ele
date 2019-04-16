@@ -2,20 +2,20 @@
     <div class="classMan">
         <p>班级管理</p>
         <div class="classContent">
-            <el-button type="primary" @click="dialogFormVisible = true">+ 添加班级</el-button>
+            <el-button type="primary" @click="dialogVisible('add')">+ 添加班级</el-button>
             <el-dialog title="添加班级" :visible.sync="dialogFormVisible">
             <el-form  :model="ruleForm" :rules="rules" ref="ruleForm" class="demo-ruleForm">
-                <el-form-item label="班级名:" prop="name">
-                    <el-input v-model="ruleForm.name" placeholder="班级名"></el-input>
+                <el-form-item label="班级名:" prop="class">
+                    <el-input v-model="ruleForm.class" placeholder="班级名"></el-input>
                 </el-form-item>
-                <el-form-item label="教室号:" prop="region">
-                    <el-select v-model="ruleForm.region" style="width:100%" placeholder="请选择教室名">
+                <el-form-item label="教室号:" prop="classroom">
+                    <el-select v-model="ruleForm.classroom" style="width:100%" placeholder="请选择教室名">
                     <el-option label="区域一" value="shanghai" style="width:100%"></el-option>
                     <el-option label="区域二" value="beijing" style="width:100%"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="课程号:" prop="region">
-                    <el-select v-model="ruleForm.region" style="width:100%" placeholder="课程名">
+                <el-form-item label="课程号:" prop="classRegion">
+                    <el-select v-model="ruleForm.classRegion" style="width:100%" placeholder="课程名">
                     <el-option label="区域一" value="shanghai" style="width:100%"></el-option>
                     <el-option label="区域二" value="beijing" style="width:100%"></el-option>
                     </el-select>
@@ -23,7 +23,7 @@
             </el-form>
             <div slot="footer" class="dialog-footer">
                 <el-button @click="dialogFormVisible = false">取 消</el-button>
-                <el-button class="submit" type="primary" @click="dialogFormVisible = false">提交</el-button>
+                <el-button class="submit" type="primary" @click="submitForm('ruleForm')">提交</el-button>
             </div>
             </el-dialog>
             <el-table
@@ -46,7 +46,7 @@
             label="操作"
             style="colo:#000">
             <template slot-scope="scope">
-                <el-button type="text" size="small" style="color:#0139FD" @click="dialogFormVisible = true">修改</el-button>
+                <el-button type="text" size="small" style="color:#0139FD" @click="dialogVisible('edit')">修改</el-button>
                 <el-button type="text" size="small" style="color:#0139FD">删除</el-button>
             </template>
             </el-table-column>
@@ -59,13 +59,16 @@
    export default {
      data() {
         return {
+         ruleForm: {
+          class: '',
+          classroom: '',
+          classRegion: '',
+          delivery: false
+        },
          rules: {
-          name: [
-            { required: true}
-          ],
-          region: [
-            { required: true}
-          ]
+          class: [{ required: true, message: '请输入班级名', trigger: 'blur'}],
+          classroom:[{ required: true, message: '请输入教室名', trigger: 'change'}],
+          classRegion:[{ required: true, message: '请输入课程号', trigger: 'change'}]
          },
           dialogFormVisible: false,
           tableData: [{
@@ -98,21 +101,32 @@
             address: '13011'
           }
           ],
-        ruleForm: {
-          name: '',
-          region: '',
-          date1: '',
-          date2: '',
-          delivery: false,
-          type: [],
-          resource: '',
-          desc: ''
-        },
+
         formLabelWidth: '120px'
         }
    },
+   watch:{
+    
+   },
    methods: {
-      
+      submitForm(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            console.log(valid)
+            alert('submit!');
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
+      },
+      dialogVisible(type){
+       if(type == 'add'){
+          this.dialogFormVisible = true
+       }else if(type == 'edit'){
+         this.dialogFormVisible = true
+       }
+      }
     }
    }
 </script>
@@ -121,7 +135,7 @@
     .dialog-footer{
         text-align: center;
         .submit{
-             width: 112px;
+             width: 20%;
              background: linear-gradient(-90deg,#4e75ff,#0139fd)!important;
         }
     }
@@ -143,15 +157,7 @@
    }
    .el-table{
        margin-top: 15px;
-       .el-table__header-wrapper{
-           .el-table__header{
-               thead{
-                   tr{
-                       background: red;
-                   }
-               }
-           }
-       }
+      
    }
   .el-table thead{
        color: #000;
