@@ -50,7 +50,7 @@
                 <markdown-editor v-model="content1" height="300px" />
             </div>
         </div>
-        <el-button type="text" @click="open3" class="addbtn">提交</el-button>
+        <el-button type="text" class="addbtn">提交</el-button>
     </div>
 </template>
 
