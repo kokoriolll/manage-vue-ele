@@ -27,19 +27,18 @@
             </div>
             </el-dialog>
             <el-table
-            :data="tableData"
-            
+            :data="classData"
             style="width: 100%">
             <el-table-column
-            prop="class"
+            prop="grade_name"
             label="班级名">
             </el-table-column>
             <el-table-column
-            prop="name"
+            prop="subject_text"
             label="课程名">
             </el-table-column>
             <el-table-column
-            prop="address"
+            prop="room_text"
             label="教室号">
             </el-table-column>
             <el-table-column
@@ -57,7 +56,8 @@
 </template>
 
 <script>
-   export default {
+import {mapState,mapMutations,mapActions} from 'vuex'
+export default {
      data() {
         return {
          ruleForm: {
@@ -71,54 +71,33 @@
           classroom:[{ required: true, message: '请输入教室名', trigger: 'change'}],
           classRegion:[{ required: true, message: '请输入课程号', trigger: 'change'}]
          },
-          dialogFormVisible: false,
-          tableData: [{
-            id:0,
-            class: '1609B',
-            name: 'JAVASCRIPT上',
-            address: '13011'
-          }, {
-            id:1,
-            class: '1609B',
-            name: 'JAVASCRIPT上',
-            address: '13011'
-          }, {
-            id:2,
-            class: '1608A',
-            name: '王小虎',
-            address: '13011'
-          }, {
-            id:3,
-            class: '1609B',
-            name: 'JAVASCRIPT上',
-            address: '13011'
-          },{
-            id:4,
-            class: '1608A',
-            name: '王小虎',
-            address: '13011'
-          },{
-            id:5,
-            class: '1608A',
-            name: '王小虎',
-            address: '13011'
-          },{
-            id:6,
-            class: '1609B',
-            name: 'JAVASCRIPT上',
-            address: '13011'
-          }
-          ],
-
+        dialogFormVisible: false,
         formLabelWidth: '120px'
         }
    },
-   watch:{
-    
+   async mounted(){
+     await this.curUpDateClass()
+    //  console.log(res)
+   },
+   computed:{
+     ...mapState({
+        classData:state => state.classManage.classData
+     })
+   },
+   created(){
+
    },
    methods: {
+     ...mapMutations({
+        updateState:'classManage/updateState'
+     }),
+     ...mapActions({
+       curUpDateClass:'classManage/curUpDateClass',
+       addClass:'classManage/addClass'
+     }),
       curDelete(e){
           console.log(e)
+          console.log(this.classData)
       },
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
@@ -136,9 +115,10 @@
           }
         });
       },
-      dialogVisible(type){
+      async dialogVisible(type){
        if(type == 'add'){
           this.dialogFormVisible = true
+         
        }else if(type == 'edit'){
          this.dialogFormVisible = true
        }
