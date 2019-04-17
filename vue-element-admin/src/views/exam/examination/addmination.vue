@@ -37,13 +37,12 @@
         <p>*设置数量:</p>
         <el-input-number
           class="name"
-          @input="getValue3"
           v-model="NumValue"
           controls-position="right"
           :min="1"
           :max="10"
         ></el-input-number>
-        <div class="explain" v-show="isShow3">请设置数量</div>
+        <!-- <div class="explain">请设置数量</div> -->
       </div>
 
       <div class="block">
@@ -149,13 +148,11 @@ export default {
       isShow: false,
       isShow1: false,
       isShow2: false,
-      isShow3: false,
       isShow4: false,
       isShow5: false,
       inpVal: "",
       inpVal1: "",
       inpVal2: "",
-      inpVal3: "",
       inpVal4: "",
       inpVal5: ""
     };
@@ -174,11 +171,6 @@ export default {
     values(e) {
       if (e) {
         this.isShow2 = false;
-      }
-    },
-    NumValue(e) {
-      if (e) {
-        this.isShow3 = false;
       }
     },
     value1(e) {
@@ -202,9 +194,6 @@ export default {
     getValue2(e) {
       this.inpVal2 = e.target.value;
     },
-    getValue3(e) {
-      this.inpVal3 = e.target.value;
-    },
     getValue4(e) {
       this.inpVal4 = e.target.value;
     },
@@ -213,24 +202,21 @@ export default {
     },
     handleBtn(e) {
       if (
-        this.inpVal == "" &&
-        this.inpVal1 == "" &&
-        this.inpVal2 == "" &&
-        this.inpVal3 == "" &&
-        this.inpVal4 == "" &&
+        this.inpVal == "" &&  
+        this.inpVal1 == "" && 
+        this.inpVal2 == "" && 
+        this.inpVal4 == "" && 
         this.inpVal5 == ""
       ) {
         this.isShow = true;
         this.isShow1 = true;
         this.isShow2 = true;
-        this.isShow3 = true;
         this.isShow4 = true;
         this.isShow5 = true;
       } else {
         this.isShow = false;
         this.isShow1 = false;
         this.isShow2 = false;
-        this.isShow3 = false;
         this.isShow4 = false;
         this.isShow5 = false;
       }
