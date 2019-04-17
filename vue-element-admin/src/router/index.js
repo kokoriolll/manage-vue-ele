@@ -80,19 +80,18 @@ export const constantRoutes = [
     component: () => import('@/views/errorPage/401'),
     hidden: true
   },
-  // {
-  //   path: '',
-  //   component: Layout,
-  //   redirect: 'Additem',
-  //   children: [
-  //     {
-  //       path: 'add',
-  //       component: () => import('@/views/exam/questions/add'),
-  //       name: 'add',
-  //       meta: { add: 'testquestions', icon: 'dashboard', noCache: true, affix: true }
-  //     }
-  //   ]
-  // },
+  {
+    path: '',
+    component: Layout,
+    redirect: 'Additem',
+    children: [
+      {
+        path: 'add',
+        component: () => import('@/views/exam/questions/add'),
+        name: 'add'
+      }
+    ]
+  },
   // {
   //   path: '/documentation',
   //   component: Layout,

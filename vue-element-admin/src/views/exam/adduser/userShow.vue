@@ -12,13 +12,19 @@
     </div>
     <h2>{{tit}}</h2>
     <el-table :data="list" style="width: 100%">
-      <el-table-column prop="date" label="日期" width="180"></el-table-column>
-      <el-table-column prop="name" label="姓名" width="190"></el-table-column>
+      <el-table-column
+        v-for="(item,index) in tabNav"
+        :key="index"
+        prop="date"
+        :label="item"
+        :style="{width:'100%'/tabNav.length}"
+      ></el-table-column>
+      <!-- <el-table-column prop="name" label="姓名" width="190"></el-table-column>
       <el-table-column prop="address" label="地址" width="190"></el-table-column>
       <el-table-column prop="address" label="地址" width="190"></el-table-column>
       <el-table-column prop="address" label="地址" width="190"></el-table-column>
       <el-table-column prop="address" label="地址" width="190"></el-table-column>
-      <el-table-column prop="address" label="地址" width="190"></el-table-column>
+      <el-table-column prop="address" label="地址" width="190"></el-table-column>-->
     </el-table>
     <div class="pagination">
       <el-pagination
@@ -43,13 +49,12 @@ export default {
         "视图接口权限",
         "身份和视图权限关系"
       ],
-      // list: null,
+      tabNav: ["用户名", "密码", "身份"],
       list: [
         { date: 2018, name: "张三", address: "123" },
         { date: 2019, name: "张四", address: "123" },
         { date: 2010, name: "张五", address: "123" }
       ],
-      currentPage4: 4,
       idx: 0,
       tit: "用户数据",
       total: 100
@@ -66,11 +71,9 @@ export default {
       setUserData: "userShow/setUserData",
       setidentity: "userShow/setidentity",
       setApiAuthority: "userShow/setApiAuthority",
-      setIdentityApiAuthorityRelation:
-        "userShow/setIdentityApiAuthorityRelation",
+      setIdentityApiAuthorityRelation:"userShow/setIdentityApiAuthorityRelation",
       setViewAuthority: "userShow/setViewAuthority",
-      setidentityViewAuthorityRelation:
-        "userShow/setidentityViewAuthorityRelation"
+      setidentityViewAuthorityRelation:"userShow/setidentityViewAuthorityRelation"
     }),
 
     handleCurrentChange(val) {
@@ -80,21 +83,27 @@ export default {
       this.idx = idx;
       this.tit = this.nav[idx];
       if (idx === 0) {
+        this.tabNav = ["用户名", "密码", "身份"];
         //展示用户数据
         this.setUserData();
       } else if (idx === 1) {
+        this.tabNav = ["身份名称"];
         //展示身份数据
         this.setidentity();
       } else if (idx === 2) {
+        this.tabNav = ["api权限名称", "api权限接口", "api权限方法"];
         //展示api接口权限
         this.setApiAuthority();
       } else if (idx === 3) {
+        this.tabNav = ["身份名称", "api权限名称", "api权限url", "api权限方法"];
         //展示身份和api接口关系
         this.setIdentityApiAuthorityRelation();
       } else if (idx === 4) {
+        this.tabNav = ["视图权限名称", "视图id"];
         //展示视图接口权限
         this.setViewAuthority();
       } else if (idx === 5) {
+        this.tabNav = ["身份", "视图名称", "视图id"];
         //展示身份和视图权限关系
         this.setidentityViewAuthorityRelation();
       }

@@ -5,7 +5,7 @@ import Layout from '@/layout'
 const examsRouter = {
   path: '/Additem',
   component: Layout,
-  redirect: 'noredirect',
+  redirect: '/Additem/add',
   name: 'Exam',
   meta: {
     title: 'Additem',
