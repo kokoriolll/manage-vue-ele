@@ -51,7 +51,6 @@
             </div>
         </div>
         <el-button type="text" class="addbtn" @click='submit'>提交</el-button>
-    </div>
     <div class="theme">
       <span>题目主题</span>
       <div class="editor-container">

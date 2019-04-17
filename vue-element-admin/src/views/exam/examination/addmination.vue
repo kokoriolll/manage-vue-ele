@@ -40,7 +40,6 @@
           @input="getValue3"
           v-model="NumValue"
           controls-position="right"
-          @change="handleChange"
           :min="1"
           :max="10"
         ></el-input-number>

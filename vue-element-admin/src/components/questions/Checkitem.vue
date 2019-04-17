@@ -56,7 +56,6 @@
         <div class="con_list_right">
           <span>编辑</span>
         </div>
-      </div>
       <div class="content_list">
         <div class="con_list_left">
           <span class="robot">机器人归位</span>
