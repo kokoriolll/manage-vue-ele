@@ -13,12 +13,12 @@
         </div>
         <div class="exam_style">
             <span>请选择考试类型:</span>
-            <el-select v-model="value" placeholder="请选择">
+            <el-select v-model="examTypes" placeholder="请选择">
                 <el-option
-                    v-for="item in options"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value">
+                    v-for="(item,index) in examType"
+                    :key="item.exam_id"
+                    :label="item.exam_name"
+                    :value="item.exam_name">
                 </el-option>
             </el-select>
         </div>
@@ -26,21 +26,21 @@
             <span>请选择课程类型:</span>
             <el-select v-model="value" placeholder="请选择">
                 <el-option 
-                    v-for="item in options" 
-                    :key="item.value" 
-                    :label="item.label"
-                    :value="item.value">
+                    v-for="item in subject" 
+                    :key="item.subject_id" 
+                    :label="item.subject_text"
+                    :value="item.subject_text">
                 </el-option>
             </el-select>
         </div>
         <div class="exam_style">
             <span>请选择题目类型:</span>
-            <el-select v-model="value" placeholder="请选择">
+            <el-select v-model="coures" placeholder="请选择">
                 <el-option 
-                    v-for="item in options" 
-                    :key="item.value" 
-                    :label="item.label" 
-                    :value="item.value">
+                    v-for="item in QuestionsType" 
+                    :key="item.subject_id" 
+                    :label="item.subject_text" 
+                    :value="item.subject_text">
                 </el-option>
             </el-select>
         </div>
@@ -74,7 +74,9 @@
                     'zh': 'zh_CN',
                     'es': 'es_ES'
                 },
+                examTypes: '',
                 value: '',
+                coures: '',
                 options: [{
                     value: '选项1',
                     label: '黄金糕'
@@ -96,20 +98,39 @@
         computed: {
             language() {
                 return this.languageTypeList[this.$store.getters.language]
-            }
+            },
+            ...mapState({
+                examType:state=>state.exam.examType,
+                subject:state=>state.exam.subject,
+                QuestionsType:state=>state.exam.getQuestionsType
+            })
+        },
+        mounted() {
+            this.getitem();
+            this.getstyle();
+            this.subjects();
+            this.itemsub();
+            this.getQuestionsTypes();
+            this.getQuestionsType();
         },
         methods: {
             getHtml() {
                 this.html = this.$refs.markdownEditor.getHtml()
                 console.log(this.html)
             },
+            ...mapMutations({
+                getstyle:'exam/getstyle',
+                itemsub:'exam/itemsub',
+                getQuestionsTypes:'exam/getQuestionsTypes'
+            }),
             ...mapActions({
-                additem:'exam/additems'
+                additem:'exam/additems',
+                getitem:'exam/getitems',
+                subjects:'exam/subjects',
+                getQuestionsType:'exam/getQuestionsType'
             }),
             submit(){
-                this.additem({
-                    
-                });
+                console.log(this.QuestionsType)
             }
         }
     }
