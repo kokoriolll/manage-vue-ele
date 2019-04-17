@@ -1,5 +1,5 @@
 <template>
-    <div>
+  <div>
         <p>题目信息</p>
         <div class="stem">
             <span class="stem_g">题干</span>
@@ -37,10 +37,10 @@
             <span>请选择题目类型:</span>
             <el-select v-model="coures" placeholder="请选择">
                 <el-option 
-                    v-for="item in QuestionsType" 
-                    :key="item.subject_id" 
-                    :label="item.subject_text" 
-                    :value="item.subject_text">
+                    v-for="item in questionsType" 
+                    :key="item.questions_type_id" 
+                    :label="item.questions_type_text" 
+                    :value="item.questions_type_text">
                 </el-option>
             </el-select>
         </div>
@@ -51,7 +51,7 @@
             </div>
         </div>
         <el-button type="text" class="addbtn" @click='submit'>提交</el-button>
-    </div>
+  </div>
 </template>
 
 <script>
@@ -102,7 +102,7 @@
             ...mapState({
                 examType:state=>state.exam.examType,
                 subject:state=>state.exam.subject,
-                QuestionsType:state=>state.exam.getQuestionsType
+                questionsType:state=>state.exam.getQuestionsType
             })
         },
         mounted() {
@@ -133,55 +133,59 @@
                 console.log(this.QuestionsType)
             }
         }
-    }
+};
 </script>
 
 <style lang="scss" scoped>
-    .stem {
-        width: 500px;
-        height: 80px;
-        display: flex;
-        flex-direction: column;
+.stem {
+  width: 500px;
+  height: 80px;
+  display: flex;
+  flex-direction: column;
 
-        .stem_g {
-            margin-bottom: 10px;
-        }
+  .stem_g {
+    margin-bottom: 10px;
+  }
 
-        input {
-            width: 100%;
-            height: 40px;
-            padding-left: 20px;
-            box-sizing: border-box;
+  input {
+    width: 100%;
+    height: 40px;
+    padding-left: 20px;
+    box-sizing: border-box;
+  }
+  input::-webkit-input-placeholder {
+    color: #cdbfbf;
+  }
+}
 
-        }
-        input::-webkit-input-placeholder{
-             color: #CDBFBF;   
-        }
-    }
-    .addbtn {
-        padding: 12px 40px 12px 40px;
-        background: linear-gradient(-90deg, #4e75ff, #0139fd) !important;
-        font-size: 14px;
-        color: #fff;
-    }
-    .editor-container {
-        margin-bottom: 30px;
-    }
+input::-webkit-input-placeholder {
+  color: #cdbfbf;
+}
 
-    .tag-title {
-        margin-bottom: 5px;
-    }
-    .exam_style{
-        width: 100%;
-        height: 80px;
-        display: flex;
-        flex-direction: column;
-        margin-top: 10px;
-    }
-    .exam_style .el-select{
-        margin-top: 10px;
-        display: block;
-        width:200px;
-        height:30px;
-    }
+.addbtn {
+  padding: 12px 40px 12px 40px;
+  background: linear-gradient(-90deg, #4e75ff, #0139fd) !important;
+  font-size: 14px;
+  color: #fff;
+}
+.editor-container {
+  margin-bottom: 30px;
+}
+
+.tag-title {
+  margin-bottom: 5px;
+}
+.exam_style {
+  width: 100%;
+  height: 80px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+}
+.exam_style .el-select {
+  margin-top: 10px;
+  display: block;
+  width: 200px;
+  height: 30px;
+}
 </style>

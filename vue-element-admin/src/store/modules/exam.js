@@ -12,6 +12,7 @@ const mutations={
         state.subject = payload;
     },
     getQuestionsTypes(state,payload){
+        console.log(payload,'payloa')
         state.getQuestionsType = payload;
     }
 }
