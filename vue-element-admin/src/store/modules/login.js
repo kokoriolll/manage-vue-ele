@@ -22,7 +22,6 @@ const mutations={
 const actions={
     async login({commit},payload){
       let result=await login(payload);
-      console.log(result,'asdas')
       setToken(result.token)
       return result;
     }

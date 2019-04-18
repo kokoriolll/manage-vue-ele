@@ -17,7 +17,6 @@ const mutations={
     },
     //获取所有试题
     getQuestionsTypes(state,payload){
-        console.log(payload,'payloa')
         state.getQuestionsType = payload;
     },
     //获取当前用户信息

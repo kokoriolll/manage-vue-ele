@@ -49,9 +49,12 @@
         </el-form-item>
       </el-tooltip>
 
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">
-        {{ $t('login.logIn') }}
-      </el-button>
+      <el-button
+        :loading="loading"
+        type="primary"
+        style="width:100%;margin-bottom:30px;"
+        @click.native.prevent="handleLogin"
+      >{{ $t('login.logIn') }}</el-button>
 
       <!-- <div style="position:relative">
          <el-button class="thirdparty-button" type="primary" @click="showDialog=true">
@@ -60,13 +63,13 @@
       </div> -->
     </el-form>
 
-    <!-- <el-dialog :title="$t('login.thirdparty')" :visible.sync="showDialog">
+    <el-dialog :title="$t('login.thirdparty')" :visible.sync="showDialog">
       {{ $t('login.thirdpartyTips') }}
       <br>
       <br>
       <br>
-      <social-sign />
-    </el-dialog> -->
+      <social-sign/>
+    </el-dialog>
   </div>
 </template>
 

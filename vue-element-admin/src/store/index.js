@@ -4,6 +4,7 @@ import getters from './getters'
 //引入store
 import exam from './modules/exam'
 import login from './modules/login'
+import examination from './modules/examination'
 
 Vue.use(Vuex)
 
@@ -24,7 +25,8 @@ const store = new Vuex.Store({
   modules,
   getters,
   exam,
-  login
+  login,
+  examination
 })
 
 export default store
