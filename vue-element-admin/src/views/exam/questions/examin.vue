@@ -9,7 +9,7 @@
     import Checkitem from '@/components/questions/Checkitem.vue'
     export default {
         components: {
-            Checkitems
+            Checkitem
         }
     }
 </script>

@@ -13,12 +13,12 @@
         </div>
         <div class="exam_style">
             <span>请选择考试类型:</span>
-            <el-select v-model="value" placeholder="请选择">
+            <el-select v-model="examTypes" placeholder="请选择">
                 <el-option
-                    v-for="item in options"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value">
+                    v-for="(item,index) in examType"
+                    :key="item.exam_id"
+                    :label="item.exam_name"
+                    :value="item.exam_name">
                 </el-option>
             </el-select>
         </div>
@@ -26,21 +26,21 @@
             <span>请选择课程类型:</span>
             <el-select v-model="value" placeholder="请选择">
                 <el-option 
-                    v-for="item in options" 
-                    :key="item.value" 
-                    :label="item.label"
-                    :value="item.value">
+                    v-for="item in subject" 
+                    :key="item.subject_id" 
+                    :label="item.subject_text"
+                    :value="item.subject_text">
                 </el-option>
             </el-select>
         </div>
         <div class="exam_style">
             <span>请选择题目类型:</span>
-            <el-select v-model="value" placeholder="请选择">
+            <el-select v-model="coures" placeholder="请选择">
                 <el-option 
-                    v-for="item in options" 
-                    :key="item.value" 
-                    :label="item.label" 
-                    :value="item.value">
+                    v-for="item in questionsType" 
+                    :key="item.questions_type_id" 
+                    :label="item.questions_type_text" 
+                    :value="item.questions_type_text">
                 </el-option>
             </el-select>
         </div>
@@ -51,117 +51,88 @@
             </div>
         </div>
         <el-button type="text" class="addbtn" @click='submit'>提交</el-button>
-    <div class="theme">
-      <span>题目主题</span>
-      <div class="editor-container">
-        <markdown-editor v-model="content1" height="300px"/>
-      </div>
-    </div>
-    <div class="exam_style">
-      <span>请选择考试类型:</span>
-      <el-select v-model="value" placeholder="请选择">
-        <el-option
-          v-for="item in options"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-        ></el-option>
-      </el-select>
-    </div>
-    <div class="exam_style">
-      <span>请选择课程类型:</span>
-      <el-select v-model="value" placeholder="请选择">
-        <el-option
-          v-for="item in options"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-        ></el-option>
-      </el-select>
-    </div>
-    <div class="exam_style">
-      <span>请选择题目类型:</span>
-      <el-select v-model="value" placeholder="请选择">
-        <el-option
-          v-for="item in options"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-        ></el-option>
-      </el-select>
-    </div>
-    <div class="theme">
-      <span>答案信息</span>
-      <div class="editor-container">
-        <markdown-editor v-model="content1" height="300px"/>
-      </div>
-    </div>
   </div>
 </template>
 
 <script>
-import MarkdownEditor from "@/components/MarkdownEditor";
-import { mapState, mapMutations, mapActions } from "vuex";
-const content = ``;
-export default {
-  // props:['additem'],
-  name: "MarkdownDemo",
-  components: { MarkdownEditor },
-  data() {
-    return {
-      content1: content,
-      content2: content,
-      content3: content,
-      content4: content,
-      html: "",
-      languageTypeList: {
-        en: "en_US",
-        zh: "zh_CN",
-        es: "es_ES"
-      },
-      value: "",
-      options: [
-        {
-          value: "选项1",
-          label: "黄金糕"
+    import MarkdownEditor from '@/components/MarkdownEditor'
+    import {mapState,mapMutations,mapActions} from 'vuex'
+    const content = ``
+    export default {
+        // props:['additem'],
+        name: 'MarkdownDemo',
+        components: { MarkdownEditor },
+        data() {
+            return {
+                content1: content,
+                content2: content,
+                content3: content,
+                content4: content,
+                html: '',
+                languageTypeList: {
+                    'en': 'en_US',
+                    'zh': 'zh_CN',
+                    'es': 'es_ES'
+                },
+                examTypes: '',
+                value: '',
+                coures: '',
+                options: [{
+                    value: '选项1',
+                    label: '黄金糕'
+                }, {
+                    value: '选项2',
+                    label: '双皮奶'
+                }, {
+                    value: '选项3',
+                    label: '蚵仔煎'
+                }, {
+                    value: '选项4',
+                    label: '龙须面'
+                }, {
+                    value: '选项5',
+                    label: '北京烤鸭'
+                }]
+            }
         },
-        {
-          value: "选项2",
-          label: "双皮奶"
+        computed: {
+            language() {
+                return this.languageTypeList[this.$store.getters.language]
+            },
+            ...mapState({
+                examType:state=>state.exam.examType,
+                subject:state=>state.exam.subject,
+                questionsType:state=>state.exam.getQuestionsType
+            })
         },
-        {
-          value: "选项3",
-          label: "蚵仔煎"
+        mounted() {
+            this.getitem();
+            this.getstyle();
+            this.subjects();
+            this.itemsub();
+            this.getQuestionsTypes();
+            this.getQuestionsType();
         },
-        {
-          value: "选项4",
-          label: "龙须面"
-        },
-        {
-          value: "选项5",
-          label: "北京烤鸭"
+        methods: {
+            getHtml() {
+                this.html = this.$refs.markdownEditor.getHtml()
+                console.log(this.html)
+            },
+            ...mapMutations({
+                getstyle:'exam/getstyle',
+                itemsub:'exam/itemsub',
+                getQuestionsTypes:'exam/getQuestionsTypes'
+            }),
+            ...mapActions({
+                additem:'exam/additems',
+                getitem:'exam/getitems',
+                subjects:'exam/subjects',
+                getQuestionsType:'exam/getQuestionsType'
+            }),
+            submit(){
+                console.log(this.QuestionsType)
+            }
         }
-      ]
-    };
-  },
-
-  methods: {
-    getHtml() {
-      this.html = this.$refs.markdownEditor.getHtml();
-      console.log(this.html);
-    },
-    ...mapActions({
-      additem: "exam/additems"
-    }),
-    submit() {
-      this.additem({});
-    }
-  },
-  computed: {
-    language() {
-      return this.languageTypeList[this.$store.getters.language];
-    }
-  }
 };
 </script>
 

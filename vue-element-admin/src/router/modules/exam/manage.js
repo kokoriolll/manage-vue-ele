@@ -11,18 +11,28 @@ const examsRouter = {
     title: 'usermanagement',
     icon: 'form'
   },
-  children: [
-    {
+  children: [{
       path: 'addmination',
       component: () => import('@/views/exam/examination/addmination'),
       name: 'addmination',
-      meta: { title: 'thetest', noCache: true }
+      meta: {
+        title: 'thetest',
+        noCache: true
+      }
     },
     {
       path: 'minationlist',
       component: () => import('@/views/exam/examination/minationlist'),
       name: 'minationlist',
-      meta: { title: 'testlist', noCache: true }
+      meta: {
+        title: 'testlist',
+        noCache: true
+      }
+    },
+    {
+      path: 'newExam',
+      component: () => import('@/views/exam/examination/newExam'),
+      hidden: true
     }
   ]
 }

@@ -53,12 +53,10 @@ export const constantRoutes = [
     path: '/redirect',
     component: Layout,
     hidden: true,
-    children: [
-      {
-        path: '/redirect/:path*',
-        component: () => import('@/views/redirect/index')
-      }
-    ]
+    children: [{
+      path: '/redirect/:path*',
+      component: () => import('@/views/redirect/index')
+    }]
   },
   {
     path: '/login',
@@ -83,8 +81,13 @@ export const constantRoutes = [
   {
     path: '/',
     component: Layout,
-    redirect: 'Additem'
-  },
+    redirect: 'Additem',
+    children: [{
+      path: 'add',
+      component: () => import('@/views/exam/questions/add'),
+      name: 'add'
+    }]
+  }
   // {
   //   path: '/documentation',
   //   component: Layout,
@@ -385,12 +388,18 @@ export const asyncRoutes = [
   //   ]
   // },
 
-  { path: '*', redirect: '/404', hidden: true }
+  {
+    path: '*',
+    redirect: '/404',
+    hidden: true
+  }
 ]
 
 const createRouter = () => new Router({
   // mode: 'history', // require service support
-  scrollBehavior: () => ({ y: 0 }),
+  scrollBehavior: () => ({
+    y: 0
+  }),
   routes: constantRoutes
 })
 
