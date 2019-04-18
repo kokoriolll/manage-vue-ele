@@ -66,16 +66,7 @@
         <p>
           <span>添加视图接口权限</span>
         </p>
-        <!-- <el-select v-model="existingView" placeholder="请选择已有视图">
-          <el-option
-            v-for="(item,idx) in existingViewValue"
-            :key="idx"
-            :label="item.authority"
-            :value="item.authority"
-            v-model="view_id"
-          ></el-option>
-        </el-select>-->
-        <el-select v-model="existingView" placeholder="请选择已有视图" @change="getViewId">
+        <el-select v-model="existingView" placeholder="请选择已有视图">
           <el-option
             v-for="(item,index) in existingViewValue"
             :key="index"
@@ -171,7 +162,6 @@ export default {
       apiJurisdictionId: "", //api接口权限id
       viewJurisdictionId: "", //视图权限id
       idx: 0, //tab切换
-      view_id: ""
     };
   },
   computed: {
@@ -228,33 +218,33 @@ export default {
       }
     },
     //用户校验
-    userVerify() {
-      if (!this.userName) {
-        this.$message({
-          showClose: true,
-          message: "请输入用户名",
-          type: "warning"
-        });
-        return false;
-      } else if (!this.pwd) {
-        this.$message({
-          showClose: true,
-          message: "请输入用户密码",
-          type: "warning"
-        });
-        return false;
-      } else if (!this.identityId) {
-        this.$message({
-          showClose: true,
-          message: "请选择身份id",
-          type: "warning"
-        });
-        return false;
-      }
-    },
+    // userVerify() {
+    //   if (!this.userName) {
+    //     this.$message({
+    //       showClose: true,
+    //       message: "请输入用户名",
+    //       type: "warning"
+    //     });
+    //     return false;
+    //   } else if (!this.pwd) {
+    //     this.$message({
+    //       showClose: true,
+    //       message: "请输入用户密码",
+    //       type: "warning"
+    //     });
+    //     return false;
+    //   } else if (!this.identityId) {
+    //     this.$message({
+    //       showClose: true,
+    //       message: "请选择身份id",
+    //       type: "warning"
+    //     });
+    //     return false;
+    //   }
+    // },
     //用户
     async user() {
-      if (this.idx === 0) {
+      if (this.idx === 0) {//添加用户
         // await this.userVerify();
         if (!this.userName) {
           this.$message({
@@ -283,8 +273,8 @@ export default {
           user_pwd: this.pwd,
           identity_id: this.identityId
         });
-        this.hint(res);
-      } else {
+        // this.hint(res);
+      } else {//更新用户
         if (!this.identityId) {
           this.$message({
             showClose: true,
@@ -322,7 +312,7 @@ export default {
           user_pwd: this.pwd,
           identity_id: this.identityId
         });
-        this.hint(res);
+        // this.hint(res);
       }
     },
     //身份
@@ -379,7 +369,6 @@ export default {
       obj = this.existingViewValue.find(item => {
         return item.authority === this.existingView;
       });
-      // console.log(obj)
       if (!this.existingView) {
         this.$message({
           showClose: true,
@@ -392,7 +381,6 @@ export default {
         view_authority_text: this.existingView,
         view_id: obj.view_id //视图id 字符串
       });
-      console.log(res, 452541);
       // this.hint(res)
     },
     // 给身份设置api接口权限
@@ -443,13 +431,6 @@ export default {
       });
       this.hint(res);
     },
-    getViewId() {
-      let obj = {};
-      obj = this.existingViewValue.find(item => {
-        return item.authority === this.existingView;
-      });
-      // console.log(obj)
-    },
     //提示
     hint(res) {
       this.$message({
@@ -463,7 +444,6 @@ export default {
     this.setApiAuthority();
     this.setViewAuthority();
     this.setidentityViewAuthorityRelation();
-    // console.log(this.existingViewValue, 666);
   }
 };
 </script>
