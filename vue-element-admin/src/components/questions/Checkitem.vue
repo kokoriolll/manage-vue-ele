@@ -3,53 +3,41 @@
         <div class="header">
             <ul class="name_list">
                 <span>课程类型:</span>
-                <li>All</li>
-                <li>javaScript上</li>
-                <li>javaScript下</li>
-                <li>模块化开发</li>
-                <li>移动端开发</li>
-                <li>node基础</li>
-                <li>组件化开发(vue)</li>
-                <li>渐进式开发(react)</li>
-                <li>项目实战</li>
-                <li>javaScript高级</li>
-                <li>node高级</li>
+                <li v-for='(item,index) in subject' :key='index' @click='subject_id(item)'>{{item.subject_text}}</li>
             </ul>
             <ul class="select">
                 <li>
                     <span>考试类型:</span>
-                    <el-select v-model="value" placeholder="请选择">
-                        <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+                    <el-select v-model="exam_id" placeholder="请选择" @change='Type'>
+                        <el-option v-for="(item,index) in examType" :key="index" :label="item.exam_name" :value="item.exam_id" >
                         </el-option>
                     </el-select>
                 </li>
                 <li class="styles">
                     <span>题目类型:</span>
-                    <el-select v-model="value" placeholder="请选择">
-                        <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+                    <el-select v-model="questions_type_id" placeholder="请选择"  @change='Questions'>
+                        <el-option v-for="(item,index) in QuestionsType" :key="index" :label="item.questions_type_text" :value="item.questions_type_id" >
                         </el-option>
                     </el-select>
                 </li>
                 <li class="styles">
-                    <el-button type="text" class="addbtn">查询</el-button>
+                    <el-button type="text" class="addbtn" @click='submit'>查询</el-button>
                 </li>
             </ul>
         </div>
         <div class="content">
-            <div class="content_list">
-                <div class="con_list_left">
-                    <span class="robot">机器人归位</span>
+            <div class="content_list" v-for='(item,index) in questionsa' :key='index' >
+                <div class="con_list_left" @click='detail(item)'>
+                    <span class="robot">{{item.title}}</span>
                     <div class="tab_list">
-                        <span>代码补全</span>
-                        <span>javaScript上</span>
-                        <span>周考1</span>
+                        <span>{{item.questions_type_text}}</span>
+                        <span>{{item.subject_text}}</span>
+                        <span>{{item.exam_name}}</span>
                     </div>
-                    <p class="name_issue">dingshaoshan发布</p>
+                    <p class="name_issue">{{item.user_name}}</p>
                 </div>
                 <div class="con_list_right">
-                    <router-link to="/Additem/add" tag="p">
-                        <span>编辑</span>
-                    </router-link>
+                    <span @click='compile(item)'>编辑</span>
                 </div>
             </div>
         </div>
@@ -57,30 +45,61 @@
 </template>
 
 <script>
+    import {mapActions,mapState} from 'vuex'
     export default {
         data() {
             return {
-                options: [{
-                    value: '选项1',
-                    label: '黄金糕'
-                }, {
-                    value: '选项2',
-                    label: '双皮奶'
-                }, {
-                    value: '选项3',
-                    label: '蚵仔煎'
-                }, {
-                    value: '选项4',
-                    label: '龙须面'
-                }, {
-                    value: '选项5',
-                    label: '北京烤鸭'
-                }],
-                value: ''
+                exam_id:'',
+                subjectid:'',
+                questions_type_id:'',
             }
         },
-        methods: {
+        computed: {
+            ...mapState({
+                examType:state=>state.exam.examType,
+                subject:state=>state.exam.subject,
+                QuestionsType:state=>state.exam.getQuestionsType,
+                questionsa:state=>state.exam.questions
+            })
         },
+        created() {
+            this.getitem();
+            this.subjects();
+            this.getQuestionsType();
+            this.questions();
+        },
+        methods: {
+            Questions(e){
+                this.questions_type_id = e;
+            },
+            Type(e){
+                this.exam_id = e;
+            },
+            ...mapActions({
+                getitem:'exam/getitems',
+                subjects:'exam/subjects',
+                getQuestionsType:'exam/getQuestionsType',
+                questions:'exam/questions',
+                condition:'exam/condition'
+            }),
+            subject_id(item){
+                console.log(item.subject_id)
+                this.subjectid = item.subject_id;    
+            },
+            submit(){
+                this.condition({
+                    subject_id:this.subjectid,
+                    exam_id:this.exam_id,
+                    questions_type_id:this.questions_type_id
+                })
+            },
+            compile(item){
+                this.$router.push({ path: '/Additem/adds',query:{list:item} })
+            },
+            detail(item){
+                this.$router.push({ path: '/Additem/detail',query:{list:item} })
+            }
+        }
     }
 </script>
 
@@ -106,9 +125,10 @@
 
     .name_list {
         display: flex;
+        flex-wrap: wrap;
         height: 20px;
         li {
-            padding: 0 6px 0 6px;
+            padding: 0 12px 0 12px;
             font-size: 12px;
             line-height: 20px;
         }
@@ -145,9 +165,11 @@
     }
 
     .content {
+        display: flex;
+        flex-direction: column;
         .con_list_left {
             font-size: 14px;
-
+            flex:1;
             .robot {
                 color: #5959AF;
             }
