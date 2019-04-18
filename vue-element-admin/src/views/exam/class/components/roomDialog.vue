@@ -2,7 +2,7 @@
   <div>
     <el-dialog title="添加班级" :visible.sync="dialogFormVisible" width="40%" :before-close="handleDialogClose">
             <el-form  :model="ruleForm" :rules="rules" ref="ruleForm" class="demo-ruleForm">
-                <el-form-item label="教室名:" prop="name">
+                <el-form-item label="教室名:" ref="name" prop="name">
                     <el-input v-model="ruleForm.name" placeholder="教室名"></el-input>
                 </el-form-item>
             </el-form>
@@ -22,7 +22,7 @@ export default {
     return {
         rules: {
           name: [
-            { required: true}
+            { required: true,message: '请输入教室名',trigger:blur}
           ]
          },
         ruleForm: {
@@ -54,6 +54,8 @@ export default {
       this.dialogForm({
          dialogFormVisible:false 
       }) 
+      this.$refs['name'].clearValidate()
+      this.ruleForm.name = ''
     },
     submitForm(formName) {
         this.$refs[formName].validate(async (valid) => {
@@ -65,6 +67,8 @@ export default {
               dialogFormVisible:false 
             }) 
             await this.getCurAllRoom()
+            this.$refs['name'].clearValidate()
+            this.ruleForm.name = ''
           } else {
             console.log('error submit!!');
             return false;

@@ -3,9 +3,9 @@
     <el-dialog title="添加班级" :visible="dialogFormVisible" :before-close="handleDialogClose">
         <el-form  :model="editData" :rules="rules" ref="ruleForm" class="demo-ruleForm">
             <el-form-item label="班级名:" prop="grade_name">
-                <el-input v-model="editData.grade_name" placeholder="班级名"></el-input>
+                <el-input v-model="editData.grade_name" placeholder="班级名" :disabled="disable"></el-input>
             </el-form-item>
-            <el-form-item label="教室号:" prop="room_text">
+            <el-form-item label="教室号:" prop="room_text" ref="class">
                 <el-select v-model="editData.room_text" style="width:100%" placeholder="请选择教室名" @change="getRoomId">
                 <el-option v-for="(item,ind) in allRoom" :key="ind" :label="item.room_text" :value="item.room_id" style="width:100%"></el-option>
                 </el-select>
@@ -34,8 +34,8 @@ export default {
         roomId:'',
          rules: {
           grade_name: [{ required: true, message: '请输入班级名', trigger: 'blur'}],
-          room_text:[{ required: true, message: '请输入教室名', trigger: 'change'}],
-          subject_text:[{ required: true, message: '请输入课程号', trigger: 'change'}]
+          room_text:[{ required: true, message: '请输入教室名', trigger: 'blur'}],
+          subject_text:[{ required: true, message: '请输入课程号', trigger: 'blur'}]
          },
     }
   },
@@ -81,6 +81,8 @@ export default {
       this.dialogForm({
          dialogFormVisible:false 
       }) 
+      this.$refs['ruleForm'].clearValidate()
+      this.$refs['class'].clearValidate()
       this.clearData()
     },
     getRoomId(e){
@@ -91,7 +93,6 @@ export default {
     },
     submitForm(formName) {
         this.$refs[formName].validate(async (valid) => {
-          console.log(this,this.type,'this.')
           if (valid) {
             if(this.type == 'add'){
               await this.curAddClass({
@@ -101,6 +102,8 @@ export default {
               })
               await this.curUpDateClass()
             }
+            this.$refs[formName].clearValidate()
+            this.$refs['class'].clearValidate()
             await this.dialogForm({
               dialogFormVisible:false  
             })  

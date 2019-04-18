@@ -68,7 +68,6 @@ export default {
             disable:true 
          })  
          this.editClass(row)
-         console.log(row,'row')
          this.curAddClass(row)
    },
     //删除班级
