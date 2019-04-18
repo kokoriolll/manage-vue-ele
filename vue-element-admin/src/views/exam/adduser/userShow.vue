@@ -22,6 +22,7 @@
     </el-table>
     <div class="pagination">
       <el-pagination
+      :current-page.sync = "dftPage"
         @current-change="handleCurrentChange"
         layout="prev, pager, next"
         :total="totals[idx]"
@@ -64,7 +65,6 @@ export default {
         ["view_authority_text", "view_id"],
         ["identity_text", "view_authority_text", "view_id"]
       ],
-      list: [],
       idx: 0,
       tit: "用户数据",
       page: 1, //第几页
@@ -75,7 +75,8 @@ export default {
         "identityApiAuthorityRelationsData",
         "viewAuthoritysData",
         "identityViewAuthorityRelationsData"
-      ]
+      ],
+      dftPage:1
     };
   },
   computed: {
@@ -118,9 +119,11 @@ export default {
       });
     },
     change(idx) {
+      this.dftPage=1
       this.tableList({ idx, data: this.pageTit[idx], pages: this.page });
       this.idx = idx;
       this.tit = this.nav[idx];
+      
     }
   }
 };

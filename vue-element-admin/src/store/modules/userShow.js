@@ -92,34 +92,6 @@ const mutations = {
   }
 }
 
-//0 9     (1-1)*10,1*10
-//10 19   (2-1)*10,2*10
-//20 29   (3-1)*10,3*10
-//30 39   (4-1)*10,4*10
-//(this.page-1)*this.pageSize
-//页面数据
-function pageList(page, data) {
-  if (page === 1) {
-    data = data.slice(0, 10)
-  } else {
-    data = data.slice((page - 1) * 10, page * 10)
-  }
-  return data
-}
-
-//循环
-function loop(data, payload) {
-  for (let key in payload) {
-    data[key] = payload[key]
-  }
-  return data
-}
-
-//去重
-function deWeight(data) {
-  return data = [...new Set(data)]
-}
-
 const actions = {
   // 展示用户数据
   async setUserData({
@@ -165,6 +137,35 @@ const actions = {
     commit('identityViewAuthorityRelations', result.data)
   }
 }
+
+//0 9     (1-1)*10,1*10
+//10 19   (2-1)*10,2*10
+//20 29   (3-1)*10,3*10
+//30 39   (4-1)*10,4*10
+//(this.page-1)*this.pageSize
+//页面数据
+function pageList(page, data) {
+  if (page === 1) {
+    data = data.slice(0, 10)
+  } else {
+    data = data.slice((page - 1) * 10, page * 10)
+  }
+  return data
+}
+
+//循环
+function loop(data, payload) {
+  for (let key in payload) {
+    data[key] = payload[key]
+  }
+  return data
+}
+
+//去重
+function deWeight(data) {
+  return data = [...new Set(data)]
+}
+
 export default {
   namespaced: true,
   state,
