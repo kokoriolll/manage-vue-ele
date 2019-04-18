@@ -123,6 +123,7 @@ export default {
   },
   methods: {
     ...mapActions({
+       login:'user/login',
        generateRoutes:'permission/generateRoutes'
     }),
     checkCapslock({ shiftKey, key } = {}) {
@@ -150,6 +151,7 @@ export default {
     handleLogin() {
       this.$refs.loginForm.validate(async valid => {
         if (valid) {
+          let res = await this.login(this.loginForm)
           if(res.code == 1){
             await this.generateRoutes([])
             this.$router.push({ path: this.redirect || '/' })       

@@ -3,85 +3,34 @@
         <p>班级管理</p>
         <div class="classContent">
             <el-button type="primary" @click="dialogVisible('add')">+ 添加班级</el-button>
-            <el-dialog title="添加班级" :visible.sync="dialogFormVisible">
-            <el-form  :model="ruleForm" :rules="rules" ref="ruleForm" class="demo-ruleForm">
-                <el-form-item label="班级名:" prop="class">
-                    <el-input v-model="ruleForm.class" placeholder="班级名"></el-input>
-                </el-form-item>
-                <el-form-item label="教室号:" prop="classroom">
-                    <el-select v-model="ruleForm.classroom" style="width:100%" placeholder="请选择教室名">
-                    <el-option label="142102" value="142102" style="width:100%"></el-option>
-                    <el-option label="142102" value="142102" style="width:100%"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="课程号:" prop="classRegion">
-                    <el-select v-model="ruleForm.classRegion" style="width:100%" placeholder="课程名">
-                    <el-option label="js上" value="js上" style="width:100%"></el-option>
-                    <el-option label="js下" value="js下" style="width:100%"></el-option>
-                    </el-select>
-                </el-form-item>
-            </el-form>
-            <div slot="footer" class="dialog-footer">
-                <el-button @click="dialogFormVisible = false">取 消</el-button>
-                <el-button class="submit" type="primary" @click="submitForm('ruleForm')">提交</el-button>
-            </div>
-            </el-dialog>
-            <el-table
-            :data="classData"
-            style="width: 100%">
-            <el-table-column
-            prop="grade_name"
-            label="班级名">
-            </el-table-column>
-            <el-table-column
-            prop="subject_text"
-            label="课程名">
-            </el-table-column>
-            <el-table-column
-            prop="room_text"
-            label="教室号">
-            </el-table-column>
-            <el-table-column
-            fixed="right"
-            label="操作"
-            style="colo:#000">
-            <template slot-scope="scope">
-                <el-button type="text" size="small" style="color:#0139FD" @click="dialogVisible('edit')">修改</el-button>
-                <el-button type="text" size="small" style="color:#0139FD" @click="curDelete">删除</el-button>
-            </template>
-            </el-table-column>
-           </el-table>
+            <classDialog></classDialog>
+            <classList :classData="classData"></classList>
         </div>
     </div>
 </template>
 
 <script>
 import {mapState,mapMutations,mapActions} from 'vuex'
+import classList from '@/components/class/classList.vue';
+import classDialog from '@/components/class/classDialog.vue';
 export default {
      data() {
         return {
-         ruleForm: {
-          class: '',
-          classroom: '',
-          classRegion: '',
-          delivery: false
-        },
-         rules: {
-          class: [{ required: true, message: '请输入班级名', trigger: 'blur'}],
-          classroom:[{ required: true, message: '请输入教室名', trigger: 'change'}],
-          classRegion:[{ required: true, message: '请输入课程号', trigger: 'change'}]
-         },
-        dialogFormVisible: false,
-        formLabelWidth: '120px'
+          
         }
+   },
+   components:{
+     classList,
+     classDialog
    },
    async mounted(){
      await this.curUpDateClass()
-    //  console.log(res)
+    
    },
    computed:{
      ...mapState({
-        classData:state => state.classManage.classData
+        classData:state => state.classManage.classData,
+        dialogFormVisible:state => state.classManage.dialogFormVisible
      })
    },
    created(){
@@ -89,39 +38,22 @@ export default {
    },
    methods: {
      ...mapMutations({
-        updateState:'classManage/updateState'
+        updateState:'classManage/updateState',
+        dialogForm:'classManage/dialogForm'
      }),
      ...mapActions({
        curUpDateClass:'classManage/curUpDateClass',
        addClass:'classManage/addClass'
      }),
-      curDelete(e){
-          console.log(e)
-          console.log(this.classData)
-      },
-      submitForm(formName) {
-        this.$refs[formName].validate((valid) => {
-          if (valid) {
-            this.tableData = [...this.tableData,{
-              class:this.ruleForm.class,
-              address:this.ruleForm.classroom,
-              name:this.ruleForm.classRegion
-            }]
-            this.dialogFormVisible = false
-            //alert('submit!');
-          } else {
-            console.log('error submit!!');
-            return false;
-          }
-        });
-      },
-      async dialogVisible(type){
-       if(type == 'add'){
-          this.dialogFormVisible = true
+     //添加班级
+    dialogVisible(type){
+        if(type == 'add'){
+          this.dialogForm({
+            dialogFormVisible:true,
+            type:type
+         })
+        }
          
-       }else if(type == 'edit'){
-         this.dialogFormVisible = true
-       }
       }
     }
    }
@@ -151,12 +83,5 @@ export default {
        box-sizing:border-box;
        
    }
-   .el-table{
-       margin-top: 15px;
-      
-   }
-  .el-table thead{
-       color: #000;
-       font-weight: 200;
-   }
+   
 </style>

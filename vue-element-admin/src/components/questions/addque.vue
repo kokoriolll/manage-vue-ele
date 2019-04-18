@@ -94,9 +94,9 @@
             }
         },
         computed: {
-            language() {
-                return this.languageTypeList[this.$store.getters.language]
-            }
+            // language() {
+            //     return this.languageTypeList[this.$store.getters.language]
+            // }
         },
         methods: {
             getHtml() {
