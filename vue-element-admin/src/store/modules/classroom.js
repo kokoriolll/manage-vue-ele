@@ -9,7 +9,7 @@ const mutations={
    //deleteDialog显示隐藏
    dialogForm(state,payload){
     state.dialogFormVisible = payload.dialogFormVisible
- }
+  }
 }
 
 const actions = {
