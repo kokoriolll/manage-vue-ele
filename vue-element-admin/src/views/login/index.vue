@@ -151,7 +151,7 @@ export default {
           })
           if(res.code == 1){
             await this.generateRoutes([]);
-            this.$router.push({ path: this.redirect || '/' })
+            this.$router.push({ path: '/' })
           }
           this.loading = false;
         } else {
