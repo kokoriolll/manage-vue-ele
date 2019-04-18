@@ -39,17 +39,7 @@ const actions = {
     let res = await login({user_name:username,user_pwd:password})
     console.log('res...',res)
     setToken(res.token)
-    return res
-    /* return new Promise((resolve, reject) => {
-      login({ username: username.trim(), password: password }).then(response => {
-        const { data } = response
-        commit('SET_TOKEN', data.token)
-        setToken(data.token)
-        resolve()
-      }).catch(error => {
-        reject(error)
-      })
-    }) */
+    return res;
   },
 
   // get user info

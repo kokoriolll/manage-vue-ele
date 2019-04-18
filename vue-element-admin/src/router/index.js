@@ -129,7 +129,7 @@ export const asyncRoutes = [
   //     title: 'permission',
   //     icon: 'lock',
   //     roles: ['admin', 'editor'] // you can set roles in root nav
-  //   },
+  // }
   //   children: [
   //     {
   //       path: 'page',
