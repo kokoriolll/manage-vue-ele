@@ -1,5 +1,5 @@
 <template>
-    <div>
+  <div>
         <p>题目信息</p>
         <div class="stem">
             <span class="stem_g">题干</span>
@@ -13,12 +13,12 @@
         </div>
         <div class="exam_style">
             <span>请选择考试类型:</span>
-            <el-select v-model="value" placeholder="请选择">
+            <el-select v-model="examTypes" placeholder="请选择">
                 <el-option
-                    v-for="item in options"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value">
+                    v-for="(item,index) in examType"
+                    :key="item.exam_id"
+                    :label="item.exam_name"
+                    :value="item.exam_name">
                 </el-option>
             </el-select>
         </div>
@@ -26,21 +26,21 @@
             <span>请选择课程类型:</span>
             <el-select v-model="value" placeholder="请选择">
                 <el-option 
-                    v-for="item in options" 
-                    :key="item.value" 
-                    :label="item.label"
-                    :value="item.value">
+                    v-for="item in subject" 
+                    :key="item.subject_id" 
+                    :label="item.subject_text"
+                    :value="item.subject_text">
                 </el-option>
             </el-select>
         </div>
         <div class="exam_style">
             <span>请选择题目类型:</span>
-            <el-select v-model="value" placeholder="请选择">
+            <el-select v-model="coures" placeholder="请选择">
                 <el-option 
-                    v-for="item in options" 
-                    :key="item.value" 
-                    :label="item.label" 
-                    :value="item.value">
+                    v-for="item in questionsType" 
+                    :key="item.questions_type_id" 
+                    :label="item.questions_type_text" 
+                    :value="item.questions_type_text">
                 </el-option>
             </el-select>
         </div>
@@ -50,14 +50,16 @@
                 <markdown-editor v-model="content1" height="300px" />
             </div>
         </div>
-        <el-button type="text"  class="addbtn">提交</el-button>
-    </div>
+        <el-button type="text" class="addbtn" @click='submit'>提交</el-button>
+  </div>
 </template>
 
 <script>
     import MarkdownEditor from '@/components/MarkdownEditor'
+    import {mapState,mapMutations,mapActions} from 'vuex'
     const content = ``
     export default {
+        // props:['additem'],
         name: 'MarkdownDemo',
         components: { MarkdownEditor },
         data() {
@@ -72,7 +74,9 @@
                     'zh': 'zh_CN',
                     'es': 'es_ES'
                 },
+                examTypes: '',
                 value: '',
+                coures: '',
                 options: [{
                     value: '选项1',
                     label: '黄金糕'
@@ -94,63 +98,94 @@
         computed: {
             language() {
                 return this.languageTypeList[this.$store.getters.language]
-            }
+            },
+            ...mapState({
+                examType:state=>state.exam.examType,
+                subject:state=>state.exam.subject,
+                questionsType:state=>state.exam.getQuestionsType
+            })
+        },
+        mounted() {
+            this.getitem();
+            this.getstyle();
+            this.subjects();
+            this.itemsub();
+            this.getQuestionsTypes();
+            this.getQuestionsType();
         },
         methods: {
             getHtml() {
                 this.html = this.$refs.markdownEditor.getHtml()
                 console.log(this.html)
+            },
+            ...mapMutations({
+                getstyle:'exam/getstyle',
+                itemsub:'exam/itemsub',
+                getQuestionsTypes:'exam/getQuestionsTypes'
+            }),
+            ...mapActions({
+                additem:'exam/additems',
+                getitem:'exam/getitems',
+                subjects:'exam/subjects',
+                getQuestionsType:'exam/getQuestionsType'
+            }),
+            submit(){
+                console.log(this.QuestionsType)
             }
         }
-    }
+};
 </script>
 
 <style lang="scss" scoped>
-    .stem {
-        width: 500px;
-        height: 80px;
-        display: flex;
-        flex-direction: column;
+.stem {
+  width: 500px;
+  height: 80px;
+  display: flex;
+  flex-direction: column;
 
-        .stem_g {
-            margin-bottom: 10px;
-        }
+  .stem_g {
+    margin-bottom: 10px;
+  }
 
-        input {
-            width: 100%;
-            height: 40px;
-            padding-left: 20px;
-            box-sizing: border-box;
+  input {
+    width: 100%;
+    height: 40px;
+    padding-left: 20px;
+    box-sizing: border-box;
+  }
+  input::-webkit-input-placeholder {
+    color: #cdbfbf;
+  }
+}
 
-        }
-        input::-webkit-input-placeholder{
-             color: #CDBFBF;   
-        }
-    }
-    .addbtn {
-        padding: 12px 40px 12px 40px;
-        background: linear-gradient(-90deg, #4e75ff, #0139fd) !important;
-        font-size: 14px;
-        color: #fff;
-    }
-    .editor-container {
-        margin-bottom: 30px;
-    }
+input::-webkit-input-placeholder {
+  color: #cdbfbf;
+}
 
-    .tag-title {
-        margin-bottom: 5px;
-    }
-    .exam_style{
-        width: 100%;
-        height: 80px;
-        display: flex;
-        flex-direction: column;
-        margin-top: 10px;
-    }
-    .exam_style .el-select{
-        margin-top: 10px;
-        display: block;
-        width:200px;
-        height:30px;
-    }
+.addbtn {
+  padding: 12px 40px 12px 40px;
+  background: linear-gradient(-90deg, #4e75ff, #0139fd) !important;
+  font-size: 14px;
+  color: #fff;
+}
+.editor-container {
+  margin-bottom: 30px;
+}
+
+.tag-title {
+  margin-bottom: 5px;
+}
+.exam_style {
+  width: 100%;
+  height: 80px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+}
+.exam_style .el-select {
+  margin-top: 10px;
+  display: block;
+  width: 200px;
+  height: 30px;
+}
 </style>

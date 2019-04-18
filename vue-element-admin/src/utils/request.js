@@ -10,7 +10,6 @@ import {
 
 // create an axios instance
 const service = axios.create({
-  // baseURL: 'http://169.254.12.55:7001', // api 的 base_url
   baseURL: '/api', // api 的 base_url
   // withCredentials: true, // 跨域请求时发送 cookies
   timeout: 5000 // request timeout
@@ -46,14 +45,13 @@ service.interceptors.response.use(
    * 以下代码均为样例，请结合自生需求加以修改，若不需要，则可删除
    */
   response => {
-    const res = response.data
-    // console.log(res, response)
-    if (res.code == 1) {
+    const res = response.data;
+    if(res.code == 1){
       return res;
     }
     // if (res.code !== 20000) {
     //   Message({
-    //     message: res.message || 'error',
+    //     message: res.msg || 'error',
     //     type: 'error',
     //     duration: 5 * 1000
     //   })

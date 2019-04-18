@@ -1,7 +1,6 @@
 import Vue from 'vue'
 
 import Cookies from 'js-cookie'
-
 import 'normalize.css/normalize.css' // A modern alternative to CSS resets
 
 import Element from 'element-ui'
@@ -20,6 +19,7 @@ import './utils/errorLog' // error log
 
 import * as filters from './filters' // global filters
 
+// import { mockXHR } from '../mock' // simulation data
 
 // mock api in github pages site build
 // if (process.env.NODE_ENV === 'production') { mockXHR() }

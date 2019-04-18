@@ -40,6 +40,7 @@
             :placeholder="$t('login.password')"
             name="password"
             auto-complete="on"
+            @blur="capsTooltip = false"
             @keyup.enter.native="handleLogin"
           />
           <span class="show-pwd" @click="showPwd">
@@ -48,42 +49,45 @@
         </el-form-item>
       </el-tooltip>
 
-      <el-button
-        :loading="loading"
-        type="primary"
-        style="width:100%;margin-bottom:30px;"
-        @click.native.prevent="handleLogin"
-      >{{ $t('login.logIn') }}</el-button>
+      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">
+        {{ $t('login.logIn') }}
+      </el-button>
+
+      <!-- <div style="position:relative">
+         <el-button class="thirdparty-button" type="primary" @click="showDialog=true">
+          {{ $t('login.thirdparty') }}
+        </el-button>
+      </div> -->
     </el-form>
 
-    <el-dialog :title="$t('login.thirdparty')" :visible.sync="showDialog">
+    <!-- <el-dialog :title="$t('login.thirdparty')" :visible.sync="showDialog">
       {{ $t('login.thirdpartyTips') }}
       <br>
       <br>
       <br>
-      <social-sign/>
-    </el-dialog>
+      <social-sign />
+    </el-dialog> -->
   </div>
 </template>
 
 <script>
-import { validUsername } from "@/utils/validate";
-import LangSelect from "@/components/LangSelect";
-import SocialSign from "./socialSignin";
-import { mapActions } from "vuex";
+import { validUsername } from '@/utils/validate'
+import LangSelect from '@/components/LangSelect'
+import SocialSign from './socialSignin'
+import {mapActions} from 'vuex'
 
 export default {
   name: "Login",
   components: { LangSelect, SocialSign },
   data() {
-    const validateUsername = (rule, value, callback) => {
+    const validateUsername = ( rules,value, callback) => {
       if (!value) {
-        callback(new Error("Please enter the correct user name"));
+        callback(new Error('Please enter the correct user name'))
       } else {
         callback();
       }
-    };
-    const validatePassword = (rule, value, callback) => {
+    }
+    const validatePassword = (rules, value, callback) => {
       if (value.length < 6) {
         callback(new Error("The password can not be less than 6 digits"));
       } else {
@@ -92,18 +96,12 @@ export default {
     };
     return {
       loginForm: {
-        // username: "liangyuan",
-        // password: "Liangyuan123&",
-        username: "wuhongyang",
-        password: "Wuhongyang123!"
+        username: 'wuhongyang',
+        password: 'Wuhongyang123!'
       },
       loginRules: {
-        username: [
-          { required: true, trigger: "blur", validator: validateUsername }
-        ],
-        password: [
-          { required: true, trigger: "blur", validator: validatePassword }
-        ]
+        username: [{ required: true, trigger: 'blur'},{trigger: 'blur',validator: validateUsername }],
+        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
       },
       passwordType: "password",
       capsTooltip: false,
@@ -135,7 +133,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      login: "user/login",
+      login:'login/login',
       generateRoutes:'permission/generateRoutes'
     }),
     showPwd() {
@@ -151,13 +149,13 @@ export default {
     handleLogin() {
       this.$refs.loginForm.validate(async valid => {
         if (valid) {
-          console.log(this.loginForm);
-          // this.loading = true;
-          let res = await this.login(this.loginForm);
-          console.log(res, "res");
-          if (res.code == 1) {
-            await this.generateRoutes([])
-            this.$router.push({ path: this.redirect || "/" });
+          let res = await this.login({
+            user_name:this.loginForm.username,
+            user_pwd:this.loginForm.password
+          })
+          if(res.code == 1){
+            await this.generateRoutes([]);
+            this.$router.push({ path: this.redirect || '/' })
           }
           this.loading = false;
         } else {

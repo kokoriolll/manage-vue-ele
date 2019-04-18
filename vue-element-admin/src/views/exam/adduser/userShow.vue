@@ -102,10 +102,11 @@ export default {
       setidentityViewAuthorityRelation:
         "userShow/setidentityViewAuthorityRelation"
     }),
-//0 10
-//10 20
-//20 30
-//30 40
+    //0 9     (1-1)*10,1*10
+    //10 19   (2-1)*10,2*10
+    //20 29   (3-1)*10,3*10
+    //30 39   (4-1)*10,4*10
+    //(this.page-1)*this.pageSize
     handleCurrentChange(val) {
       this.page = val;
       console.log(this[this.pageTit[this.idx]])

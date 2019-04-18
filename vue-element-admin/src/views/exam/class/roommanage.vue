@@ -30,10 +30,11 @@
                 <el-dialog
                 :visible.sync="centerDialogVisible"
                 style="z-index:9999;"
+                width="35%"
                 >
                 <b>?</b>
                 <span>确定要删除此教室吗？</span>
-                <span slot="footer" class="dialog-footer" style="margin-right:80px">
+                <span slot="footer" class="dialog-footer" style="margin-right:28%">
                     <el-button @click="centerDialogVisible = false">取 消</el-button>
                     <el-button class="submit" type="primary" @click="centerDialogVisible = false">确定</el-button>
                 </span>
@@ -98,11 +99,9 @@
        flex-direction: column;
        align-items: center;
        b{
-           width: 22px;
-           height: 22px;
+           width: 6%;
            border:2px solid orange;
            color: orange;
-           line-height: 19px;
            text-align: center;
            border-radius: 50%;
            display: block;
@@ -110,7 +109,7 @@
        }
        span{
            display: inline-block;
-           margin-left: 135px;
+           margin-left: 35%;
            margin-top: 20px;
        }
        
@@ -118,7 +117,7 @@
     .dialog-footer{
         text-align: center;
         .submit{
-             width: 112px;
+             width: 20%;
              background: linear-gradient(-90deg,#4e75ff,#0139fd)!important;
         }
     }
