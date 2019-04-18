@@ -22,7 +22,7 @@
     </el-table>
     <div class="pagination">
       <el-pagination
-      :current-page.sync = "dftPage"
+        :current-page.sync="dftPage"
         @current-change="handleCurrentChange"
         layout="prev, pager, next"
         :total="totals[idx]"
@@ -76,7 +76,7 @@ export default {
         "viewAuthoritysData",
         "identityViewAuthorityRelationsData"
       ],
-      dftPage:1
+      dftPage: 1
     };
   },
   computed: {
@@ -84,7 +84,7 @@ export default {
       totals: state => state.userShow.total,
       data: state => state.userShow.data,
       pageSize: state => state.userShow.pageSize,
-      userData: state => state.userShow.userData,
+      userData: state => state.userShow.userData
     })
   },
   created() {
@@ -94,7 +94,6 @@ export default {
     this.setIdentityApiAuthorityRelation();
     this.setViewAuthority();
     this.setidentityViewAuthorityRelation();
-    
   },
   methods: {
     ...mapActions({
@@ -119,11 +118,10 @@ export default {
       });
     },
     change(idx) {
-      this.dftPage=1
+      this.dftPage = 1;
       this.tableList({ idx, data: this.pageTit[idx], pages: this.page });
       this.idx = idx;
       this.tit = this.nav[idx];
-      
     }
   }
 };

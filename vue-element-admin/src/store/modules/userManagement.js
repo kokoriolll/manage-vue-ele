@@ -87,6 +87,5 @@ function Tips(result, state) {
 export default {
   namespaced: true,
   state,
-  mutations,
   actions
 }
