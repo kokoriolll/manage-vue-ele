@@ -32,9 +32,6 @@ export default {
     Sidebar,
     TagsView
   },
-  async created() {
-    await this.generateRoutes([]);
-  },
   mixins: [ResizeMixin],
   computed: {
     ...mapState({
@@ -54,9 +51,6 @@ export default {
     }
   },
   methods: {
-    ...mapActions({
-      generateRoutes:'permission/generateRoutes'
-    }),
     handleClickOutside() {
       this.$store.dispatch('app/closeSideBar', { withoutAnimation: false })
     }
