@@ -33,6 +33,11 @@ const examsRouter = {
       path: 'newExam',
       component: () => import('@/views/exam/examination/newExam'),
       hidden: true
+    },
+    {
+      path: 'detail',
+      component: () => import('@/views/exam/examination/detail'),
+      hidden: true
     }
   ]
 }

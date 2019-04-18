@@ -14,3 +14,8 @@ export let Subject = () => {
 export let CreateExam = params => {
   return request.post('/exam/new', params);
 }
+
+//创建试卷
+export let AllExam = params => {
+  return request.get('/exam/exam', params);
+}

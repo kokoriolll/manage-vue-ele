@@ -43,7 +43,7 @@
 
         <el-form-item label="考试时间" required class="ExamName datatime">
           <br>
-          <el-col :span="10">
+          <el-col :span="6">
             <el-form-item prop="date1">
               <el-date-picker
                 type="datetime"
@@ -53,8 +53,8 @@
               ></el-date-picker>
             </el-form-item>
           </el-col>
-          
-          <el-col :span="8">
+          <el-col class="line" :span="1">-</el-col>
+          <el-col :span="1">
             <el-form-item prop="date2">
               <el-date-picker
                 type="datetime"
@@ -135,15 +135,11 @@ export default {
       ClassType: "examination/ClassType",
       Subject: "examination/Subject"
     }),
-    // getLocalTime(nS) {
-    //   return new Date(parseInt(nS) * 1000).toLocaleString().replace(/:\d{1,2}$/,' ');
-    // },
+
     submitForm(formName) {
       this.$refs[formName].validate(async valid => {
-        const dataTime1 = moment(this.ruleForm.date1).unix();
-        const dataTime2 = moment(this.ruleForm.date2).unix();
         if (valid) {
-          const localstorage = window.localStorage;
+          /* const localstorage = window.localStorage;
           let res = await this.CreateExam({
             subject_id: this.SubjectID,
             exam_id: this.ClassTypeID,
@@ -153,6 +149,15 @@ export default {
             end_time: dataTime2
           });
           console.log(res);
+          window.localStorage.setItem("CreateExam", JSON.stringify(res)); */
+
+          const dataTime1 = moment(this.ruleForm.date1).unix();
+          const dataTime2 = moment(this.ruleForm.date2).unix();
+          const localstorage = window.localStorage;
+          let ruleForm = { ...this.ruleForm, dataTime2, dataTime1 };
+          let res = await this.CreateExam(ruleForm);
+          console.log(res,'res...')
+          // 本地存放提交成功的数据
           window.localStorage.setItem("CreateExam", JSON.stringify(res));
           //this.$router.push({ path: "/examination/newExam" });
         } else {
@@ -208,8 +213,7 @@ export default {
       margin-left: 40px;
       margin-top: 20px;
     }
-    .datatime{
-     
+    .datatime {
     }
   }
 }
