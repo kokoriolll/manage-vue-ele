@@ -11,7 +11,7 @@
       >{{item}}</span>
     </div>
     <h2>{{tit}}</h2>
-    <el-table :data="list" style="width: 100%">
+    <el-table :data="data" style="width: 100%">
       <el-table-column
         v-for="(item,index) in tits[idx]"
         :key="index"
@@ -68,7 +68,6 @@ export default {
       idx: 0,
       tit: "用户数据",
       page: 1, //第几页
-      // pageSize: 10, //每页十条
       pageTit: [
         "userData",
         "identitysData",
@@ -81,17 +80,10 @@ export default {
   },
   computed: {
     ...mapState({
-      userData: state => state.userShow.userData,
-      identitysData: state => state.userShow.identitysData,
-      apiAuthoritysData: state => state.userShow.apiAuthoritysData,
-      identityApiAuthorityRelationsData: state =>
-        state.userShow.identityApiAuthorityRelationsData,
-      viewAuthoritysData: state => state.userShow.viewAuthoritysData,
-      identityViewAuthorityRelationsData: state =>
-        state.userShow.identityViewAuthorityRelationsData,
       totals: state => state.userShow.total,
-      // page: state => state.userShow.page,
-      pageSize: state => state.userShow.pageSize
+      data: state => state.userShow.data,
+      pageSize: state => state.userShow.pageSize,
+      userData: state => state.userShow.userData,
     })
   },
   created() {
@@ -101,6 +93,7 @@ export default {
     this.setIdentityApiAuthorityRelation();
     this.setViewAuthority();
     this.setidentityViewAuthorityRelation();
+    
   },
   methods: {
     ...mapActions({
@@ -119,31 +112,15 @@ export default {
 
     handleCurrentChange(val) {
       this.page = val;
-      console.log(`当前页: ${val}`);
+      this.tableList({
+        data: this.pageTit[this.idx],
+        pages: this.page
+      });
     },
     change(idx) {
       this.tableList({ idx, data: this.pageTit[idx], pages: this.page });
       this.idx = idx;
       this.tit = this.nav[idx];
-      if (idx === 0) {
-        //展示用户数据
-        this.list = this.userData;
-      } else if (idx === 1) {
-        //展示身份数据
-        this.list = this.identitysData;
-      } else if (idx === 2) {
-        //展示api接口权限
-        this.list = this.apiAuthoritysData;
-      } else if (idx === 3) {
-        //展示身份和api接口关系
-        this.list = this.identityApiAuthorityRelationsData;
-      } else if (idx === 4) {
-        //展示视图接口权限
-        this.list = this.viewAuthoritysData;
-      } else if (idx === 5) {
-        //展示身份和视图权限关系
-        this.list = this.identityViewAuthorityRelationsData;
-      }
     }
   }
 };

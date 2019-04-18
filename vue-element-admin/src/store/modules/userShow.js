@@ -22,7 +22,8 @@ const state = {
   total: [], //总条数
   page: 1, //第几页
   pageSize: 10, //每页十条
-  active: 0
+  active: 0,
+  data: []
 }
 
 const mutations = {
@@ -34,6 +35,8 @@ const mutations = {
       state.userIdValue.push(item.user_name)
     })
     deWeight(state.userIdValue)
+    state.data = state.userData.slice(0, 10)
+
   },
   //获取身份数据
   identitys(state, payload) {
@@ -85,11 +88,7 @@ const mutations = {
         state.existingViewValue.length)
   },
   list(state, payload) {
-    console.log(payload)
-    // if(state.active){
-
-    // }
-    pageList(payload.pages,payload.data)
+    state.data = pageList(payload.idx ? payload.pages = 1 : payload.pages, state[payload.data])
   }
 }
 
@@ -101,7 +100,7 @@ const mutations = {
 //页面数据
 function pageList(page, data) {
   if (page === 1) {
-    data = data.slice(0, 9)
+    data = data.slice(0, 10)
   } else {
     data = data.slice((page - 1) * 10, page * 10)
   }
@@ -118,8 +117,7 @@ function loop(data, payload) {
 
 //去重
 function deWeight(data) {
-  data = [...new Set(data)]
-
+  return data = [...new Set(data)]
 }
 
 const actions = {
@@ -128,7 +126,6 @@ const actions = {
     commit
   }, payload) {
     let result = await userData(payload);
-    // console.log(result.data=result.data.slice(state.page-1,state.pageSize),7878787878)
     commit('userDatas', result.data)
     return result
   },
