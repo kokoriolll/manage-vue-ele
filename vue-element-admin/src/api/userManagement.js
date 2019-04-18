@@ -5,9 +5,7 @@ export function addUsers(data) {
   return request({
     url: '/user',
     method: 'post',
-    params: {
-      ...data
-    }
+    data
   })
 }
 

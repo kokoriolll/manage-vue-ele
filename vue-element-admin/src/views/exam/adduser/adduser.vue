@@ -161,7 +161,7 @@ export default {
       existingView: "", //已有视图
       apiJurisdictionId: "", //api接口权限id
       viewJurisdictionId: "", //视图权限id
-      idx: 0, //tab切换
+      idx: 0 //tab切换
     };
   },
   computed: {
@@ -170,7 +170,9 @@ export default {
       apiJurisdictionIdValue: state => state.userShow.apiJurisdictionIdValue, //api接口权限id值
       viewJurisdictionIdValue: state => state.userShow.viewJurisdictionIdValue, //视图权限id值
       identityIdValue: state => state.userShow.identityIdValue, //身份id值
-      userIdValue: state => state.userShow.userIdValue //用户id值
+      userIdValue: state => state.userShow.userIdValue, //用户id值
+      code: state => state.userManagement.code, //code
+      msg: state => state.userManagement.msg //msg
     })
   },
   methods: {
@@ -189,7 +191,6 @@ export default {
       setidentityViewAuthorityRelation:
         "userShow/setidentityViewAuthorityRelation" //展示身份和视图权限关系
     }),
-    ...mapMutations({}),
     //tab切换
     change(idx) {
       this.idx = idx;
@@ -217,88 +218,36 @@ export default {
         this.viewJurisdictionId = "";
       }
     },
-    //用户校验
-    // userVerify() {
-    //   if (!this.userName) {
-    //     this.$message({
-    //       showClose: true,
-    //       message: "请输入用户名",
-    //       type: "warning"
-    //     });
-    //     return false;
-    //   } else if (!this.pwd) {
-    //     this.$message({
-    //       showClose: true,
-    //       message: "请输入用户密码",
-    //       type: "warning"
-    //     });
-    //     return false;
-    //   } else if (!this.identityId) {
-    //     this.$message({
-    //       showClose: true,
-    //       message: "请选择身份id",
-    //       type: "warning"
-    //     });
-    //     return false;
-    //   }
-    // },
     //用户
     async user() {
-      if (this.idx === 0) {//添加用户
-        // await this.userVerify();
-        if (!this.userName) {
+      if (this.idx === 0) {
+        //添加用户
+        var uPattern = /^[a-zA-Z0-9_-]{4,16}$/;
+        var Reg = /^.*(?=.{6,})(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*? ]).*$/;
+        if (!this.userName.match(uPattern)) {
           this.$message({
             showClose: true,
-            message: "请输入用户名",
+            message: "请输入正确的用户名",
             type: "warning"
           });
           return false;
-        } else if (!this.pwd) {
+        } else if (!this.pwd.match(Reg)) {
           this.$message({
             showClose: true,
-            message: "请输入用户密码",
-            type: "warning"
-          });
-          return false;
-        } else if (!this.identityId) {
-          this.$message({
-            showClose: true,
-            message: "请选择身份id",
+            message: "请输入正确的用户密码",
             type: "warning"
           });
           return false;
         }
-        let res = await this.setAddUsers({
+        await this.setAddUsers({
           user_name: this.userName,
           user_pwd: this.pwd,
           identity_id: this.identityId
         });
-        // this.hint(res);
-      } else {//更新用户
+        this.hint();
+      } else {
+        //更新用户
         if (!this.identityId) {
-          this.$message({
-            showClose: true,
-            message: "请选择用户id",
-            type: "warning"
-          });
-          return false;
-        }
-        // await this.userVerify();
-        if (!this.userName) {
-          this.$message({
-            showClose: true,
-            message: "请输入用户名",
-            type: "warning"
-          });
-          return false;
-        } else if (!this.pwd) {
-          this.$message({
-            showClose: true,
-            message: "请输入用户密码",
-            type: "warning"
-          });
-          return false;
-        } else if (!this.identityId) {
           this.$message({
             showClose: true,
             message: "请选择身份id",
@@ -306,14 +255,14 @@ export default {
           });
           return false;
         }
-        let res = await this.setUpdataUserInfo({
+        await this.setUpdataUserInfo({
           user_id: this.userId,
           user_name: this.userName,
           user_pwd: this.pwd,
           identity_id: this.identityId
         });
-        // this.hint(res);
       }
+      this.hint();
     },
     //身份
     async identity() {
@@ -325,10 +274,10 @@ export default {
         });
         return false;
       }
-      let res = await this.setAddIdentity({
+      await this.setAddIdentity({
         identity_text: this.identityName
       });
-      this.hint(res);
+      this.hint();
     },
     //api接口权限
     async jurisdiction() {
@@ -356,12 +305,12 @@ export default {
         });
         return false;
       }
-      let res = await this.setAddAuthorityApi({
+      await this.setAddAuthorityApi({
         api_authority_text: this.apiJurisdictionName,
         api_authority_url: this.apiJurisdictionUrl,
         api_authority_method: this.apiJurisdictionMethod
       });
-      this.hint(res);
+      this.hint();
     },
     //视图接口权限
     async view() {
@@ -377,11 +326,11 @@ export default {
         });
         return false;
       }
-      let res = await this.setAddAuthorityView({
+      await this.setAddAuthorityView({
         view_authority_text: this.existingView,
         view_id: obj.view_id //视图id 字符串
       });
-      // this.hint(res)
+      this.hint();
     },
     // 给身份设置api接口权限
     async api() {
@@ -401,11 +350,11 @@ export default {
         });
         return false;
       }
-      let res = await this.setIdentityApi({
+      await this.setIdentityApi({
         identity_id: this.identityId2,
         api_authority_id: this.apiJurisdictionId
       });
-      this.hint(res);
+      this.hint();
     },
     //给身份设定视图权限
     async set() {
@@ -425,17 +374,25 @@ export default {
         });
         return false;
       }
-      let res = await this.setIdentityView({
+      await this.setIdentityView({
         identity_id: this.identityId3,
         view_authority_id: this.viewJurisdictionId
       });
-      this.hint(res);
+      this.hint();
     },
     //提示
-    hint(res) {
-      this.$message({
-        message: res.msg
-      });
+    hint() {
+      if (this.code == 1) {
+        this.$message({
+          message: this.msg,
+          type: "success"
+        });
+      } else {
+        this.$message({
+          message: this.msg,
+          type: "error"
+        });
+      }
     }
   },
   created() {
