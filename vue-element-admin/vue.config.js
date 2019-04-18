@@ -39,17 +39,6 @@ module.exports = {
       //   pathRewrite: {
       //     ['^' + process.env.VUE_APP_BASE_API]: ''
       //   }
-<<<<<<< HEAD
-      // }
-      '/api':{
-        target:`http://169.254.12.55:7001/`,
-        changeOrigin: true,
-        pathRewrite:{
-          '/api':''
-        }
-      }
-    },
-=======
         '/api':{
           target: `http://169.254.12.55:7001/`,
           changeOrigin: true,
@@ -59,7 +48,6 @@ module.exports = {
         }
       }
       
->>>>>>> b6d863f9f50f753d15bc56ae3fa82a186b635a1d
     // after: require('./mock/mock-server.js')
   },
   configureWebpack: {

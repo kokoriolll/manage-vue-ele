@@ -24,7 +24,7 @@
       <el-pagination
         @current-change="handleCurrentChange"
         layout="prev, pager, next"
-        :total="total"
+        :total="totals[idx]"
       ></el-pagination>
     </div>
   </div>
@@ -67,10 +67,16 @@ export default {
       list: [],
       idx: 0,
       tit: "用户数据",
-      total: 0,
       page: 1, //第几页
-      pageSize: 10 ,//每页十条
-      pageTit:['userData','identitysData','apiAuthoritysData','identityApiAuthorityRelationsData','viewAuthoritysData','identityViewAuthorityRelationsData']
+      // pageSize: 10, //每页十条
+      pageTit: [
+        "userData",
+        "identitysData",
+        "apiAuthoritysData",
+        "identityApiAuthorityRelationsData",
+        "viewAuthoritysData",
+        "identityViewAuthorityRelationsData"
+      ]
     };
   },
   computed: {
@@ -82,14 +88,19 @@ export default {
         state.userShow.identityApiAuthorityRelationsData,
       viewAuthoritysData: state => state.userShow.viewAuthoritysData,
       identityViewAuthorityRelationsData: state =>
-        state.userShow.identityViewAuthorityRelationsData
+        state.userShow.identityViewAuthorityRelationsData,
+      totals: state => state.userShow.total,
+      // page: state => state.userShow.page,
+      pageSize: state => state.userShow.pageSize
     })
   },
   created() {
     this.setUserData();
-    this.list = this.userData;
-    this.total = this.list.length;
-    this.list = this.list.slice(this.page - 1, this.pageSize);
+    this.setidentity();
+    this.setApiAuthority();
+    this.setIdentityApiAuthorityRelation();
+    this.setViewAuthority();
+    this.setidentityViewAuthorityRelation();
   },
   methods: {
     ...mapActions({
@@ -102,60 +113,37 @@ export default {
       setidentityViewAuthorityRelation:
         "userShow/setidentityViewAuthorityRelation"
     }),
-    //0 9     (1-1)*10,1*10
-    //10 19   (2-1)*10,2*10
-    //20 29   (3-1)*10,3*10
-    //30 39   (4-1)*10,4*10
-    //(this.page-1)*this.pageSize
+    ...mapMutations({
+      tableList: "userShow/list"
+    }),
+
     handleCurrentChange(val) {
       this.page = val;
-      console.log(this[this.pageTit[this.idx]])
-
       console.log(`当前页: ${val}`);
     },
     change(idx) {
+      this.tableList({ idx, data: this.pageTit[idx], pages: this.page });
       this.idx = idx;
       this.tit = this.nav[idx];
-      // this.page=1
       if (idx === 0) {
         //展示用户数据
-        this.setUserData();
         this.list = this.userData;
-        console.log((this.total = this.list.length));
-        this.list = this.list.slice(this.page - 1, this.pageSize);
       } else if (idx === 1) {
         //展示身份数据
-        this.setidentity();
         this.list = this.identitysData;
-        console.log((this.total = this.list.length));
-        this.list = this.list.slice(this.page - 1, this.pageSize);
       } else if (idx === 2) {
         //展示api接口权限
-        this.setApiAuthority();
         this.list = this.apiAuthoritysData;
-        console.log((this.total = this.list.length));
-        this.list = this.list.slice(this.page - 1, this.pageSize);
       } else if (idx === 3) {
         //展示身份和api接口关系
-        this.setIdentityApiAuthorityRelation();
         this.list = this.identityApiAuthorityRelationsData;
-        console.log((this.total = this.list.length));
-        this.list = this.list.slice(this.page - 1, this.pageSize);
       } else if (idx === 4) {
         //展示视图接口权限
-        this.setViewAuthority();
         this.list = this.viewAuthoritysData;
-        console.log((this.total = this.list.length));
-        this.list = this.list.slice(this.page - 1, this.pageSize);
       } else if (idx === 5) {
         //展示身份和视图权限关系
-        this.setidentityViewAuthorityRelation();
         this.list = this.identityViewAuthorityRelationsData;
-        console.log((this.total = this.list.length));
-        this.list = this.list.slice(this.page - 1, this.pageSize);
       }
-      // this.total = this.list.length;
-      // console.log(this.list.length);
     }
   }
 };
