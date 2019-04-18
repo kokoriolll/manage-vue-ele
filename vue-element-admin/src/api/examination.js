@@ -11,11 +11,17 @@ export let Subject = () => {
 }
 
 //创建试卷
-export let CreateExam = params => {
-  return request.post('/exam/new', params);
+export let CreateExam = data => {
+  return request.post('/exam/exam', data);
 }
 
-//创建试卷
+//试卷列表
 export let AllExam = params => {
   return request.get('/exam/exam', params);
+}
+
+
+//更新试卷
+export let UpdateExam= params => {
+  return request.put('/exam/exam', params);
 }

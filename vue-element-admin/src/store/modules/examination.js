@@ -1,14 +1,17 @@
-import { CreateExam,ClassType,Subject,AllExam } from '@/api/examination.js'
+import { CreateExam,ClassType,Subject,AllExam,UpdateExam } from '@/api/examination.js'
 
 const state = {
     ClassTypeData:[],
     SubjectData:[],
-    AllExamData:[]
+    AllExamData:[],
+    CreateExamData:[],
+    CreateExamDataFun:[],
+    UpdateExamData:[]
 }
 
 const mutations = {
   getCreateExam(state,payload){
-    console.log(payload,'pay')
+    state.CreateExamData = payload
   },
   getClassType(state,payload){
     state.ClassTypeData = payload
@@ -17,8 +20,13 @@ const mutations = {
     state.SubjectData = payload
   },
   getAllExam(state,payload){
-    console.log(payload,'pay...')
     state.AllExamData = payload
+  },
+  getCreateExamFun(state,payload){
+    state.CreateExamDataFun = payload
+  },
+  getUpdateExam(state,payload){
+    state.UpdateExamData = payload
   }
 }
 
@@ -36,13 +44,20 @@ const actions = {
   //创建试卷
   async CreateExam({commit},payload){
     let result = await CreateExam(payload)
-    return result
+    commit('getCreateExam',result.data.questions)
+    commit('getCreateExamFun',payload)
+    return result.data.questions
   },
   //获取所有试卷列表
   async AllExam({commit},payload){
     let result = await AllExam()
     commit('getAllExam',result.exam)    
-  }
+  },
+  //更新试卷
+  async UpdateExam({commit},payload){
+    let result = await UpdateExam()
+    commit('getUpdateExam',result.data)
+  },
 }
 
 export default {
