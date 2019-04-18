@@ -136,8 +136,8 @@ export default {
   },
   methods: {
     ...mapActions({
-      login:'login/login',
-      generateRoutes:'permission/generateRoutes'
+      login:'login/login'
+      // generateRoutes:'permission/generateRoutes'
     }),
     showPwd() {
       if (this.passwordType === "password") {
@@ -157,7 +157,6 @@ export default {
             user_pwd:this.loginForm.password
           })
           if(res.code == 1){
-            await this.generateRoutes([]);
             this.$router.push({ path: '/' })
           }
           this.loading = false;

@@ -3,7 +3,7 @@ const state={
     examType:[],
     subject:[],
     getQuestionsType:[],
-    getuser:[],
+    getuser:{},
     questions:[]
 }
 const mutations={
