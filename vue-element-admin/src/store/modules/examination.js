@@ -55,7 +55,7 @@ const actions = {
   },
   //更新试卷
   async UpdateExam({commit},payload){
-    let result = await UpdateExam()
+    let result = await UpdateExam(payload)
     commit('getUpdateExam',result.data)
   },
 }
