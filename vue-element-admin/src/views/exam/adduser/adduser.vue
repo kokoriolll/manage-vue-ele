@@ -12,30 +12,25 @@
           <el-input v-model="pwd" placeholder="请输入密码" show-password></el-input>
           <el-select v-model="identityId" placeholder="请选择身份id">
             <el-option
-              v-for="item in identityIdValue"
-              :key="item.value"
-              :label="item.label"
-              :value="item.label"
+              v-for="(item,index) in identityIdValue"
+              :key="index"
+              :label="item"
+              :value="item"
             ></el-option>
           </el-select>
         </div>
         <div v-if="idx===1">
           <el-select v-model="userId" placeholder="请选择用户id">
-            <el-option
-              v-for="item in userIdValue"
-              :key="item.value"
-              :label="item.label"
-              :value="item.label"
-            ></el-option>
+            <el-option v-for="(item,index) in userIdValue" :key="index" :label="item" :value="item"></el-option>
           </el-select>
           <el-input v-model="userName" placeholder="请输入用户名"></el-input>
           <el-input v-model="pwd" placeholder="请输入密码" show-password></el-input>
           <el-select v-model="identityId" placeholder="请选择身份id">
             <el-option
-              v-for="item in identityIdValue"
-              :key="item.value"
-              :label="item.label"
-              :value="item.label"
+              v-for="(item,index) in identityIdValue"
+              :key="index"
+              :label="item"
+              :value="item"
             ></el-option>
           </el-select>
         </div>
@@ -73,10 +68,10 @@
         </p>
         <el-select v-model="existingView" placeholder="请选择已有视图">
           <el-option
-            v-for="item in existingViewValue"
-            :key="item.value"
-            :label="item.label"
-            :value="item.label"
+            v-for="(item,index) in existingViewValue"
+            :key="index"
+            :label="item.authority"
+            :value="item.authority"
           ></el-option>
         </el-select>
         <div class="btn">
@@ -90,22 +85,22 @@
           <span>给身份设置api接口权限</span>
         </p>
         <div>
-          <el-select v-model="identityId" placeholder="请选择身份id">
+          <el-select v-model="identityId2" placeholder="请选择身份id">
             <el-option
-              v-for="item in identityIdValue"
-              :key="item.value"
-              :label="item.label"
-              :value="item.label"
+              v-for="(item,index) in identityIdValue"
+              :key="index"
+              :label="item"
+              :value="item"
             ></el-option>
           </el-select>
         </div>
         <div>
           <el-select v-model="apiJurisdictionId" placeholder="请选择api接口权限id">
             <el-option
-              v-for="item in apiJurisdictionIdValue"
-              :key="item.value"
-              :label="item.label"
-              :value="item.label"
+              v-for="(item,index) in apiJurisdictionIdValue"
+              :key="index"
+              :label="item"
+              :value="item"
             ></el-option>
           </el-select>
         </div>
@@ -119,22 +114,22 @@
           <span>给身份设置视图权限</span>
         </p>
         <div>
-          <el-select v-model="identityId" placeholder="请选择身份id">
+          <el-select v-model="identityId3" placeholder="请选择身份id">
             <el-option
-              v-for="item in identityIdValue"
-              :key="item.value"
-              :label="item.label"
-              :value="item.label"
+              v-for="(item,index) in identityIdValue"
+              :key="index"
+              :label="item"
+              :value="item"
             ></el-option>
           </el-select>
         </div>
         <div>
           <el-select v-model="viewJurisdictionId" placeholder="请选择视图权限id">
             <el-option
-              v-for="item in viewJurisdictionIdValue"
-              :key="item.value"
-              :label="item.label"
-              :value="item.label"
+              v-for="(item,index) in viewJurisdictionIdValue"
+              :key="index"
+              :label="item"
+              :value="item"
             ></el-option>
           </el-select>
         </div>
@@ -153,62 +148,51 @@ import { constants } from "fs";
 export default {
   data() {
     return {
-      userId: "",
-      userName: "",
-      pwd: "",
-      identityId: "",
-      identityName: "",
-      apiJurisdictionName: "",
-      apiJurisdictionUrl: "",
-      apiJurisdictionMethod: "",
-      existingView: "",
-      apiJurisdictionId: "",
-      viewJurisdictionId: "",
-      idx: 0,
-      existingViewValue: [
-        {
-          value: "选项1",
-          label: "黄金糕"
-        }
-      ],
-      apiJurisdictionIdValue: [
-        {
-          value: "选项1",
-          label: "黄金糕"
-        }
-      ],
-      viewJurisdictionIdValue: [
-        {
-          value: "选项1",
-          label: "黄金糕"
-        }
-      ],
-      identityIdValue: [
-        {
-          value: "选项1",
-          label: "黄金糕"
-        }
-      ]
+      userId: "", //用户id
+      userName: "", //用户名
+      pwd: "", //用户密码
+      identityId: "", //身份id
+      identityId2: "", //身份id2
+      identityId3: "", //身份id3
+      identityName: "", //身份名称
+      apiJurisdictionName: "", //api接口权限名称
+      apiJurisdictionUrl: "", //api接口权限url
+      apiJurisdictionMethod: "", //api接口权限方法
+      existingView: "", //已有视图
+      apiJurisdictionId: "", //api接口权限id
+      viewJurisdictionId: "", //视图权限id
+      idx: 0, //tab切换
     };
   },
   computed: {
-    ...mapState({})
+    ...mapState({
+      existingViewValue: state => state.userShow.existingViewValue, //已有视图值
+      apiJurisdictionIdValue: state => state.userShow.apiJurisdictionIdValue, //api接口权限id值
+      viewJurisdictionIdValue: state => state.userShow.viewJurisdictionIdValue, //视图权限id值
+      identityIdValue: state => state.userShow.identityIdValue, //身份id值
+      userIdValue: state => state.userShow.userIdValue //用户id值
+    })
   },
   methods: {
     ...mapActions({
-      setAddUsers: "userManagement/setAddUsers",
-      setUpdataUserInfo: "userManagement/setUpdataUserInfo",
-      setAddIdentity: "userManagement/setAddIdentity",
-      setAddAuthorityApi: "userManagement/setAddAuthorityApi",
-      setAddAuthorityView: "userManagement/setAddAuthorityView",
-      setIdentityApi: "userManagement/setIdentityApi",
-      setIdentityView: "userManagement/setIdentityView"
+      setAddUsers: "userManagement/setAddUsers", //添加用户
+      setUpdataUserInfo: "userManagement/setUpdataUserInfo", //更新用户信息
+      setAddIdentity: "userManagement/setAddIdentity", //添加身份
+      setAddAuthorityApi: "userManagement/setAddAuthorityApi", //添加api接口权限
+      setAddAuthorityView: "userManagement/setAddAuthorityView", //添加视图接口权限
+      setIdentityApi: "userManagement/setIdentityApi", //给身份设置api接口权限
+      setIdentityView: "userManagement/setIdentityView", //给身份设置视图权限
+      setUserData: "userShow/setUserData", // 展示用户数据
+      setidentity: "userShow/setidentity", //展示身份数据
+      setApiAuthority: "userShow/setApiAuthority", //展示api接口权限数据
+      setViewAuthority: "userShow/setViewAuthority", // 获取视图权限数据
+      setidentityViewAuthorityRelation:
+        "userShow/setidentityViewAuthorityRelation" //展示身份和视图权限关系
     }),
     ...mapMutations({}),
     //tab切换
     change(idx) {
       this.idx = idx;
-      console.log(this.idx);
     },
     //重置
     reset(idx) {
@@ -226,52 +210,71 @@ export default {
       } else if (idx === 4) {
         this.existingView = "";
       } else if (idx === 5) {
-        this.identityId = "";
+        this.identityId2 = "";
         this.apiJurisdictionId = "";
       } else if (idx === 6) {
-        this.identityId = "";
+        this.identityId3 = "";
         this.viewJurisdictionId = "";
       }
     },
     //用户校验
-    userVerify() {
-      if (!this.userName) {
-        this.$message({
-          showClose: true,
-          message: "请输入用户名",
-          type: "warning"
-        });
-        return false;
-      } else if (!this.pwd) {
-        this.$message({
-          showClose: true,
-          message: "请输入用户密码",
-          type: "warning"
-        });
-        return false;
-      } else if (!this.identityId) {
-        this.$message({
-          showClose: true,
-          message: "请选择身份id",
-          type: "warning"
-        });
-        return false;
-      }
-    },
+    // userVerify() {
+    //   if (!this.userName) {
+    //     this.$message({
+    //       showClose: true,
+    //       message: "请输入用户名",
+    //       type: "warning"
+    //     });
+    //     return false;
+    //   } else if (!this.pwd) {
+    //     this.$message({
+    //       showClose: true,
+    //       message: "请输入用户密码",
+    //       type: "warning"
+    //     });
+    //     return false;
+    //   } else if (!this.identityId) {
+    //     this.$message({
+    //       showClose: true,
+    //       message: "请选择身份id",
+    //       type: "warning"
+    //     });
+    //     return false;
+    //   }
+    // },
     //用户
     async user() {
-      console.log(this.userName, this.pwd, this.identityId);
-      if (this.idx === 0) {
-        console.log(1111);
-        await this.userVerify();
-        await this.setAddUsers({
+      if (this.idx === 0) {//添加用户
+        // await this.userVerify();
+        if (!this.userName) {
+          this.$message({
+            showClose: true,
+            message: "请输入用户名",
+            type: "warning"
+          });
+          return false;
+        } else if (!this.pwd) {
+          this.$message({
+            showClose: true,
+            message: "请输入用户密码",
+            type: "warning"
+          });
+          return false;
+        } else if (!this.identityId) {
+          this.$message({
+            showClose: true,
+            message: "请选择身份id",
+            type: "warning"
+          });
+          return false;
+        }
+        let res = await this.setAddUsers({
           user_name: this.userName,
           user_pwd: this.pwd,
           identity_id: this.identityId
         });
-      } else {
-        console.log(2222);
-
+        // this.hint(res);
+      } else {//更新用户
         if (!this.identityId) {
           this.$message({
             showClose: true,
@@ -280,13 +283,36 @@ export default {
           });
           return false;
         }
-        await this.userVerify();
-        await this.setUpdataUserInfo({
-          user_id: this.userId2,
+        // await this.userVerify();
+        if (!this.userName) {
+          this.$message({
+            showClose: true,
+            message: "请输入用户名",
+            type: "warning"
+          });
+          return false;
+        } else if (!this.pwd) {
+          this.$message({
+            showClose: true,
+            message: "请输入用户密码",
+            type: "warning"
+          });
+          return false;
+        } else if (!this.identityId) {
+          this.$message({
+            showClose: true,
+            message: "请选择身份id",
+            type: "warning"
+          });
+          return false;
+        }
+        let res = await this.setUpdataUserInfo({
+          user_id: this.userId,
           user_name: this.userName,
           user_pwd: this.pwd,
           identity_id: this.identityId
         });
+        // this.hint(res);
       }
     },
     //身份
@@ -299,9 +325,10 @@ export default {
         });
         return false;
       }
-      await this.setAddIdentity({
+      let res = await this.setAddIdentity({
         identity_text: this.identityName
       });
+      this.hint(res);
     },
     //api接口权限
     async jurisdiction() {
@@ -329,14 +356,19 @@ export default {
         });
         return false;
       }
-      await this.setAddAuthorityApi({
+      let res = await this.setAddAuthorityApi({
         api_authority_text: this.apiJurisdictionName,
         api_authority_url: this.apiJurisdictionUrl,
-        api_authority_mehtod: this.apiJurisdictionMethod
+        api_authority_method: this.apiJurisdictionMethod
       });
+      this.hint(res);
     },
     //视图接口权限
     async view() {
+      let obj = {};
+      obj = this.existingViewValue.find(item => {
+        return item.authority === this.existingView;
+      });
       if (!this.existingView) {
         this.$message({
           showClose: true,
@@ -345,14 +377,15 @@ export default {
         });
         return false;
       }
-      await this.setAddAuthorityView({
-        view_authority_text: this.existingView
-        // view_id: this. 视图id 字符串
+      let res = await this.setAddAuthorityView({
+        view_authority_text: this.existingView,
+        view_id: obj.view_id //视图id 字符串
       });
+      // this.hint(res)
     },
     // 给身份设置api接口权限
     async api() {
-      if (!this.identityId) {
+      if (!this.identityId2) {
         this.$message({
           showClose: true,
           message: "请选择身份id",
@@ -368,14 +401,15 @@ export default {
         });
         return false;
       }
-      await this.setIdentityApi({
-        identity_id: this.identityId,
+      let res = await this.setIdentityApi({
+        identity_id: this.identityId2,
         api_authority_id: this.apiJurisdictionId
       });
+      this.hint(res);
     },
     //给身份设定视图权限
     async set() {
-      if (!this.identityId) {
+      if (!this.identityId3) {
         this.$message({
           showClose: true,
           message: "请选择身份id",
@@ -391,11 +425,25 @@ export default {
         });
         return false;
       }
-      await this.setIdentityView({
-        identity_id: this.identityId,
-        view_id: this.viewJurisdictionId
+      let res = await this.setIdentityView({
+        identity_id: this.identityId3,
+        view_authority_id: this.viewJurisdictionId
+      });
+      this.hint(res);
+    },
+    //提示
+    hint(res) {
+      this.$message({
+        message: res.msg
       });
     }
+  },
+  created() {
+    this.setUserData();
+    this.setidentity();
+    this.setApiAuthority();
+    this.setViewAuthority();
+    this.setidentityViewAuthorityRelation();
   }
 };
 </script>
@@ -449,8 +497,6 @@ export default {
     }
   }
 }
-// .user
-// .user
 .el-select {
   margin: 8px 0;
   width: 180px;

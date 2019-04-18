@@ -21,7 +21,7 @@ const actions = {
   async setAddUsers({
     commit
   }, payload) {
-    console.log(payload);
+    // console.log(payload);
     let result = await addUsers(payload);
     return result;
   },
@@ -29,7 +29,7 @@ const actions = {
   async setUpdataUserInfo({
     commit
   }, payload) {
-    console.log(payload);
+    // console.log(payload);
     let result = await updataUserInfo(payload);
     return result;
   },
@@ -37,7 +37,7 @@ const actions = {
   async setAddIdentity({
     commit
   }, payload) {
-    console.log(payload);
+    // console.log(payload,'添加身份');
     let result = await addIdentity(payload);
     return result;
   },
@@ -45,7 +45,7 @@ const actions = {
   async setAddAuthorityApi({
     commit
   }, payload) {
-    console.log(payload);
+    // console.log(payload);
     let result = await addAuthorityApi(payload);
     return result;
   },
@@ -53,7 +53,7 @@ const actions = {
   async setAddAuthorityView({
     commit
   }, payload) {
-    console.log(payload);
+    // console.log(payload);
     let result = await addAuthorityView(payload);
     return result;
   },
@@ -61,7 +61,7 @@ const actions = {
   async setIdentityApi({
     commit
   }, payload) {
-    console.log(payload);
+    // console.log(payload);
     let result = await identityApi(payload);
     return result;
   },
@@ -69,7 +69,7 @@ const actions = {
   async setIdentityView({
     commit
   }, payload) {
-    console.log(payload);
+    // console.log(payload);
     let result = await identityView(payload);
     return result;
   },
