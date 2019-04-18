@@ -1,10 +1,16 @@
+// //路由实例
 // import router from './router'
+// //vuex实例
 // import store from './store'
+// //ele组件实例
 // import { Message } from 'element-ui'
+// //进度条
 // import NProgress from 'nprogress' // progress bar
 // import 'nprogress/nprogress.css' // progress bar style
 // import { getToken } from '@/utils/auth' // get token from cookie
 
+// // NProgress.done NProgress.start 方法
+// //配置进度条是否需要spinner
 // NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
 // const whiteList = ['/login', '/auth-redirect'] // no redirect whitelist
@@ -52,7 +58,7 @@
 //     }
 //   } else {
 //     /* has no token*/
-
+//     //白名单   判断要去的页面是否在白名单中
 //     if (whiteList.indexOf(to.path) !== -1) {
 //       // in the free login whitelist, go directly
 //       next()

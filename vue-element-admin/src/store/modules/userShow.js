@@ -19,7 +19,11 @@ const state = {
   viewJurisdictionIdValue: [], //视图权限id
   identityIdValue: [], //身份id
   userIdValue: [], //用户id
-  
+  total: [], //总条数
+  page: 1, //第几页
+  pageSize: 10, //每页十条
+  active: 0,
+  data: []
 }
 
 const mutations = {
@@ -30,6 +34,9 @@ const mutations = {
       //用户id
       state.userIdValue.push(item.user_name)
     })
+    deWeight(state.userIdValue)
+    state.data = state.userData.slice(0, 10)
+
   },
   //获取身份数据
   identitys(state, payload) {
@@ -38,6 +45,7 @@ const mutations = {
       //身份id
       state.identityIdValue.push(item.identity_text)
     })
+    deWeight(state.identityIdValue)
   },
   //获取api接口权限数据
   apiAuthoritys(state, payload) {
@@ -46,10 +54,12 @@ const mutations = {
       //视图权限id
       state.apiJurisdictionIdValue.push(item.api_authority_text)
     })
+    deWeight(state.apiJurisdictionIdValue)
   },
   //获取身份和api权限关系
   identityApiAuthorityRelations(state, payload) {
     loop(state.identityApiAuthorityRelationsData, payload)
+    deWeight(state.identityApiAuthorityRelationsData)
   },
   //获取视图权限数据
   viewAuthoritys(state, payload) {
@@ -58,6 +68,7 @@ const mutations = {
       //视图权限id
       state.viewJurisdictionIdValue.push(item.view_authority_text)
     })
+    deWeight(state.viewJurisdictionIdValue)
   },
   //获取身份和视图权限关系view_authority_text
   identityViewAuthorityRelations(state, payload) {
@@ -69,15 +80,16 @@ const mutations = {
         view_id: item.view_id
       })
     })
-    state.existingViewValue = [...new Set(state.existingViewValue)]
+    deWeight(state.existingViewValue)
+    state.total.length ?
+      state.total :
+      state.total.push(state.userIdValue.length, state.identityIdValue.length, state.apiJurisdictionIdValue.length, state.identityApiAuthorityRelationsData.length,
+        state.viewJurisdictionIdValue.length,
+        state.existingViewValue.length)
+  },
+  list(state, payload) {
+    state.data = pageList(payload.idx ? payload.pages = 1 : payload.pages, state[payload.data])
   }
-}
-
-function loop(data, payload) {
-  for (let key in payload) {
-    data[key] = payload[key]
-  }
-  return data
 }
 
 const actions = {
@@ -86,7 +98,6 @@ const actions = {
     commit
   }, payload) {
     let result = await userData(payload);
-    // console.log(result.data=result.data.slice(state.page-1,state.pageSize),7878787878)
     commit('userDatas', result.data)
     return result
   },
@@ -126,6 +137,35 @@ const actions = {
     commit('identityViewAuthorityRelations', result.data)
   }
 }
+
+//0 9     (1-1)*10,1*10
+//10 19   (2-1)*10,2*10
+//20 29   (3-1)*10,3*10
+//30 39   (4-1)*10,4*10
+//(this.page-1)*this.pageSize
+//页面数据
+function pageList(page, data) {
+  if (page === 1) {
+    data = data.slice(0, 10)
+  } else {
+    data = data.slice((page - 1) * 10, page * 10)
+  }
+  return data
+}
+
+//循环
+function loop(data, payload) {
+  for (let key in payload) {
+    data[key] = payload[key]
+  }
+  return data
+}
+
+//去重
+function deWeight(data) {
+  return data = [...new Set(data)]
+}
+
 export default {
   namespaced: true,
   state,

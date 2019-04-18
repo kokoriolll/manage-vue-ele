@@ -15,7 +15,7 @@ export default {
   data() {
     return {
       text:'',
-      sort:5
+      sort:0
     };
   },
   created() {
@@ -32,19 +32,26 @@ export default {
       addtype:'exam/addtype'
     }),
     open3() {
-      this.$prompt("创建新类型", {
+      this.sort = this.QuestionsType.length
+      console.log(this.sort)
+        this.$prompt("创建新类型", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         center: true,
         cancelButtonClass: "cancel",
         confirmButtonClass: "confirm"
       })
-        .then(({ value }) => {
-          this.sort++
-          this.addtype({
-           text:value,
-           sort:this.sort
-          })
+        .then(async ({ value }) => {
+          if(value){
+            this.sort++
+            await this.addtype({
+              text:value,
+              sort:this.sort
+            })
+            this.getQuestionsType();
+          }else{
+            alert('请添加类型名称 || Please add the type name')
+          }
         })
         .catch(() => {
           
