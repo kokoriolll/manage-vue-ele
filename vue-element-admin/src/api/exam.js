@@ -31,6 +31,10 @@ export let condition = params => {
 export let update = params => {
     return request.put('/exam/questions/update', params);
 }
+//添加试题类型
+export let addtype = params => {
+    return request.get('/exam/insertQuestionsType', {params});
+}
 //测试删除接口
 // export let deletes = params => {
 //     console.log(params,'sadad215')

@@ -1,43 +1,36 @@
 <template>
   <div>
     <el-button type="text" @click="open3" class="addbtn">+ 添加类型</el-button>
-    <el-table :data="tableData" style="width: 100%">
-      <el-table-column prop="date" label="类型ID"></el-table-column>
-      <el-table-column prop="name" label="类型名称"></el-table-column>
+    <el-table :data="QuestionsType" style="width: 100%">
+      <el-table-column prop="questions_type_id" label="类型ID"></el-table-column>
+      <el-table-column prop="questions_type_text" label="类型名称"></el-table-column>
       <el-table-column prop="address" label="操作"></el-table-column>
     </el-table>
   </div>
 </template>
 
 <script>
+import {mapState,mapActions} from 'vuex'
 export default {
   data() {
     return {
-      tableData: [
-        {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1517 弄"
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1519 弄"
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1516 弄"
-        }
-      ]
+      text:'',
+      sort:5
     };
   },
+  created() {
+    this.getQuestionsType();
+  },
+  computed: {
+    ...mapState({
+      QuestionsType:state=>state.exam.getQuestionsType
+    })
+  },
   methods: {
+    ...mapActions({
+      getQuestionsType:'exam/getQuestionsType',
+      addtype:'exam/addtype'
+    }),
     open3() {
       this.$prompt("创建新类型", {
         confirmButtonText: "确定",
@@ -46,8 +39,16 @@ export default {
         cancelButtonClass: "cancel",
         confirmButtonClass: "confirm"
       })
-        .then(({ value }) => {})
-        .catch(() => {});
+        .then(({ value }) => {
+          this.sort++
+          this.addtype({
+           text:value,
+           sort:this.sort
+          })
+        })
+        .catch(() => {
+          
+        });
     }
   }
 };

@@ -1,4 +1,4 @@
-import {additem,getitem,subject,getQuestionsType,getuser,questions,condition,update} from '@/api/exam.js'
+import {additem,getitem,subject,getQuestionsType,getuser,questions,condition,update,addtype} from '@/api/exam.js'
 const state={
     examType:[],
     subject:[],
@@ -33,7 +33,6 @@ const actions={
     //添加试题
     async additems({commit},payload){
       let result=await additem(payload);
-      console.log(result)
     },
     //获取考试类型
     async getitems({commit},payload){
@@ -48,6 +47,7 @@ const actions={
     //获取所有试题
     async getQuestionsType({commit},payload){
         let result = await getQuestionsType();
+        console.log(result,'result')
         commit('getQuestionsTypes',result.data)
     },
     //获取当前用户信息
@@ -69,9 +69,13 @@ const actions={
     },
     //更新试题
     async update({commit},payload){
-        console.log(payload,'update')
         let result = await update(payload);
-        console.log(result,'updates')
+    },
+    //添加试题类型
+    async addtype({commit},payload){
+        console.log(payload,'addtypeddddddddddddddddddddddd')
+        let result = await addtype(payload);
+        console.log(result,'addtypessssssssssssssssssss')
     }
 
     //测试删除接口
