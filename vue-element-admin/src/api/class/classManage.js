@@ -20,7 +20,6 @@ export let updateClasses = params => {
 
 //删除班级
 export let deleteClass = params => {
-    console.log(params,'params..')
     return request.delete('/manger/grade/delete',{data:params});
 }
 //获取所有的教室

@@ -7,7 +7,8 @@ const state = {
     dialogFormVisible:false,
     editData:{},
     type:'',
-    disable:false
+    disable:false,
+    gradeID:''
 }
 
 const mutations={
@@ -21,11 +22,11 @@ const mutations={
        state.type = payload.type
        state.disable = payload.disable
        state.dialogFormVisible = payload.dialogFormVisible
+       state.gradeID = payload.gradeID
    },
    //修改
    editClass(state,payload){
       state.editData = payload
-      console.log(payload,'payload')
    }
 }
 
@@ -41,26 +42,16 @@ const actions = {
       }
     },
     //添加班级
-    async curAddClass({commit,state},payload){ 
-        if(state.type == 'add'){
-            let res = await addClass(payload)
-            //更新班级
-            await updateClasses({
-                grade_id:res.grade_id,
-                grade_name:payload.grade_name,
-                room_id:payload.room_id,
-                subject_id:payload.subject_id
-            })
-        }else if(state.type == 'edit'){
-            console.log(payload,'type')
-            //更新班级
-            await updateClasses({
-                grade_id:payload.grade_id,
-                grade_name:payload.grade_name,
-                room_id:payload.room_id,
-                subject_id:payload.subject_id
-            })
-        }  
+    async curAddClass({commit},payload){ 
+        let res = await addClass(payload)
+        if(!res){
+            console.log('班级名重复！！！')
+        }
+    },
+    //更新班级
+    async curUpdateClasses({commit},payload){
+        let res = await updateClasses(payload)
+
     },
     //删除班级
     async curDeleteClass({commit},payload){

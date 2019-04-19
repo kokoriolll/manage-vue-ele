@@ -13,14 +13,14 @@ import { getToken } from '@/utils/auth' // get token from cookie
 //配置进度条是否需要spinner
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
-// const whiteList = ['/login', '/auth-redirect'] // no redirect whitelist
+const whiteList = ['/login', '/auth-redirect'] // no redirect whitelist
 
-// router.beforeEach(async(to, from, next) => {
-//   // start progress bar
-//   NProgress.start()
+router.beforeEach(async(to, from, next) => {
+  // start progress bar
+  NProgress.start()
 
-//   // determine whether the user has logged in
-//   const hasToken = getToken()
+  // determine whether the user has logged in
+  const hasToken = getToken()
 
 if (hasToken) {
   if (to.path === '/login') {
@@ -70,8 +70,9 @@ if (hasToken) {
     NProgress.done()
   }
 }
+})
 
-// router.afterEach(() => {
-//   // finish progress bar
-//   NProgress.done()
-// })
+router.afterEach(() => {
+  // finish progress bar
+  NProgress.done()
+})

@@ -2,15 +2,15 @@
   <div>
     <el-dialog title="添加班级" :visible="dialogFormVisible" :before-close="handleDialogClose">
         <el-form  :model="editData" :rules="rules" ref="ruleForm" class="demo-ruleForm">
-            <el-form-item label="班级名:" prop="grade_name">
-                <el-input v-model="editData.grade_name" placeholder="班级名" :disabled="disable"></el-input>
+            <el-form-item label="班级名:" prop="grade_name" ref="class">
+                <el-input v-model="editData.grade_name" @input="getClass" placeholder="班级名" :disabled="disable"></el-input>
             </el-form-item>
-            <el-form-item label="教室号:" prop="room_text" ref="class">
+            <el-form-item label="教室号:" prop="room_text" ref="room">
                 <el-select v-model="editData.room_text" style="width:100%" placeholder="请选择教室名" @change="getRoomId">
                 <el-option v-for="(item,ind) in allRoom" :key="ind" :label="item.room_text" :value="item.room_id" style="width:100%"></el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item label="课程号:" prop="subject_text">
+            <el-form-item label="课程号:" prop="subject_text" ref="subject">
                 <el-select v-model="editData.subject_text" style="width:100%" placeholder="课程名" @change="getSubjectId">
                 <el-option v-for="(item,ind) in allSubject" :key="ind" :label="item.subject_text" :value="item.subject_id" style="width:100%"></el-option>
                 </el-select>
@@ -46,11 +46,14 @@ export default {
        dialogFormVisible:state => state.classManage.dialogFormVisible,
        editData:state => state.classManage.editData,
        type:state => state.classManage.type,
-       disable:state => state.classManage.disable
+       disable:state => state.classManage.disable,
+       gradeID:state => state.classManage.gradeID
     })
   },
-  created(){
+  watch:{
     
+  },
+  created(){
   },
   mounted(){
     this.getCurAllRoom()
@@ -65,8 +68,13 @@ export default {
       curAddClass:'classManage/curAddClass',
       getCurAllRoom:'classManage/getCurAllRoom',
       getCurAllSubject:'classManage/getCurAllSubject',
-      curUpDateClass:'classManage/curUpDateClass'
+      curUpDateClass:'classManage/curUpDateClass',
+      curUpdateClasses:'classManage/curUpdateClasses'
     }),
+    getClass(e){
+      this.editData.grade_name = e;
+      this.$refs['class'].clearValidate()
+    },
     clearData(){
       this.editClass({
         grade_id: "",
@@ -81,15 +89,21 @@ export default {
       this.dialogForm({
          dialogFormVisible:false 
       }) 
-      this.$refs['ruleForm'].clearValidate()
-      this.$refs['class'].clearValidate()
       this.clearData()
+      this.$refs['ruleForm'].clearValidate() 
     },
     getRoomId(e){
-     this.roomId = e;
+     if(e){
+       this.roomId = e;
+       this.$refs['room'].clearValidate()
+     }
+     
     },
     getSubjectId(e){
-      this.subjectId = e;
+      if(e){
+        this.subjectId = e;
+        this.$refs['subject'].clearValidate()
+      }
     },
     submitForm(formName) {
         this.$refs[formName].validate(async (valid) => {
@@ -99,15 +113,21 @@ export default {
                 grade_name:this.editData.grade_name,
                 room_id:this.roomId,
                 subject_id:this.subjectId
+              })  
+              this.clearData()
+            }else if(this.type == 'edit'){
+              await this.curUpdateClasses({
+                grade_id:this.gradeID,
+                subject_id:this.subjectId,
+                room_id:this.roomId
               })
-              await this.curUpDateClass()
             }
-            this.$refs[formName].clearValidate()  //移除校验结果
-            this.$refs['class'].clearValidate()
+            await this.curUpDateClass()
             await this.dialogForm({
               dialogFormVisible:false  
             })  
-            await this.clearData()
+            this.$refs[formName].clearValidate() 
+            
             //alert('submit!');
           } else {
             console.log('error submit!!');

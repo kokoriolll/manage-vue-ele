@@ -4,15 +4,15 @@
         <div class="classContent">
             <div class="form">
                 <el-form :model="form" ref="form" label-width="80px">
-                 <el-input style="width:175px" v-model="form.name" placeholder="输入学生姓名"></el-input>
-                 <el-select placeholder="请选择教室号" style="margin-left:10px" v-model="form.room" @change="getRoom">
+                  <el-input style="width:175px" v-model="form.name" placeholder="输入学生姓名"></el-input>
+                  <el-select placeholder="请选择教室号" style="margin-left:10px" v-model="form.room" @change="getRoom">
                    <el-option v-for="(item,ind) in allRoom" :key="ind" :label="item.room_text" :value="item.room_text"></el-option>
-                </el-select>
-                <el-select placeholder="班级名" style="margin-left:10px" v-model="form.class" @change="getClass">
-                    <el-option v-for="(item,ind) in classData" :key="ind" :label="item.grade_name" :value="item.grade_name"></el-option>
-                </el-select>
-                <el-button type="primary" @click="curSearch">搜索</el-button>
-                <el-button type="primary" @click="resetForm('form')">重置</el-button>
+                  </el-select>
+                  <el-select placeholder="班级名" style="margin-left:10px" v-model="form.class" @change="getClass">
+                      <el-option v-for="(item,ind) in classData" :key="ind" :label="item.grade_name" :value="item.grade_name"></el-option>
+                  </el-select>
+                  <el-button type="primary" @click="curSearch">搜索</el-button>
+                  <el-button type="primary" @click="resetForm('form')">重置</el-button>
               </el-form>
             </div>
             <el-table
@@ -93,12 +93,7 @@ export default {
     this.getCurAllRoom() 
     this.curUpDateClass() 
    },
-   curDelete(row){
-      this.curDeleteStudent({
-        student_id:row.student_id
-      })
-      this.curUpDateStudent()
-   },
+  
    methods:{
      ...mapMutations({
        updatePage:'student/updatePage',
@@ -117,16 +112,26 @@ export default {
      getClass(e){
        this.form.class = e ;
      },
+     curDelete(row){
+      this.curDeleteStudent({
+        student_id:row.student_id
+      })
+      this.getPage()
+     },
      async curSearch(){
-        let res = await this.curUpDateStudent()
-        let newData = res.filter(val=>{
-          return val.student_name == this.form.name || val.room_text == this.form.room || val.grade_name == this.form.class
-        })
-        if(newData){
-          this.pageData(newData)
+        if(!this.form.name && !this.form.room && !this.form.class){
+           this.getPage()
         }else{
-          return;
-        }
+            let res = await this.curUpDateStudent()
+            let newData = res.filter(val=>{
+              return val.student_name == this.form.name || val.room_text == this.form.room || val.grade_name == this.form.class
+            })
+            if(newData){
+              this.pageData(newData)
+            }else{
+              return;
+            }
+        }     
      },
      async getPage(){
         this.updatePage({
@@ -145,9 +150,14 @@ export default {
         this.currentPages = val
         this.getPage()
       },
+      classValue(){
+        this.form.name = '';
+        this.form.room = '';
+        this.form.class = '';
+      },
       resetForm(formName) {
-        this.$refs[formName].resetFields();//移除校验结果并重置字段值
-        this.getPage()
+        this.$refs[formName].resetFields(); //移除校验结果并重置字段值
+        this.classValue()
       }
    }
   }
