@@ -25,7 +25,7 @@
         :current-page.sync="dftPage"
         @current-change="handleCurrentChange"
         layout="prev, pager, next"
-        :total="totals[idx]"
+        :total="totals"
       ></el-pagination>
     </div>
   </div>
@@ -76,24 +76,42 @@ export default {
         "viewAuthoritysData",
         "identityViewAuthorityRelationsData"
       ],
-      dftPage: 1
+
+      dftPage: 1,
+      totals: 0,
+      totalTit: [
+        "userIdValue",
+        "identityIdValue",
+        "apiJurisdictionIdValue",
+        "identityApiAuthorityRelationsData",
+        "viewJurisdictionIdValue",
+        "existingViewValue"
+      ]
     };
   },
+
   computed: {
     ...mapState({
-      totals: state => state.userShow.total,
       data: state => state.userShow.data,
       pageSize: state => state.userShow.pageSize,
-      userData: state => state.userShow.userData
+      userData: state => state.userShow.userData,
+      userIdValue: state => state.userShow.userIdValue,
+      identityIdValue: state => state.userShow.identityIdValue,
+      apiJurisdictionIdValue: state => state.userShow.apiJurisdictionIdValue,
+      identityApiAuthorityRelationsData: state =>
+        state.userShow.identityApiAuthorityRelationsData,
+      viewJurisdictionIdValue: state => state.userShow.viewJurisdictionIdValue,
+      existingViewValue: state => state.userShow.existingViewValue
     })
   },
-  created() {
-    this.setUserData();
-    this.setidentity();
-    this.setApiAuthority();
-    this.setIdentityApiAuthorityRelation();
-    this.setViewAuthority();
-    this.setidentityViewAuthorityRelation();
+ async created() {
+   await this.setUserData();
+   await this.setidentity();
+   await this.setApiAuthority();
+   await this.setIdentityApiAuthorityRelation();
+   await this.setViewAuthority();
+   await this.setidentityViewAuthorityRelation();
+    this.totals=this.userData.length
   },
   methods: {
     ...mapActions({
@@ -109,7 +127,6 @@ export default {
     ...mapMutations({
       tableList: "userShow/list"
     }),
-
     handleCurrentChange(val) {
       this.page = val;
       this.tableList({
@@ -119,9 +136,10 @@ export default {
     },
     change(idx) {
       this.dftPage = 1;
-      this.tableList({ idx, data: this.pageTit[idx], pages: this.page });
+      this.tableList({ idx, data: this.pageTit[idx], pages: 1 });
       this.idx = idx;
       this.tit = this.nav[idx];
+      this.totals = this[this.totalTit[this.idx]].length;
     }
   }
 };

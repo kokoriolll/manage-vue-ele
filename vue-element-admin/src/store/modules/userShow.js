@@ -19,11 +19,11 @@ const state = {
   viewJurisdictionIdValue: [], //视图权限id
   identityIdValue: [], //身份id
   userIdValue: [], //用户id
-  total: [], //总条数
+  // total: [], //总条数
   page: 1, //第几页
   pageSize: 10, //每页十条
   active: 0,
-  data: []
+  data: [],
 }
 
 const mutations = {
@@ -32,7 +32,7 @@ const mutations = {
     loop(state.userData, payload)
     state.userData.forEach(item => {
       //用户id
-      state.userIdValue.push(item.user_name)
+      state.userIdValue.push({user_name:item.user_name,user_id:item.user_id})
     })
     deWeight(state.userIdValue)
     state.data = state.userData.slice(0, 10)
@@ -43,7 +43,7 @@ const mutations = {
     loop(state.identitysData, payload)
     state.identitysData.forEach(item => {
       //身份id
-      state.identityIdValue.push(item.identity_text)
+      state.identityIdValue.push({identity_text:item.identity_text,identity_id:item.identity_id})
     })
     deWeight(state.identityIdValue)
   },
@@ -51,8 +51,8 @@ const mutations = {
   apiAuthoritys(state, payload) {
     loop(state.apiAuthoritysData, payload)
     state.apiAuthoritysData.forEach(item => {
-      //视图权限id
-      state.apiJurisdictionIdValue.push(item.api_authority_text)
+      //api接口权限id
+      state.apiJurisdictionIdValue.push({api_authority_text:item.api_authority_text,api_authority_id:item.api_authority_id})
     })
     deWeight(state.apiJurisdictionIdValue)
   },
@@ -66,7 +66,7 @@ const mutations = {
     loop(state.viewAuthoritysData, payload)
     state.viewAuthoritysData.forEach(item => {
       //视图权限id
-      state.viewJurisdictionIdValue.push(item.view_authority_text)
+      state.viewJurisdictionIdValue.push({view_authority_text:item.view_authority_text,view_authority_id:item.view_authority_id})
     })
     deWeight(state.viewJurisdictionIdValue)
   },
@@ -81,11 +81,6 @@ const mutations = {
       })
     })
     deWeight(state.existingViewValue)
-    state.total.length ?
-      state.total :
-      state.total.push(state.userIdValue.length, state.identityIdValue.length, state.apiJurisdictionIdValue.length, state.identityApiAuthorityRelationsData.length,
-        state.viewJurisdictionIdValue.length,
-        state.existingViewValue.length)
   },
   list(state, payload) {
     state.data = pageList(payload.idx ? payload.pages = 1 : payload.pages, state[payload.data])
@@ -95,44 +90,50 @@ const mutations = {
 const actions = {
   // 展示用户数据
   async setUserData({
-    commit
+    commit,state
   }, payload) {
+    state.userIdValue=[];
     let result = await userData(payload);
     commit('userDatas', result.data)
     return result
   },
   //展示身份数据
   async setidentity({
-    commit
+    commit,state
   }, payload) {
+    state.identityIdValue=[];
     let result = await identity(payload);
     commit('identitys', result.data)
   },
   //展示api接口权限数据
   async setApiAuthority({
-    commit
+    commit,state
   }, payload) {
+    state.apiJurisdictionIdValue=[];
     let result = await apiAuthority(payload);
     commit('apiAuthoritys', result.data)
   },
   // 展示身份和api权限关系
   async setIdentityApiAuthorityRelation({
-    commit
+    commit,state
   }, payload) {
+    state.identityApiAuthorityRelationsData=[];
     let result = await identityApiAuthorityRelation(payload);
     commit('identityApiAuthorityRelations', result.data)
   },
   // 获取视图权限数据
   async setViewAuthority({
-    commit
+    commit,state
   }, payload) {
+    state.viewJurisdictionIdValue=[];
     let result = await viewAuthority(payload);
     commit('viewAuthoritys', result.data)
   },
   //展示身份和视图权限关系
   async setidentityViewAuthorityRelation({
-    commit
+    commit,state
   }, payload) {
+    state.existingViewValue=[];
     let result = await identityViewAuthorityRelation(payload);
     commit('identityViewAuthorityRelations', result.data)
   }
@@ -142,7 +143,7 @@ const actions = {
 //10 19   (2-1)*10,2*10
 //20 29   (3-1)*10,3*10
 //30 39   (4-1)*10,4*10
-//(this.page-1)*this.pageSize
+//(state.page-1)*state.pageSize,state.page*state.pageSize
 //页面数据
 function pageList(page, data) {
   if (page === 1) {

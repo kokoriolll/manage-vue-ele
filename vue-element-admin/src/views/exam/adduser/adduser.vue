@@ -14,14 +14,19 @@
             <el-option
               v-for="(item,index) in identityIdValue"
               :key="index"
-              :label="item"
-              :value="item"
+              :label="item.identity_text"
+              :value="item.identity_text"
             ></el-option>
           </el-select>
         </div>
         <div v-if="idx===1">
           <el-select v-model="userId" placeholder="请选择用户id">
-            <el-option v-for="(item,index) in userIdValue" :key="index" :label="item" :value="item"></el-option>
+            <el-option
+              v-for="(item,index) in userIdValue"
+              :key="index"
+              :label="item.user_name"
+              :value="item.user_name"
+            ></el-option>
           </el-select>
           <el-input v-model="userName" placeholder="请输入用户名"></el-input>
           <el-input v-model="pwd" placeholder="请输入密码" show-password></el-input>
@@ -29,8 +34,8 @@
             <el-option
               v-for="(item,index) in identityIdValue"
               :key="index"
-              :label="item"
-              :value="item"
+              :label="item.identity_text"
+              :value="item.identity_text"
             ></el-option>
           </el-select>
         </div>
@@ -89,8 +94,8 @@
             <el-option
               v-for="(item,index) in identityIdValue"
               :key="index"
-              :label="item"
-              :value="item"
+              :label="item.identity_text"
+              :value="item.identity_text"
             ></el-option>
           </el-select>
         </div>
@@ -99,8 +104,8 @@
             <el-option
               v-for="(item,index) in apiJurisdictionIdValue"
               :key="index"
-              :label="item"
-              :value="item"
+              :label="item.api_authority_text"
+              :value="item.api_authority_text"
             ></el-option>
           </el-select>
         </div>
@@ -118,8 +123,8 @@
             <el-option
               v-for="(item,index) in identityIdValue"
               :key="index"
-              :label="item"
-              :value="item"
+              :label="item.identity_text"
+              :value="item.identity_text"
             ></el-option>
           </el-select>
         </div>
@@ -128,8 +133,8 @@
             <el-option
               v-for="(item,index) in viewJurisdictionIdValue"
               :key="index"
-              :label="item"
-              :value="item"
+              :label="item.view_authority_text"
+              :value="item.view_authority_text"
             ></el-option>
           </el-select>
         </div>
@@ -220,6 +225,14 @@ export default {
     },
     //用户
     async user() {
+      let obj = {},
+        obj1 = {};
+      obj = this.identityIdValue.find(item => {
+        return item.identity_text === this.identityId;
+      });
+      obj1 = this.userIdValue.find(item => {
+        return item.user_name === this.userId;
+      });
       if (this.idx === 0) {
         //添加用户
         var uPattern = /^[a-zA-Z0-9_-]{4,16}$/;
@@ -242,9 +255,10 @@ export default {
         await this.setAddUsers({
           user_name: this.userName,
           user_pwd: this.pwd,
-          identity_id: this.identityId
+          identity_id: obj.identity_id
         });
         this.hint();
+        this.datas();
       } else {
         //更新用户
         if (!this.identityId) {
@@ -255,14 +269,16 @@ export default {
           });
           return false;
         }
+        console.log(obj1.user_id)
         await this.setUpdataUserInfo({
-          user_id: this.userId,
+          user_id: obj1.user_id,
           user_name: this.userName,
           user_pwd: this.pwd,
-          identity_id: this.identityId
+          identity_id: obj.identity_id
         });
       }
       this.hint();
+      this.datas();
     },
     //身份
     async identity() {
@@ -278,6 +294,7 @@ export default {
         identity_text: this.identityName
       });
       this.hint();
+      this.datas();
     },
     //api接口权限
     async jurisdiction() {
@@ -311,6 +328,7 @@ export default {
         api_authority_method: this.apiJurisdictionMethod
       });
       this.hint();
+      this.datas();
     },
     //视图接口权限
     async view() {
@@ -331,9 +349,18 @@ export default {
         view_id: obj.view_id //视图id 字符串
       });
       this.hint();
+      this.datas();
     },
     // 给身份设置api接口权限
     async api() {
+      let obj = {},
+        obj1 = {};
+      obj = this.identityIdValue.find(item => {
+        return item.identity_text === this.identityId2;
+      });
+      obj1 = this.apiJurisdictionIdValue.find(item => {
+        return item.api_authority_text === this.apiJurisdictionId;
+      });
       if (!this.identityId2) {
         this.$message({
           showClose: true,
@@ -351,13 +378,22 @@ export default {
         return false;
       }
       await this.setIdentityApi({
-        identity_id: this.identityId2,
-        api_authority_id: this.apiJurisdictionId
+        identity_id: obj.identity_id,
+        api_authority_id: obj1.api_authority_id
       });
       this.hint();
+      this.datas();
     },
     //给身份设定视图权限
     async set() {
+      let obj = {},
+        obj1 = {};
+      obj = this.identityIdValue.find(item => {
+        return item.identity_text === this.identityId3;
+      });
+      obj1 = this.viewJurisdictionIdValue.find(item => {
+        return item.view_authority_text === this.viewJurisdictionId;
+      });
       if (!this.identityId3) {
         this.$message({
           showClose: true,
@@ -375,10 +411,11 @@ export default {
         return false;
       }
       await this.setIdentityView({
-        identity_id: this.identityId3,
-        view_authority_id: this.viewJurisdictionId
+        identity_id: obj.identity_id,
+        view_authority_id: obj1.api_authority_id
       });
       this.hint();
+      this.datas();
     },
     //提示
     hint() {
@@ -393,14 +430,21 @@ export default {
           type: "error"
         });
       }
+    },
+    datas() {
+      this.setUserData();
+      this.setidentity();
+      this.setApiAuthority();
+      this.setViewAuthority();
+      this.setidentityViewAuthorityRelation();
     }
   },
-  created() {
-    this.setUserData();
-    this.setidentity();
-    this.setApiAuthority();
-    this.setViewAuthority();
-    this.setidentityViewAuthorityRelation();
+  async created() {
+   await this.setUserData();
+   await this.setidentity();
+   await this.setApiAuthority();
+   await this.setViewAuthority();
+   await this.setidentityViewAuthorityRelation();
   }
 };
 </script>

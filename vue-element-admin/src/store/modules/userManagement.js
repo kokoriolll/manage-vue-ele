@@ -13,79 +13,78 @@ const state = {
   msg: ''
 }
 
+const mutations = {
+  Tips(state, result) {
+    if (result) {
+      state.code = result.code;
+      state.msg = result.msg;
+    }
+  }
+}
+
 const actions = {
   //添加用户
   async setAddUsers({
-    state
+    commit
   }, payload) {
     let result = await addUsers(payload);
-    Tips(result, state)
+    commit('Tips', result)
     return result;
   },
   //更新用户信息（用户名，用户密码，用户身份）
   async setUpdataUserInfo({
-    state
+    commit
   }, payload) {
     let result = await updataUserInfo(payload);
-    Tips(result, state)
+    commit('Tips', result)
     return result;
   },
   //添加身份
   async setAddIdentity({
-    state
+    commit
   }, payload) {
     let result = await addIdentity(payload);
-    Tips(result, state)
+    commit('Tips', result)
     return result;
   },
   //添加api接口权限
   async setAddAuthorityApi({
-    state
+    commit
   }, payload) {
     let result = await addAuthorityApi(payload);
-    Tips(result, state)
+    commit('Tips', result)
     return result;
   },
   //添加视图权限
   async setAddAuthorityView({
-    state
+    commit
   }, payload) {
     let result = await addAuthorityView(payload);
-    Tips(result, state)
+    commit('Tips', result)
     return result;
   },
   //给身份设定api接口权限
   async setIdentityApi({
-    state
+    commit
   }, payload) {
     let result = await identityApi(payload);
-    Tips(result, state)
+    commit('Tips', result)
     return result;
   },
   //给身份设定视图权限
   async setIdentityView({
-    state
+    commit
   }, payload) {
     let result = await identityView(payload);
-    Tips(result, state)
+    commit('Tips', result)
     return result;
   },
 }
 
-//提示
-function Tips(result, state) {
-  if (result) {
-    state.code = result.code;
-    state.msg = result.msg;
-  } else {
-    state.code = 0
-    state.msg = "失败了"
-  }
-  return state
-}
 
 export default {
   namespaced: true,
   state,
+  mutations,
   actions
 }
