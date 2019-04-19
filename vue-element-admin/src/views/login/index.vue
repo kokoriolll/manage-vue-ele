@@ -9,13 +9,12 @@
       label-position="left"
     >
       <div class="title-container">
-        <h3 class="title">{{ $t('login.title') }}</h3>
         <lang-select class="set-language"/>
       </div>
 
       <el-form-item prop="username">
         <span class="svg-container">
-          <svg-icon icon-class="user"/>
+          <svg-icon icon-class="user" style="color:rgba(0, 0, 0, 0.65)"/>
         </span>
         <el-input
           ref="username"
@@ -30,7 +29,7 @@
       <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
         <el-form-item prop="password">
           <span class="svg-container">
-            <svg-icon icon-class="password"/>
+            <svg-icon icon-class="password" style="color:rgba(0, 0, 0, 0.65)"/>
           </span>
           <el-input
             :key="passwordType"
@@ -43,16 +42,15 @@
             @blur="capsTooltip = false"
             @keyup.enter.native="handleLogin"
           />
-          <span class="show-pwd" @click="showPwd">
-            <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'"/>
-          </span>
         </el-form-item>
       </el-tooltip>
-
+      <el-checkbox-group v-model="form.type">
+        <el-checkbox label="记住密码" name="type"></el-checkbox>
+      </el-checkbox-group>
       <el-button
         :loading="loading"
         type="primary"
-        style="width:100%;margin-bottom:30px;"
+        style="width:100%;margin-top:20px;height:40px;background:#0139FD"
         @click.native.prevent="handleLogin"
       >{{ $t('login.logIn') }}</el-button>
 
@@ -98,6 +96,9 @@ export default {
       }
     };
     return {
+      form: {
+          type: [],
+      },
       loginForm: {
         username: 'wuhongyang',
         password: 'Wuhongyang123!'
@@ -188,18 +189,18 @@ $cursor: #fff;
 .login-container {
   .el-input {
     display: inline-block;
-    height: 47px;
+    height: 40px;
     width: 85%;
-
+   
     input {
       background: transparent;
       border: 0px;
       -webkit-appearance: none;
       border-radius: 0px;
       padding: 12px 5px 12px 15px;
-      color: $light_gray;
-      height: 47px;
-      caret-color: $cursor;
+      color: #000;
+      height: 40px;
+      /* caret-color: $cursor; */
 
       &:-webkit-autofill {
         box-shadow: 0 0 0px 1000px $bg inset !important;
@@ -209,16 +210,17 @@ $cursor: #fff;
   }
 
   .el-form-item {
+    height: 45px;
     border: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-    color: #454545;
+    background: rgb(232, 240, 254) !important;
+    border-radius: 2px;
+    color: rgba(0, 0, 0, 0.65);
   }
 }
 </style>
 
 <style lang="scss" scoped>
-$bg: #2d3a4b;
+$bg:navy;;
 $dark_gray: #889aa4;
 $light_gray: #eee;
 
@@ -227,14 +229,18 @@ $light_gray: #eee;
   width: 100%;
   background-color: $bg;
   overflow: hidden;
-
+  
   .login-form {
-    position: relative;
-    width: 520px;
+    position: absolute;
+    right: 15%;
+    top: 25%;
+    width: 400px;
     max-width: 100%;
-    padding: 160px 35px 0;
+    padding: 30px 25px;
+    box-sizing:border-box;
     margin: 0 auto;
     overflow: hidden;
+    background:#FFF;
   }
 
   .tips {
