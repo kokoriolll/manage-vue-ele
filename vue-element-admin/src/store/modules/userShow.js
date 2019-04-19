@@ -8,32 +8,87 @@ import {
 } from '@/api/userManagement';
 
 const state = {
-
+  userData: [], //获取用户数据
+  identitysData: [], //获取身份数据
+  apiAuthoritysData: [], //获取api接口权限数据
+  viewAuthoritysData: [], //获取视图权限数据
+  identityViewAuthorityRelationsData: [], //获取身份和视图权限关系
+  identityApiAuthorityRelationsData: [], //获取身份和api权限关系
+  existingViewValue: [], //已有视图
+  apiJurisdictionIdValue: [], //api接口权限id
+  viewJurisdictionIdValue: [], //视图权限id
+  identityIdValue: [], //身份id
+  userIdValue: [], //用户id
+  total: [], //总条数
+  page: 1, //第几页
+  pageSize: 10, //每页十条
+  active: 0,
+  data: []
 }
 
 const mutations = {
+  //获取用户数据
   userDatas(state, payload) {
-console.log(payload)
+    loop(state.userData, payload)
+    state.userData.forEach(item => {
+      //用户id
+      state.userIdValue.push(item.user_name)
+    })
+    deWeight(state.userIdValue)
+    state.data = state.userData.slice(0, 10)
+
   },
+  //获取身份数据
   identitys(state, payload) {
-    console.log(payload)
-
+    loop(state.identitysData, payload)
+    state.identitysData.forEach(item => {
+      //身份id
+      state.identityIdValue.push(item.identity_text)
+    })
+    deWeight(state.identityIdValue)
   },
+  //获取api接口权限数据
   apiAuthoritys(state, payload) {
-    console.log(payload)
-
+    loop(state.apiAuthoritysData, payload)
+    state.apiAuthoritysData.forEach(item => {
+      //视图权限id
+      state.apiJurisdictionIdValue.push(item.api_authority_text)
+    })
+    deWeight(state.apiJurisdictionIdValue)
   },
-  identityApiAuthorityRelationss(state, payload) {
-    console.log(payload)
-
+  //获取身份和api权限关系
+  identityApiAuthorityRelations(state, payload) {
+    loop(state.identityApiAuthorityRelationsData, payload)
+    deWeight(state.identityApiAuthorityRelationsData)
   },
+  //获取视图权限数据
   viewAuthoritys(state, payload) {
-    console.log(payload)
-
+    loop(state.viewAuthoritysData, payload)
+    state.viewAuthoritysData.forEach(item => {
+      //视图权限id
+      state.viewJurisdictionIdValue.push(item.view_authority_text)
+    })
+    deWeight(state.viewJurisdictionIdValue)
   },
+  //获取身份和视图权限关系view_authority_text
   identityViewAuthorityRelations(state, payload) {
-    console.log(payload)
-
+    loop(state.identityViewAuthorityRelationsData, payload)
+    state.identityViewAuthorityRelationsData.forEach(item => {
+      //已有视图
+      state.existingViewValue.push({
+        authority: item.view_authority_text,
+        view_id: item.view_id
+      })
+    })
+    deWeight(state.existingViewValue)
+    state.total.length ?
+      state.total :
+      state.total.push(state.userIdValue.length, state.identityIdValue.length, state.apiJurisdictionIdValue.length, state.identityApiAuthorityRelationsData.length,
+        state.viewJurisdictionIdValue.length,
+        state.existingViewValue.length)
+  },
+  list(state, payload) {
+    state.data = pageList(payload.idx ? payload.pages = 1 : payload.pages, state[payload.data])
   }
 }
 
@@ -42,57 +97,75 @@ const actions = {
   async setUserData({
     commit
   }, payload) {
-    console.log(payload);
     let result = await userData(payload);
-    console.log(result)
-    commit('userDatas', result)
+    commit('userDatas', result.data)
+    return result
   },
   //展示身份数据
   async setidentity({
     commit
   }, payload) {
-    console.log(payload);
     let result = await identity(payload);
-    console.log(result)
-    commit('identitys', result)
+    commit('identitys', result.data)
   },
   //展示api接口权限数据
   async setApiAuthority({
     commit
   }, payload) {
-    console.log(payload);
     let result = await apiAuthority(payload);
-    console.log(result)
-    commit('apiAuthoritys', result)
+    commit('apiAuthoritys', result.data)
   },
   // 展示身份和api权限关系
   async setIdentityApiAuthorityRelation({
     commit
   }, payload) {
-    console.log(payload);
     let result = await identityApiAuthorityRelation(payload);
-    console.log(result)
-    commit('identityApiAuthorityRelations', result)
+    commit('identityApiAuthorityRelations', result.data)
   },
   // 获取视图权限数据
   async setViewAuthority({
     commit
   }, payload) {
-    console.log(payload);
     let result = await viewAuthority(payload);
-    console.log(result)
-    commit('viewAuthoritys', result)
+    commit('viewAuthoritys', result.data)
   },
   //展示身份和视图权限关系
   async setidentityViewAuthorityRelation({
     commit
   }, payload) {
-    console.log(payload);
     let result = await identityViewAuthorityRelation(payload);
-    console.log(result)
-    commit('identityViewAuthorityRelations', result)
+    commit('identityViewAuthorityRelations', result.data)
   }
 }
+
+//0 9     (1-1)*10,1*10
+//10 19   (2-1)*10,2*10
+//20 29   (3-1)*10,3*10
+//30 39   (4-1)*10,4*10
+//(this.page-1)*this.pageSize
+//页面数据
+function pageList(page, data) {
+  if (page === 1) {
+    data = data.slice(0, 10)
+  } else {
+    data = data.slice((page - 1) * 10, page * 10)
+  }
+  return data
+}
+
+//循环
+function loop(data, payload) {
+  for (let key in payload) {
+    data[key] = payload[key]
+  }
+  return data
+}
+
+//去重
+function deWeight(data) {
+  return data = [...new Set(data)]
+}
+
 export default {
   namespaced: true,
   state,

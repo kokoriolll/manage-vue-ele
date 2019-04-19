@@ -1,11 +1,15 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import getters from './getters'
+// import createlogger from 'vuex/dist/logger'
+
 //引入store
 import exam from './modules/exam'
 import login from './modules/login'
 import examination from './modules/examination'
 
+import classManage from './modules/classManage'
+import classRoom from './modules/classroom'
 Vue.use(Vuex)
 
 // https://webpack.js.org/guides/dependency-management/#requirecontext
@@ -19,14 +23,19 @@ const modules = modulesFiles.keys().reduce((modules, modulePath) => {
   const value = modulesFiles(modulePath)
   modules[moduleName] = value.default
   return modules
-}, {})
+}, {
+  exam,
+  login,
+  examination,
+  classManage,
+  classRoom
+})
 
 const store = new Vuex.Store({
   modules,
-  getters,
-  exam,
-  login,
-  examination
+  getters
+
+  // plugins:[createlogger()]
 })
 
 export default store

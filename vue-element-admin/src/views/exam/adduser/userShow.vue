@@ -11,20 +11,21 @@
       >{{item}}</span>
     </div>
     <h2>{{tit}}</h2>
-    <el-table :data="list" style="width: 100%">
-      <el-table-column prop="date" label="日期" width="180"></el-table-column>
-      <el-table-column prop="name" label="姓名" width="190"></el-table-column>
-      <el-table-column prop="address" label="地址" width="190"></el-table-column>
-      <el-table-column prop="address" label="地址" width="190"></el-table-column>
-      <el-table-column prop="address" label="地址" width="190"></el-table-column>
-      <el-table-column prop="address" label="地址" width="190"></el-table-column>
-      <el-table-column prop="address" label="地址" width="190"></el-table-column>
+    <el-table :data="data" style="width: 100%">
+      <el-table-column
+        v-for="(item,index) in tits[idx]"
+        :key="index"
+        :prop="item"
+        :label="tabNav[idx][index]"
+        :style="{width:'100%'/tabNav[idx].length}"
+      ></el-table-column>
     </el-table>
     <div class="pagination">
       <el-pagination
+        :current-page.sync="dftPage"
         @current-change="handleCurrentChange"
         layout="prev, pager, next"
-        :total="total"
+        :total="totals[idx]"
       ></el-pagination>
     </div>
   </div>
@@ -43,23 +44,56 @@ export default {
         "视图接口权限",
         "身份和视图权限关系"
       ],
-      // list: null,
-      list: [
-        { date: 2018, name: "张三", address: "123" },
-        { date: 2019, name: "张四", address: "123" },
-        { date: 2010, name: "张五", address: "123" }
+      tabNav: [
+        ["用户名", "密码", "身份"],
+        ["身份名称"],
+        ["api权限名称", "api权限接口", "api权限方法"],
+        ["身份名称", "api权限名称", "api权限url", "api权限方法"],
+        ["视图权限名称", "视图id"],
+        ["身份", "视图名称", "视图id"]
       ],
-      currentPage4: 4,
+      tits: [
+        ["user_name", "user_pwd", "identity_text"],
+        ["identity_text"],
+        ["api_authority_text", "api_authority_url", "api_authority_method"],
+        [
+          "identity_text",
+          "api_authority_text",
+          "api_authority_url",
+          "api_authority_method"
+        ],
+        ["view_authority_text", "view_id"],
+        ["identity_text", "view_authority_text", "view_id"]
+      ],
       idx: 0,
       tit: "用户数据",
-      total: 100
+      page: 1, //第几页
+      pageTit: [
+        "userData",
+        "identitysData",
+        "apiAuthoritysData",
+        "identityApiAuthorityRelationsData",
+        "viewAuthoritysData",
+        "identityViewAuthorityRelationsData"
+      ],
+      dftPage: 1
     };
   },
   computed: {
-    ...mapState({})
+    ...mapState({
+      totals: state => state.userShow.total,
+      data: state => state.userShow.data,
+      pageSize: state => state.userShow.pageSize,
+      userData: state => state.userShow.userData
+    })
   },
   created() {
     this.setUserData();
+    this.setidentity();
+    this.setApiAuthority();
+    this.setIdentityApiAuthorityRelation();
+    this.setViewAuthority();
+    this.setidentityViewAuthorityRelation();
   },
   methods: {
     ...mapActions({
@@ -72,32 +106,22 @@ export default {
       setidentityViewAuthorityRelation:
         "userShow/setidentityViewAuthorityRelation"
     }),
+    ...mapMutations({
+      tableList: "userShow/list"
+    }),
 
     handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
+      this.page = val;
+      this.tableList({
+        data: this.pageTit[this.idx],
+        pages: this.page
+      });
     },
     change(idx) {
+      this.dftPage = 1;
+      this.tableList({ idx, data: this.pageTit[idx], pages: this.page });
       this.idx = idx;
       this.tit = this.nav[idx];
-      if (idx === 0) {
-        //展示用户数据
-        this.setUserData();
-      } else if (idx === 1) {
-        //展示身份数据
-        this.setidentity();
-      } else if (idx === 2) {
-        //展示api接口权限
-        this.setApiAuthority();
-      } else if (idx === 3) {
-        //展示身份和api接口关系
-        this.setIdentityApiAuthorityRelation();
-      } else if (idx === 4) {
-        //展示视图接口权限
-        this.setViewAuthority();
-      } else if (idx === 5) {
-        //展示身份和视图权限关系
-        this.setidentityViewAuthorityRelation();
-      }
     }
   }
 };
@@ -141,9 +165,17 @@ export default {
     justify-content: flex-end;
   }
 }
-// .pagination .el-pagination .el-pager li.active{
-//       border: 1px solid #0139fd!important;
-//   // color: #0139fd!important;
-//   // background: #fff!important;
-// }
+
+.demo-table-expand {
+  font-size: 0;
+}
+.demo-table-expand label {
+  width: 90px;
+  color: #99a9bf;
+}
+.demo-table-expand .el-form-item {
+  margin-right: 0;
+  margin-bottom: 0;
+  width: 50%;
+}
 </style>

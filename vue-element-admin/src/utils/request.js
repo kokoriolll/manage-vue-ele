@@ -1,7 +1,12 @@
 import axios from 'axios'
-import { MessageBox, Message } from 'element-ui'
-import store from '@/store'
-import { getToken } from '@/utils/auth'
+import {
+  MessageBox,
+  Message
+} from 'element-ui'
+// import store from '@/store'
+import {
+  getToken
+} from '@/utils/auth'
 
 // create an axios instance
 const service = axios.create({
@@ -32,7 +37,7 @@ service.interceptors.response.use(
   /**
    * If you want to get information such as headers or status
    * Please return  response => response
-  */
+   */
   /**
    * 下面的注释为通过在response里，自定义code来标示请求状态
    * 当code返回如下情况则说明权限有问题，登出并返回到登录页

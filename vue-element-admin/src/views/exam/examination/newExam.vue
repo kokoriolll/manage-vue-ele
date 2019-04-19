@@ -98,7 +98,7 @@ export default {
         });
     },
     handleClick() {
-      this.UpdateExam()
+      //this.UpdateExam()
     }
   },
   created() {}
