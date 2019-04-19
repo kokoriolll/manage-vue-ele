@@ -30,7 +30,7 @@ const actions = {
   //删除
   async curDeleteRoom({commit},payload){
     await deleteRoom(payload)
-},
+ },
 }
 export default {
     namespaced:true,

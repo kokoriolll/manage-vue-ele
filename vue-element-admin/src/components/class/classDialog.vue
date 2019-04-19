@@ -32,11 +32,11 @@ export default {
     return {
         subjectId:'',
         roomId:'',
-         rules: {
+        rules: {
           grade_name: [{ required: true, message: '请输入班级名', trigger: 'blur'}],
           room_text:[{ required: true, message: '请输入教室名', trigger: 'blur'}],
           subject_text:[{ required: true, message: '请输入课程号', trigger: 'blur'}]
-         },
+         }
     }
   },
   computed:{
@@ -102,7 +102,7 @@ export default {
               })
               await this.curUpDateClass()
             }
-            this.$refs[formName].clearValidate()
+            this.$refs[formName].clearValidate()  //移除校验结果
             this.$refs['class'].clearValidate()
             await this.dialogForm({
               dialogFormVisible:false  

@@ -25,6 +25,5 @@ export let updateStudents = params => {
 //删除学生  传student_id即可
 
 export let deleteStudent = params => {
-    console.log(params,'params..')
     return request.delete('/manger/student',{data:params});
 }

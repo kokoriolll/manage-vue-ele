@@ -51,7 +51,7 @@ export default {
           this.dialogForm({
             dialogFormVisible:true,
             type:type
-         })
+          })
         }
          
       }

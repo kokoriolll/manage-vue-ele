@@ -1,5 +1,5 @@
 import request from '@/utils/request'
-//添加班级列表
+//班级列表
 export let upDateClass = () => {
     return request.get('/manger/grade');
 }
