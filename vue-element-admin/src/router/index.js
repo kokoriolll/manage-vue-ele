@@ -7,10 +7,10 @@ Vue.use(Router)
 import Layout from '@/layout'
 
 /* Router Modules */
-// import componentsRouter from './modules/components'
-// import chartsRouter from './modules/charts'
-// import tableRouter from './modules/table'
-// import nestedRouter from './modules/nested'
+import componentsRouter from './modules/components'
+import chartsRouter from './modules/charts'
+import tableRouter from './modules/table'
+import nestedRouter from './modules/nested'
 /* 添加试题列表 */
 import examRouter from './modules/exam/exam'
 import userRouter from './modules/exam/user'
@@ -44,11 +44,6 @@ import approvalRouter from './modules/exam/approval'
  * all roles can be accessed
  */
 export const constantRoutes = [
-  examRouter,
-  userRouter,
-  manageRouter,
-  classsRouter,
-  approvalRouter,
   {
     path: '/redirect',
     component: Layout,
@@ -120,6 +115,11 @@ export const constantRoutes = [
  * the routes that need to be dynamically loaded based on user roles
  */
 export const asyncRoutes = [
+  examRouter,
+  userRouter,
+  manageRouter,
+  classsRouter,
+  approvalRouter
   // {
   //   path: '/permission',
   //   component: Layout,
@@ -388,11 +388,11 @@ export const asyncRoutes = [
   //   ]
   // },
 
-  {
-    path: '*',
-    redirect: '/404',
-    hidden: true
-  }
+  // {
+  //   path: '*',
+  //   redirect: '/404',
+  //   hidden: true
+  // }
 ]
 
 const createRouter = () => new Router({

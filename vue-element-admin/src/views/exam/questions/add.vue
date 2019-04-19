@@ -2,7 +2,7 @@
     <div>
         <p class="title">添加试题</p>
         <div class="box">
-            <Addque :list='list' />
+            <Addque/>
         </div>
     </div>
 </template>
@@ -12,19 +12,14 @@
     export default {
         data() {
             return {
-                list:''
             }
         },
         components:{
             Addque
         },
         created() {
-            this.getRoute();
         },
         methods: {
-            getRoute(){
-                this.list = this.$route.query.list;
-            }
         }
     }
 </script>
