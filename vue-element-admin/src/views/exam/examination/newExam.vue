@@ -50,18 +50,20 @@ import { mapState, mapMutations, mapActions } from "vuex";
 export default {
   data() {
     return {
-      createDate: []
+      createDate: [],
+      obj: "",
+      examID:""
     };
   },
   computed: {
     ...mapState({
-      CreateExamState: state => {
+      CreateExamState: state => { //创建试卷
         return state.examination.CreateExamData;
       },
       CreateExamDataFunState: state => {
         return state.examination.CreateExamDataFun;
       },
-      UpdateExamState: state => {
+      UpdateExamState: state => { //更新试卷
         return state.examination.UpdateExamData;
       }
     })
@@ -77,8 +79,8 @@ export default {
       UpdateExamSave: "examination/getUpdateExam"
     }),
     ...mapActions({
-      CreateExam: "examination/CreateExam",
-      UpdateExam: "examination/UpdateExam"
+      CreateExam: "examination/CreateExam",//创建试卷
+      UpdateExam: "examination/UpdateExam" //更新试卷
     }),
     //点击删除
     handleDel(index) {
@@ -98,7 +100,21 @@ export default {
         });
     },
     handleClick() {
-      //this.UpdateExam()
+      //获取exam_exam_id的ID
+      this.examID = this.CreateExamState.exam_exam_id
+      //获取questions的ID
+      this.CreateExamState.questions.map(item => {
+        this.obj = item.questions_id;
+        return this.obj;
+      });
+      //更新试卷：传入参数
+      this.UpdateExam({
+        question_ids:{
+           question_ids:JSON.stringify(this.obj)
+        },
+        examID:this.examID
+      });
+      this.$router.push({ path: "/examination/minationlist" })
     }
   },
   created() {}

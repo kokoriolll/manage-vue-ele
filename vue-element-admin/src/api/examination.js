@@ -23,5 +23,5 @@ export let AllExam = params => {
 
 //更新试卷
 export let UpdateExam= params => {
-  return request.put('/exam/exam', params);
+  return request.put(`/exam/exam/${params.examID}`,params.question_ids);
 }

@@ -44,7 +44,7 @@ const actions = {
   //创建试卷
   async CreateExam({commit},payload){
     let result = await CreateExam(payload)
-    commit('getCreateExam',result.data.questions)
+    commit('getCreateExam',result.data)
     commit('getCreateExamFun',payload)
     return result.data.questions
   },
@@ -56,7 +56,8 @@ const actions = {
   //更新试卷
   async UpdateExam({commit},payload){
     let result = await UpdateExam(payload)
-    commit('getUpdateExam',result.data)
+    console.log(result,'res')
+    commit('getUpdateExam',result)
   },
 }
 

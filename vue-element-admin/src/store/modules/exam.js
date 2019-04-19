@@ -46,7 +46,6 @@ const actions={
     //获取所有试题
     async getQuestionsType({commit},payload){
         let result = await getQuestionsType();
-        console.log(result,'result')
         commit('getQuestionsTypes',result.data)
     },
     //获取当前用户信息
