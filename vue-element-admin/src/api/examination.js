@@ -20,8 +20,13 @@ export let AllExam = params => {
   return request.get('/exam/exam', params);
 }
 
-
 //更新试卷
 export let UpdateExam= params => {
   return request.put(`/exam/exam/${params.examID}`,params.question_ids);
+}
+
+//试卷详情
+export let DetailExam= params => {
+  console.log(params,'param')
+  return request.get(`/exam/exam/${params.examID}`);
 }

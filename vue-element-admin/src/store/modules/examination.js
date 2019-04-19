@@ -1,4 +1,4 @@
-import { CreateExam,ClassType,Subject,AllExam,UpdateExam } from '@/api/examination.js'
+import { CreateExam,ClassType,Subject,AllExam,UpdateExam,DetailExam } from '@/api/examination.js'
 
 const state = {
     ClassTypeData:[],
@@ -6,7 +6,8 @@ const state = {
     AllExamData:[],
     CreateExamData:[],
     CreateExamDataFun:[],
-    UpdateExamData:[]
+    UpdateExamData:[],
+    DetailExamData:[]
 }
 
 const mutations = {
@@ -27,6 +28,9 @@ const mutations = {
   },
   getUpdateExam(state,payload){
     state.UpdateExamData = payload
+  },
+  getDetailExam(state,payload){
+    state.DetailExamData = payload
   }
 }
 
@@ -56,9 +60,14 @@ const actions = {
   //更新试卷
   async UpdateExam({commit},payload){
     let result = await UpdateExam(payload)
-    console.log(result,'res')
     commit('getUpdateExam',result)
   },
+  //试卷详情
+  async DetailExam({commit},payload){
+    let result = await DetailExam(payload)
+    console.log(result,'res')
+    commit('getDetailExam',result)
+  }
 }
 
 export default {
