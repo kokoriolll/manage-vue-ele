@@ -1,53 +1,61 @@
 import request from '@/utils/request'
 
-//添加用户
+//添加用户vvv
 export function addUsers(data) {
   return request({
-    url: 'http://169.254.12.55:7001/user',
+    url: '/user',
     method: 'post',
     data
   })
 }
 
-//更新用户信息（用户名，用户密码，用户身份）
-export function updataUserInfo(token) {
+//更新用户信息（用户名，用户密码，用户身份）vvv
+export function updataUserInfo(data) {
   return request({
     url: '/user/user',
     method: 'put',
-    params: {
-      token
-    }
+    data
   })
 }
 
 //添加身份
 export function addIdentity(data) {
+  // console.log(data,'token1')
   return request({
     url: '/user/identity/edit',
     method: 'get',
-    data
+    params: {
+      ...data
+    }
   })
 }
 
 //添加api接口权限
 export function addAuthorityApi(data) {
+  // console.log(data,'token2')
   return request({
     url: '/user/authorityApi/edit',
     method: 'get',
-    data
+    params: {
+      ...data
+    }
   })
 }
 
 //添加视图权限
 export function addAuthorityView(data) {
+  // console.log(data,'token3')
   return request({
     url: '/user/authorityView/edit',
     method: 'get',
-    data
+    params: {
+      ...data
+    }
+
   })
 }
 
-//给身份设定api接口权限
+//给身份设定api接口权限vvv
 export function identityApi(data) {
   return request({
     url: '/user/setIdentityApi',
@@ -56,7 +64,7 @@ export function identityApi(data) {
   })
 }
 
-//给身份设定视图权限
+//给身份设定视图权限vvv
 export function identityView(data) {
   return request({
     url: '/user/setIdentityView',
@@ -68,7 +76,7 @@ export function identityView(data) {
 //展示用户数据
 export function userData() {
   return request({
-    url: 'http://169.254.12.55:7001/user/user',
+    url: '/user/user',
     method: 'get'
   })
 }
@@ -76,7 +84,7 @@ export function userData() {
 //展示身份数据
 export function identity() {
   return request({
-    url: 'http://169.254.12.55:7001/user/identity',
+    url: '/user/identity',
     method: 'get'
   })
 }
@@ -84,7 +92,7 @@ export function identity() {
 //展示api接口权限数据
 export function apiAuthority() {
   return request({
-    url: 'http://169.254.12.55:7001/user/api_authority',
+    url: '/user/api_authority',
     method: 'get'
 
   })

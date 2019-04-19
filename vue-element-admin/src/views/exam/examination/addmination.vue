@@ -2,133 +2,179 @@
   <div class="examination">
     <div class="head">添加考试</div>
     <div class="Allbox">
-      <div class="NameExamination">
-        <p>*试卷名称:</p>
-        <el-input placeholder="请输入内容" v-model="input10" clearable class="name"></el-input>
-      </div>
-      <div class="examType">
-        <p>*选择考试类型:</p>
-        <el-select v-model="value" placeholder="请选择" class="name">
-          <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          ></el-option>
-        </el-select>
-      </div>
+      <el-form :model="ruleForm" :rules="rules" ref="ruleForm" class="demo-ruleForm">
+        <el-form-item label="试卷名称" prop="name" class="ExamName">
+          <br>
+          <el-input v-model="ruleForm.name" style="width:200px"></el-input>
+        </el-form-item>
+        <el-form-item label="选择试卷考试类型" prop="type" class="ExamName">
+          <br>
+          <el-select v-model="ruleForm.type" @change="handleChange" style="width:200px">
+            <el-option
+              v-for="item in ClassTypeState"
+              :key="item.exam_id"
+              :label="item.exam_name"
+              :value="item.exam_id"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="选择课程" prop="region" class="ExamName">
+          <br>
+          <el-select v-model="ruleForm.region" @change="handleSub" style="width:200px">
+            <el-option
+              v-for="item in SubjectState"
+              :key="item.subject_id"
+              :label="item.subject_text"
+              :value="item.subject_id"
+            ></el-option>
+          </el-select>
+        </el-form-item>
 
-      <div class="classType">
-        <p>*选择课程:</p>
-        <el-select v-model="values" placeholder="请选择" class="name">
-          <el-option
-            v-for="item in option"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          ></el-option>
-        </el-select>
-      </div>
+        <el-form-item label="设置题量" prop="Topic" class="ExamName">
+          <br>
+          <el-input-number
+            v-model="ruleForm.Topic"
+            controls-position="right"
+            :min="1"
+            :max="10"
+            style="width:200px"
+          ></el-input-number>
+        </el-form-item>
 
-      <div class="Number">
-        <p>*设置数量:</p>
-        <el-input-number
-          class="name"
-          v-model="num8"
-          controls-position="right"
-          @change="handleChange"
-          :min="1"
-          :max="10"
-        ></el-input-number>
-      </div>
-
-      <div class="block">
-        <div class="demonstration">考试时间:</div>
-        <el-date-picker v-model="value1" type="datetime" placeholder="开始时间"></el-date-picker>
-        <span>-</span>
-        <el-date-picker v-model="value2" type="datetime" placeholder="结束时间" class="els"></el-date-picker>
-      </div>
-
-      <div class="btn">
-        <el-row>
-          <el-button type="primary">主要按钮</el-button>
-        </el-row>
-      </div>
+        <el-form-item label="考试时间" required class="ExamName datatime">
+          <br>
+          <el-col :span="6">
+            <el-form-item prop="date1">
+              <el-date-picker
+                type="datetime"
+                placeholder="选择日期"
+                v-model="ruleForm.date1"
+                style="width:300px"
+              ></el-date-picker>
+            </el-form-item>
+          </el-col>
+          <el-col class="line" :span="1">-</el-col>
+          <el-col :span="1">
+            <el-form-item prop="date2">
+              <el-date-picker
+                type="datetime"
+                placeholder="选择日期"
+                v-model="ruleForm.date2"
+                style="width:300px"
+              ></el-date-picker>
+            </el-form-item>
+          </el-col>
+        </el-form-item>
+        <el-form-item class="btn">
+          <el-button type="primary" @click="submitForm('ruleForm')">创建试卷</el-button>
+        </el-form-item>
+      </el-form>
     </div>
   </div>
 </template>
 
 <script>
+import { mapState, mapMutations, mapActions } from "vuex";
+var moment = require("moment");
+
 export default {
   data() {
     return {
-      input10: "",
-      options: [
-        {
-          value: "选项1",
-          label: "周考一"
-        },
-        {
-          value: "选项2",
-          label: "周考二"
-        },
-        {
-          value: "选项3",
-          label: "周考三"
-        },
-        {
-          value: "选项4",
-          label: "月考"
-        }
-      ],
-      value: "",
-      values: "",
-      option: [
-        {
-          value: "选项1",
-          label: "JavaScript上"
-        },
-        {
-          value: "选项2",
-          label: "JavaScript下"
-        },
-        {
-          value: "选项3",
-          label: "模块开发"
-        },
-        {
-          value: "选项4",
-          label: "移动开发"
-        },
-        {
-          value: "选项5",
-          label: "node基础"
-        },
-        {
-          value: "选项6",
-          label: "组件化开发(vue)"
-        },
-        {
-          value: "选项7",
-          label: "渐进式开发(react)"
-        },
-        {
-          value: "选项8",
-          label: "项目实战"
-        },
-        {
-          value: "选项9",
-          label: "javaScript高级"
-        },
-        {
-          value: "选项10",
-          label: "node高级"
-        }
-      ],
-      num8: 1,
-      value1: "",
-      value2: ""
+      num: "",
+      ruleForm: {
+        name: "",
+        region: "",
+        date1: "",
+        date2: "",
+        delivery: false
+      },
+      rules: {
+        name: [{ required: true, message: "请输入试卷名称", trigger: "blur" }],
+        type: [{ required: true, message: "请选择考试类型", trigger: "blur" }],
+        region: [{ required: true, message: "请选择课程", trigger: "blur" }],
+        Topic: [{ required: true, message: "请选择题量", trigger: "blur" }],
+        date1: [
+          {
+            type: "date",
+            required: true,
+            message: "请选择日期",
+            trigger: "change"
+          }
+        ],
+        date2: [
+          {
+            type: "date",
+            required: true,
+            message: "请选择时间",
+            trigger: "change"
+          }
+        ]
+      },
+      createExamParams: {},
+      ClassTypeID: "",
+      SubjectID: ""
     };
+  },
+  computed: {
+    ...mapState({
+      ClassTypeState: state => {
+        return state.examination.ClassTypeData;
+      },
+      SubjectState: state => {
+        return state.examination.SubjectData;
+      }
+    })
+  },
+  methods: {
+    ...mapMutations({
+      ClassTypeSave: "examination/getClassType",
+      SubjectSave: "examination/getSubject"
+    }),
+    ...mapActions({
+      CreateExam: "examination/CreateExam",
+      ClassType: "examination/ClassType",
+      Subject: "examination/Subject"
+    }),
+
+    submitForm(formName) {
+      this.$refs[formName].validate(async valid => {
+        if (valid) {
+          /* const localstorage = window.localStorage;
+          let res = await this.CreateExam({
+            subject_id: this.SubjectID,
+            exam_id: this.ClassTypeID,
+            title: this.ruleForm.name,
+            number: this.ruleForm.Topic,
+            start_time: dataTime1,
+            end_time: dataTime2
+          });
+          console.log(res);
+          window.localStorage.setItem("CreateExam", JSON.stringify(res)); */
+
+          const dataTime1 = moment(this.ruleForm.date1).unix();
+          const dataTime2 = moment(this.ruleForm.date2).unix();
+          const localstorage = window.localStorage;
+          let ruleForm = { ...this.ruleForm, dataTime2, dataTime1 };
+          let res = await this.CreateExam(ruleForm);
+          console.log(res,'res...')
+          // 本地存放提交成功的数据
+          window.localStorage.setItem("CreateExam", JSON.stringify(res));
+          //this.$router.push({ path: "/examination/newExam" });
+        } else {
+          return false;
+        }
+      });
+    },
+    handleChange(e) {
+      this.ClassTypeID = e;
+    },
+    handleSub(e) {
+      this.SubjectID = e;
+    }
+  },
+  created() {
+    this.ClassType();
+    this.Subject();
   }
 };
 </script>
@@ -149,79 +195,26 @@ export default {
 
 .Allbox {
   width: 96%;
-  height: 650px;
+  height: 700px;
   background: #fff;
   margin: 0 auto;
   border-radius: 15px;
   display: flex;
   flex-direction: column;
-  .NameExamination {
-    height: 100px;
-    margin-top: 12px;
-    p {
-      margin-left: 40px;
-    }
-    .name {
-      width: 150px;
-      height: 50px;
-      margin-left: 40px;
-    }
-  }
-  .examType {
-    height: 100px;
-    margin-top: 2px;
-    p {
-      margin-left: 40px;
-    }
-    .name {
-      width: 150px;
-      height: 50px;
-      margin-left: 40px;
-    }
-  }
 
-  .classType {
-    height: 100px;
-    margin-top: 2px;
-    p {
+  .demo-ruleForm {
+    display: flex;
+    flex-direction: column;
+    .ExamName {
       margin-left: 40px;
+      margin-top: 20px;
     }
-    .name {
-      width: 150px;
-      height: 50px;
+    .btn {
       margin-left: 40px;
+      margin-top: 20px;
     }
-  }
-
-  .Number {
-    height: 100px;
-    margin-top: 2px;
-    p {
-      margin-left: 40px;
+    .datatime {
     }
-    .name {
-      width: 150px;
-      height: 36px;
-      margin-left: 40px;
-    }
-  }
-
-  .block {
-    height: 80px;
-    margin-top: 12px;
-    div {
-      margin-left: 40px;
-      margin-bottom: 15px;
-    }
-    .els {
-      margin: 0;
-      padding: 0;
-    }
-  }
-
-  .btn{
-    margin-top: 22px;
-    margin-left: 40px;
   }
 }
 </style>

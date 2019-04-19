@@ -2,7 +2,7 @@
     <div>
         <p class="title">添加试题</p>
         <div class="box">
-            <Addque />
+            <Addque :list='list' />
         </div>
     </div>
 </template>
@@ -10,10 +10,21 @@
 <script>
     import Addque from '@/components/questions/addque.vue'
     export default {
+        data() {
+            return {
+                list:''
+            }
+        },
         components:{
             Addque
         },
+        created() {
+            this.getRoute();
+        },
         methods: {
+            getRoute(){
+                this.list = this.$route.query.list;
+            }
         }
     }
 </script>

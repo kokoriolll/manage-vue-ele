@@ -39,16 +39,15 @@ module.exports = {
       //   pathRewrite: {
       //     ['^' + process.env.VUE_APP_BASE_API]: ''
       //   }
-      // },
-      '/api':{
-        target:'http://169.254.12.55:7001/',
-        changeOrigin: true,
-        pathRewrite:{
-          '/api':''
+        '/api':{
+          target: `http://169.254.12.55:7001/`,
+          changeOrigin: true,
+          pathRewrite:{
+            '/api':''
+          }
         }
       }
-
-    },
+      
     // after: require('./mock/mock-server.js')
   },
   configureWebpack: {
@@ -105,7 +104,7 @@ module.exports = {
             .plugin('ScriptExtHtmlWebpackPlugin')
             .after('html')
             .use('script-ext-html-webpack-plugin', [{
-            // `runtime` must same as runtimeChunk name. default is `runtime`
+              // `runtime` must same as runtimeChunk name. default is `runtime`
               inline: /runtime\..*\.js$/
             }])
             .end()

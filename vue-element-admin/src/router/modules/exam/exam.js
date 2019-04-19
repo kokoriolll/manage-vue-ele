@@ -29,7 +29,17 @@ const examsRouter = {
       component: () => import('@/views/exam/questions/examin'),
       name: 'examin',
       meta: { title: 'Checktheitem', noCache: true }
-    }
+    },
+    {
+      path: 'adds',
+      component: () => import('@/views/exam/questions/add'),
+      hidden: true
+    },
+    {
+      path: 'detail',
+      component: () => import('@/views/exam/questions/detail'),
+      hidden: true
+    },
   ]
 }
 
