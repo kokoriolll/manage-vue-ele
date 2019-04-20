@@ -11,8 +11,8 @@
 
 <script>
 import {mapState,mapMutations,mapActions} from 'vuex'
-import classList from '@/components/class/classList.vue';
-import classDialog from '@/components/class/classDialog.vue';
+import classList from './components/classList.vue';
+import classDialog from './components/classDialog.vue';
 export default {
      data() {
         return {
