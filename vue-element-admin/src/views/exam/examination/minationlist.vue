@@ -66,7 +66,8 @@ export default {
   data() {
     return {
       classtypeValue: "",
-      subjectValue: ""
+      subjectValue: "",
+      examID:''
     };
   },
   computed: {
@@ -79,6 +80,12 @@ export default {
       },
       AllExamState: state => {
         return state.examination.AllExamData;
+      },
+      DetailExamState: state => {
+        return state.examination.DetailExamData;
+      },
+      CreateExamState: state => { //创建试卷
+        return state.examination.CreateExamData;
       }
     })
   },
@@ -86,13 +93,16 @@ export default {
     ...mapMutations({
       ClassTypeSave: "examination/getClassType",
       SubjectSave: "examination/getSubject",
-      AllExamSave: "examination/getAllExam"
+      AllExamSave: "examination/getAllExam",
+      DetailExamSave: "examination/getDetailExam",
+      CreateExamSave: "examination/getCreateExam"
     }),
     ...mapActions({
       CreateExam: "examination/CreateExam",
       ClassType: "examination/ClassType",
       Subject: "examination/Subject",
-      AllExam: "examination/AllExam"
+      AllExam: "examination/AllExam",
+      DetailExam: "examination/DetailExam"
     }),
     handleChange(e) {
       this.ClassTypeID = e;
@@ -101,7 +111,13 @@ export default {
       this.SubjectID = e;
     },
     handleDetail() {
-      this.$router.push({ path: "/examination/detail" });
+      //获取exam_exam_id的ID
+      this.examID = this.CreateExamState.exam_exam_id;
+      console.log(this.examID)
+      this.DetailExam({
+        examID: this.examID
+      });
+      //this.$router.push({ path: "/examination/detail" });
     }
   },
   created() {
