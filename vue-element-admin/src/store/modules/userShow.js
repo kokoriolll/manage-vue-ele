@@ -19,7 +19,6 @@ const state = {
   viewJurisdictionIdValue: [], //视图权限id
   identityIdValue: [], //身份id
   userIdValue: [], //用户id
-  // total: [], //总条数
   page: 1, //第几页
   pageSize: 10, //每页十条
   active: 0,
