@@ -16,13 +16,13 @@ const examsRouter = {
       path: 'approvals',
       component: () => import('@/views/exam/approval/approval'),
       name: 'approvals',
-      meta: { title: 'approvalclass', noCache: true }
+      meta: { title: 'approvalclass', noCache: true ,view_id: "main-examPaperClassmate"}
     },
     {
       path: 'type',
       component: () => import('@/views/charts/keyboard'),
       name: 'KeyboardChart',
-      meta: { title: '批卷', noCache: true }
+      meta: { title: '批卷', noCache: true ,view_id: "main-23"}
     }
   ]
 }

@@ -25,8 +25,8 @@ export function filterAsyncRoutes(routes, view_ids) {
     const tmp = { ...route }
     if (hasPermission(view_ids, tmp)) {
       if (tmp.children) {
+        console.log(tmp.children,'tmp.children')
         tmp.children = filterAsyncRoutes(tmp.children, view_ids)
-        console.log(tmp.children,'asdsa')
       }
       res.push(tmp)
     }
@@ -54,7 +54,9 @@ const actions = {
     // 在动态路由里过滤一遍，得到用户能访问的路由
     let accessedRoutes = filterAsyncRoutes(asyncRoutes, view_ids);
     // 更新路由
+    console.log(accessedRoutes,'accessedRoutes')
     commit('SET_ROUTES', accessedRoutes);
+    return accessedRoutes ;
   }
 }
 

@@ -16,19 +16,19 @@ const examsRouter = {
       path: 'classmanage',
       component: () => import('@/views/exam/class/classmanage'),
       name: 'classmanage',
-      meta: { title: 'Testquestions', noCache: true }
+      meta: { title: 'Testquestions', noCache: true ,view_id:'main-grade'}
     },
     {
       path: 'roommanage',
       component: () => import('@/views/exam/class/roommanage'),
       name: 'roommanage',
-      meta: { title: 'Classroom', noCache: true }
+      meta: { title: 'Classroom', noCache: true ,view_id:'main-student'}
     },
     {
       path: 'student',
       component: () => import('@/views/exam/class/student'),
       name: 'student',
-      meta: { title: 'syudent', noCache: true }
+      meta: { title: 'syudent', noCache: true ,view_id:'main-grade'}
     }
   ]
 }
