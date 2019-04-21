@@ -38,15 +38,10 @@ router.beforeEach(async(to, from, next) => {
           // get user info
           // note: roles must be a object array! such as: ['admin'] or ,['developer','editor']
           const userInfo = await store.dispatch('user/getInfo')
-          await store.dispatch('permission/generateRoutes',[])
-          // generate accessible routes map based on roles
-        //   const accessRoutes = await store.dispatch('permission/generateRoutes', roles)
-
-        //   // dynamically add accessible routes
-        //   router.addRoutes(accessRoutes)
-
-        //   // hack method to ensure that addRoutes is complete
-        //   // set the replace: true, so the navigation will not leave a history record
+          const getViewAuthority = await store.dispatch('user/getViewAuthoritys');
+          console.log(userInfo,'userInfo')
+          let generateRoutes = await store.dispatch('permission/generateRoutes',getViewAuthority)
+          router.addRoutes(generateRoutes)
           next({ ...to, replace: true })
         } catch (error) {
             console.log(error)
@@ -65,7 +60,6 @@ router.beforeEach(async(to, from, next) => {
       // in the free login whitelist, go directly
       next()
     } else {
-      // other pages that do not have permission to access are redirected to the login page.
       next(`/login?redirect=${to.path}`)
       NProgress.done()
     }

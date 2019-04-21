@@ -8,17 +8,16 @@
 <script>
     import Detail from '@/components/questions/detail.vue'
     export default {
+        data() {
+            return {
+            }
+        },
         components:{
             Detail
         },
         created() {
-            this.getRoute();
         },
         methods: {
-            getRoute(){
-                this.list = this.$route.query.list;
-                console.log(this.list.questions_stem)
-            }
         }
     }
 </script>

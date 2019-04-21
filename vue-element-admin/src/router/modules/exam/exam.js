@@ -16,29 +16,31 @@ const examsRouter = {
       path: 'add',
       component: () => import('@/views/exam/questions/add'),
       name: 'add',
-      meta: { title: 'testquestions', noCache: true }
+      meta: { title: 'testquestions', noCache: true , view_id:'main-addQuestions'}
     },
     {
       path: 'classify',
       component: () => import('@/views/exam/questions/classify'),
       name: 'classify',
-      meta: { title: 'classification', noCache: true }
+      meta: { title: 'classification', noCache: true , view_id:'main-questionsType'}
     },
     {
       path: 'examin',
       component: () => import('@/views/exam/questions/examin'),
       name: 'examin',
-      meta: { title: 'Checktheitem', noCache: true }
+      meta: { title: 'Checktheitem', noCache: true , view_id:'main-watchQuestions'}
     },
     {
       path: 'adds',
       component: () => import('@/views/exam/questions/add'),
-      hidden: true
+      hidden: true,
+      meta: { title: '', noCache: true , view_id:'main-editQuestions'}
     },
     {
       path: 'detail',
       component: () => import('@/views/exam/questions/detail'),
-      hidden: true
+      hidden: true,
+      meta: { title: '', noCache: true , view_id:'main-questionsDetail'}
     },
   ]
 }
