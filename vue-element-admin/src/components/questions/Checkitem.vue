@@ -94,10 +94,12 @@
         })
       },
       compile(item) {
-        this.$router.push({ path: '/Additem/adds', query: { list: item } })
+        this.$router.push({ path: '/Additem/adds'})
+        sessionStorage.setItem('questions_id',JSON.stringify(item.questions_id))
       },
       detail(item) {
-        this.$router.push({ path: '/Additem/detail', query: { list: item } })
+        this.$router.push({ path: '/Additem/detail'})
+        sessionStorage.setItem('questions_ids',JSON.stringify(item.questions_id))
       }
     }
   }

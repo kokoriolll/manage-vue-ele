@@ -65,7 +65,8 @@ export default {
          this.dialogForm({
             dialogFormVisible:true,
             type:type,
-            disable:true 
+            disable:true,
+            gradeID:row.grade_id 
          })  
          this.editClass(row)
          this.curAddClass(row)

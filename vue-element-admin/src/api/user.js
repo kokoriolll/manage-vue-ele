@@ -16,6 +16,14 @@ export function getInfo(token) {
   })
 }
 
+export function getviewAuthority(token) {
+  return request({
+    url: '/user/view_authority',
+    method: 'get',
+    params: { token }
+  })
+}
+
 export function logout() {
   return request({
     url: '/user/logout',

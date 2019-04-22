@@ -17,7 +17,8 @@ const examsRouter = {
       name: 'addmination',
       meta: {
         title: 'thetest',
-        noCache: true
+        noCache: true,
+        view_id: "main-examEdit"
       }
     },
     {
@@ -26,18 +27,29 @@ const examsRouter = {
       name: 'minationlist',
       meta: {
         title: 'testlist',
-        noCache: true
+        noCache: true,
+        view_id: "main-examList"
       }
     },
     {
       path: 'newExam',
       component: () => import('@/views/exam/examination/newExam'),
-      hidden: true
+      hidden: true,
+      meta: {
+        title: '',
+        noCache: true,
+        view_id: "main-examList"
+      }
     },
     {
       path: 'detail',
       component: () => import('@/views/exam/examination/detail'),
-      hidden: true
+      hidden: true,
+      meta: {
+        title: '',
+        noCache: true,
+        view_id: "main-examDetail"
+      }
     }
   ]
 }
