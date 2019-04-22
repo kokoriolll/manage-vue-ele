@@ -1,6 +1,6 @@
 <template>
   <div class="examination">
-    <div class="head">添加考试</div>
+    <p>添加考试</p>
     <div class="Allbox">
       <el-form :model="ruleForm" :rules="rules" ref="ruleForm" class="demo-ruleForm">
         <el-form-item label="试卷名称" prop="name" class="ExamName">
@@ -181,13 +181,9 @@ export default {
   width: 100%;
   height: 800px;
   background: #eee;
-}
-
-.head {
-  height: 80px;
-  padding: 30px;
-  box-sizing: border-box;
-  font-size: 30px;
+  >p{
+    font-size: 22px;
+  }
 }
 
 .Allbox {
