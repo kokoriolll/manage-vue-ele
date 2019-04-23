@@ -37,16 +37,16 @@ const actions = {
   async login({ commit }, userInfo) {
     const { username, password } = userInfo
     let res = await login({user_name:username,user_pwd:password})
-    console.log('res...',res)
     setToken(res.token)
     return res;
   },
 
   // get user info
-  async getInfo({ commit, state }) {
+  async getInfo({ commit, state },payload) {
     let result = await getInfo();
-    commit('userInfo',result.data)
-    return result.data;
+    let data={...result.data,...payload}
+    commit('userInfo',data)
+    return data;
   },
 
   // user logout
