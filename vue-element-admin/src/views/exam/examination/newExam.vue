@@ -80,7 +80,8 @@ export default {
     }),
     ...mapActions({
       CreateExam: "examination/CreateExam",//创建试卷
-      UpdateExam: "examination/UpdateExam" //更新试卷
+      UpdateExam: "examination/UpdateExam", //更新试卷
+      AllExam: "examination/AllExam"      
     }),
     //点击删除
     handleDel(index) {
@@ -114,6 +115,7 @@ export default {
         },
         examID:this.examID
       });
+      this.AllExam()
       this.$router.push({ path: "/examination/minationlist" })
     }
   },
