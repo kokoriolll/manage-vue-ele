@@ -22,7 +22,14 @@ const examsRouter = {
       path: 'userShow',
       component: () => import('@/views/exam/adduser/userShow'),
       name: 'userShow',
-      meta: { title: 'userdisplay', noCache: true ,view_id: "main-showUser"}
+      meta: { title: 'userdisplay', noCache: true }
+    },
+    {
+      path: 'headPortrait',
+      component: () => import('@/views/exam/adduser/headPortrait'),
+      name: 'headPortrait',
+      // meta: { title: 'headPortrait', noCache: true }
+      meta: { title: 'headPortrait', noCache: true ,view_id: "main-showUser"}
     }
   ]
 }
