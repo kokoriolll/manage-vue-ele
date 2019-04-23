@@ -6,54 +6,121 @@
         <el-button>添加新题</el-button>
       </el-row>
       <div class="style_exam">
-        <h2>ss</h2>
+        <h2>{{CreateExamDataFunState.title}}</h2>
         <p class="top">考试时间：1小时30分钟 监考人：刘于 开始考试时间：2018.9.10 10:00 阅卷人：刘于</p>
-        <div class="style_questionitem">
+        <div class="style_questionitem" v-for="(item,index) in this.createDate" :key="index">
           <div class="style_questionitem__3ETlC">
             <h4>
               "1"
-              <a href="javascript:;">删除</a>
+              <a href="javascript:;" @click="handleDel(index)">删除</a>
             </h4>
             <div class="react-markdown">
-              <p>在二维平面上，有一个机器人从原点 (0, 0) 开始，给出它的移动顺序，判断这个机器人在完成移动后是否在 (0, 0) 处结束。</p>
-              <p>移动顺序由字符串表示。机器人的有效动作有 R（右），L（左），U（上）和 D（下）。如果机器人在完成所有动作后返回原点，则返回 true。否则，返回 false。</p>
+              <p>{{item.title}}</p>
+              <p></p>
               <p>示例 1:</p>
-               <pre>
+              <pre>
                   <code>
-                    输入: "UD"
-                    输出: true
-                    解释：机器人向上移动一次，然后向下移动一次。所有动作都具有相同的幅度，因此它最终回到它开始的原点。因此，我们返回 true。
+                    {{item.questions_stem}}
                   </code>
               </pre>
               <p>示例 2:</p>
               <pre>
                   <code>
-                    输入: "LL"
-                    输出: false
-                    解释：机器人向左移动两次。它最终位于原点的左侧，距原点有两次 “移动” 的距离。我们返回 false，因为它在移动结束时没有返回原点。
+                    {{item.questions_answer}}
                   </code>
               </pre>
-              <p>注意：机器人“面朝”的方向无关紧要。 “R” 将始终使机器人向右移动一次，“L” 将始终向左移动等。此外，假设每次移动机器人的移动幅度相同。</p>
-              <p>请根据题意在横线处填写合适的代码：</p>
+              <p></p>
               <p>
-                function check(str){
-                    var U = 0, D = 0, L = 0, R = 0;
-                    for(var i=0; i  str.length; i++){
-                switch (str
+                {{item.questions_type_text}}
+                <br>
               </p>
+              <p>{{item.questions_answer}}</p>
             </div>
           </div>
         </div>
-        <button>
-          <span>创建试卷</span>
-        </button>
+        <button @click="handleClick">创建试卷</button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+import { mapState, mapMutations, mapActions } from "vuex";
+
+export default {
+  data() {
+    return {
+      createDate: [],
+      obj: "",
+      examID:""
+    };
+  },
+  computed: {
+    ...mapState({
+      CreateExamState: state => { //创建试卷
+        return state.examination.CreateExamData;
+      },
+      CreateExamDataFunState: state => {
+        return state.examination.CreateExamDataFun;
+      },
+      UpdateExamState: state => { //更新试卷
+        return state.examination.UpdateExamData;
+      }
+    })
+  },
+  mounted() {
+    //存入本地
+    this.createDate = JSON.parse(window.localStorage.getItem("CreateExam"));
+  },
+  methods: {
+    ...mapMutations({
+      CreateExamSave: "examination/getCreateExam",
+      CreateExamFunSave: "examination/getCreateExamFun",
+      UpdateExamSave: "examination/getUpdateExam"
+    }),
+    ...mapActions({
+      CreateExam: "examination/CreateExam",//创建试卷
+      UpdateExam: "examination/UpdateExam", //更新试卷
+      AllExam: "examination/AllExam"      
+    }),
+    //点击删除
+    handleDel(index) {
+      this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          this.createDate.splice(index, 1);
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
+    },
+    handleClick() {
+      //获取exam_exam_id的ID
+      this.examID = this.CreateExamState.exam_exam_id
+      //获取questions的ID
+      this.CreateExamState.questions.map(item => {
+        this.obj = item.questions_id;
+        return this.obj;
+      });
+      //更新试卷：传入参数
+      this.UpdateExam({
+        question_ids:{
+           question_ids:JSON.stringify(this.obj)
+        },
+        examID:this.examID
+      });
+      this.AllExam()
+      this.$router.push({ path: "/examination/minationlist" })
+    }
+  },
+  created() {}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -100,6 +167,8 @@ export default {};
     .style_questionitem {
       border: solid 1px #ccc;
       padding: 0 20px;
+      margin-top: 30px;
+
       .style_questionitem__3ETlC {
         h4 {
           margin-block-start: 1.33em;
@@ -120,17 +189,17 @@ export default {};
       }
     }
     button {
-        margin-top: 20px;
-        padding: 10px 40px!important;
-        border-radius: 4px!important;
-        border: 0!important;
-        font-size: 14px!important;
-        color: #fff!important;
-        background: linear-gradient(-90deg,#4e75ff,#0139fd)!important;
-        span{
-            pointer-events: none;
-            display: inline-block;
-        }
+      margin-top: 20px;
+      padding: 10px 40px !important;
+      border-radius: 4px !important;
+      border: 0 !important;
+      font-size: 14px !important;
+      color: #fff !important;
+      background: linear-gradient(-90deg, #4e75ff, #0139fd) !important;
+      span {
+        pointer-events: none;
+        display: inline-block;
+      }
     }
   }
 }

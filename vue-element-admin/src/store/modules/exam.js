@@ -7,25 +7,10 @@ const state={
     questions:[]
 }
 const mutations={
-    // 获取考试类型
-    getstyle(state,payload){
-        state.examType = payload;
-    },
-    //获取所有课程
-    itemsub(state,payload){
-        state.subject = payload;
-    },
-    //获取所有试题
-    getQuestionsTypes(state,payload){
-        state.getQuestionsType = payload;
-    },
-    //获取当前用户信息
-    getusers(state,payload){
-        state.getuser = payload;
-    },
-    //获取所有试题   //条件查询
-    questions(state,payload){
-        state.questions = payload;
+    updata(state,payload){
+        for(var i in payload){
+            state[i] = payload[i]
+        }
     }
 }
 const actions={
@@ -36,35 +21,35 @@ const actions={
     //获取考试类型
     async getitems({commit},payload){
         let result = await getitem();
-        commit('getstyle',result.data)
+        commit('updata',{examType:result.data})
     },
     //获取所有课程
     async subjects({commit},payload){
         let result = await subject();
-        commit('itemsub',result.data)
+        commit('updata',{subject:result.data})
     },
     //获取所有试题
     async getQuestionsType({commit},payload){
         let result = await getQuestionsType();
         console.log(result,'result')
-        commit('getQuestionsTypes',result.data)
+        commit('updata',{getQuestionsType:result.data})
     },
     //获取当前用户信息
     async getuser({commit},payload){
         let result = await getuser();
-        commit('getusers',result.data)
+        commit('updata',{getuser:result.data})
     },
     //获取所有试题
     async questions({commit},payload){
         let result = await questions();
-        commit('questions',result.data)
+        commit('updata',{questions:result.data})
     },
     //条件查询
     async condition({commit},payload){
         console.log(payload,'condition')
         let result = await condition(payload);
         console.log(result,'conditions')
-        commit('questions',result.data)
+        commit('updata',{questions:result.data})
     },
     //更新试题
     async update({commit},payload){

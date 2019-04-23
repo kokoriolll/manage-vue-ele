@@ -1,6 +1,6 @@
 <template>
   <div class="examination">
-    <div class="head">添加考试</div>
+    <p>添加考试</p>
     <div class="Allbox">
       <el-form :model="ruleForm" :rules="rules" ref="ruleForm" class="demo-ruleForm">
         <el-form-item label="试卷名称" prop="name" class="ExamName">
@@ -128,7 +128,8 @@ export default {
   methods: {
     ...mapMutations({
       ClassTypeSave: "examination/getClassType",
-      SubjectSave: "examination/getSubject"
+      SubjectSave: "examination/getSubject",
+      CreateExamSave: "examination/getCreateExam"
     }),
     ...mapActions({
       CreateExam: "examination/CreateExam",
@@ -138,8 +139,12 @@ export default {
 
     submitForm(formName) {
       this.$refs[formName].validate(async valid => {
+        var localstorage = window.localStorage;
+        //转换为时间戳
+        const dataTime1 = moment(this.ruleForm.date1).unix();
+        const dataTime2 = moment(this.ruleForm.date2).unix();
         if (valid) {
-          /* const localstorage = window.localStorage;
+          //传入接口参数
           let res = await this.CreateExam({
             subject_id: this.SubjectID,
             exam_id: this.ClassTypeID,
@@ -148,18 +153,10 @@ export default {
             start_time: dataTime1,
             end_time: dataTime2
           });
-          console.log(res);
-          window.localStorage.setItem("CreateExam", JSON.stringify(res)); */
 
-          const dataTime1 = moment(this.ruleForm.date1).unix();
-          const dataTime2 = moment(this.ruleForm.date2).unix();
-          const localstorage = window.localStorage;
-          let ruleForm = { ...this.ruleForm, dataTime2, dataTime1 };
-          let res = await this.CreateExam(ruleForm);
-          console.log(res,'res...')
           // 本地存放提交成功的数据
           window.localStorage.setItem("CreateExam", JSON.stringify(res));
-          //this.$router.push({ path: "/examination/newExam" });
+          this.$router.push({ path: "/examination/newExam" });
         } else {
           return false;
         }
@@ -184,13 +181,9 @@ export default {
   width: 100%;
   height: 800px;
   background: #eee;
-}
-
-.head {
-  height: 80px;
-  padding: 30px;
-  box-sizing: border-box;
-  font-size: 30px;
+  >p{
+    font-size: 22px;
+  }
 }
 
 .Allbox {

@@ -10,6 +10,7 @@ import examination from './modules/examination'
 
 import classManage from './modules/classManage'
 import classRoom from './modules/classroom'
+import student from './modules/student'
 Vue.use(Vuex)
 
 // https://webpack.js.org/guides/dependency-management/#requirecontext
@@ -28,7 +29,8 @@ const modules = modulesFiles.keys().reduce((modules, modulePath) => {
   login,
   examination,
   classManage,
-  classRoom
+  classRoom,
+  student
 })
 
 const store = new Vuex.Store({

@@ -3,7 +3,7 @@
     <el-dialog title="添加班级" :visible.sync="dialogFormVisible" width="40%" :before-close="handleDialogClose">
             <el-form  :model="ruleForm" :rules="rules" ref="ruleForm" class="demo-ruleForm">
                 <el-form-item label="教室名:" ref="name" prop="name">
-                    <el-input v-model="ruleForm.name" placeholder="教室名"></el-input>
+                    <el-input v-model="ruleForm.name" @input="getClass" placeholder="教室名"></el-input>
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
@@ -50,6 +50,12 @@ export default {
       getCurAllRoom:'classManage/getCurAllRoom',
       curAddRoom:'classRoom/curAddRoom'
     }),
+    getClass(e){
+      if(e){
+        this.ruleForm.name = e;
+        this.$refs['name'].clearValidate()
+      }
+    },
     handleDialogClose(){
       this.dialogForm({
          dialogFormVisible:false 
