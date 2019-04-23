@@ -1,10 +1,10 @@
 <template>
   <div :style="{zIndex:zIndex,height:height,width:width}" class="pan-item">
-    <div class="pan-info">
+    <!-- <div class="pan-info">
       <div class="pan-info-roles-container">
         <slot />
       </div>
-    </div>
+    </div> -->
     <img :src="image" class="pan-thumb">
   </div>
 </template>
@@ -23,11 +23,11 @@ export default {
     },
     width: {
       type: String,
-      default: '150px'
+      default: '50px'
     },
     height: {
       type: String,
-      default: '150px'
+      default: '50px'
     }
   }
 }
@@ -35,13 +35,15 @@ export default {
 
 <style scoped>
 .pan-item {
-  width: 200px;
-  height: 200px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   display: inline-block;
   position: relative;
   cursor: default;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  /* right:100px; */
+  top: 5px;
+  /* box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); */
 }
 
 .pan-info-roles-container {
@@ -52,7 +54,6 @@ export default {
 .pan-thumb {
   width: 100%;
   height: 100%;
-  background-size: 100%;
   border-radius: 50%;
   overflow: hidden;
   position: absolute;
@@ -69,21 +70,16 @@ export default {
   top: 40%;
   left: 95%;
   margin: -4px 0 0 -4px;
-  background: radial-gradient(ellipse at center, rgba(14, 14, 14, 1) 0%, rgba(125, 126, 125, 1) 100%);
-  box-shadow: 0 0 1px rgba(255, 255, 255, 0.9);
+  /* background: radial-gradient(ellipse at center, rgba(14, 14, 14, 1) 0%, rgba(125, 126, 125, 1) 100%);
+  box-shadow: 0 0 1px rgba(255, 255, 255, 0.9); */
 }
 
 .pan-info {
   position: absolute;
-  width: inherit;
-  height: inherit;
-  border-radius: 50%;
-  overflow: hidden;
-  box-shadow: inset 0 0 0 5px rgba(0, 0, 0, 0.05);
 }
 
 .pan-info h3 {
-  color: #fff;
+  /* color: #fff;
   text-transform: uppercase;
   position: relative;
   letter-spacing: 2px;
@@ -92,20 +88,20 @@ export default {
   padding: 22px 0 0 0;
   height: 85px;
   font-family: 'Open Sans', Arial, sans-serif;
-  text-shadow: 0 0 1px #fff, 0 1px 2px rgba(0, 0, 0, 0.3);
+  text-shadow: 0 0 1px #fff, 0 1px 2px rgba(0, 0, 0, 0.3); */
 }
 
 .pan-info p {
-  color: #fff;
+  /* color: #fff;
   padding: 10px 5px;
   font-style: italic;
   margin: 0 30px;
   font-size: 12px;
-  border-top: 1px solid rgba(255, 255, 255, 0.5);
+  border-top: 1px solid rgba(255, 255, 255, 0.5); */
 }
 
 .pan-info p a {
-  display: block;
+  /* display: block;
   color: #333;
   width: 80px;
   height: 80px;
@@ -120,21 +116,21 @@ export default {
   padding-top: 24px;
   margin: 7px auto 0;
   font-family: 'Open Sans', Arial, sans-serif;
-  opacity: 0;
-  transition: transform 0.3s ease-in-out 0.2s, opacity 0.3s ease-in-out 0.2s, background 0.2s linear 0s;
-  transform: translateX(60px) rotate(90deg);
+  opacity: 0; */
+  /* transition: transform 0.3s ease-in-out 0.2s, opacity 0.3s ease-in-out 0.2s, background 0.2s linear 0s;
+  transform: translateX(60px) rotate(90deg); */
 }
 
 .pan-info p a:hover {
-  background: rgba(255, 255, 255, 0.5);
+  /* background: rgba(255, 255, 255, 0.5); */
 }
 
 .pan-item:hover .pan-thumb {
-  transform: rotate(-110deg);
+  /* transform: rotate(-110deg); */
 }
 
 .pan-item:hover .pan-info p a {
   opacity: 1;
-  transform: translateX(0px) rotate(0deg);
+  /* transform: translateX(0px) rotate(0deg); */
 }
 </style>

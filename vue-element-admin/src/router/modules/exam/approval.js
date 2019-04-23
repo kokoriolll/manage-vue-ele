@@ -19,10 +19,10 @@ const examsRouter = {
       meta: { title: 'approvalclass', noCache: true ,view_id: "main-examPaperClassmate"}
     },
     {
-      path: 'type',
-      component: () => import('@/views/charts/keyboard'),
-      name: 'KeyboardChart',
-      meta: { title: '批卷', noCache: true ,view_id: "main-23"}
+      path: 'app_detail',
+      component: () => import('@/views/exam/approval/app_detail'),
+      name: 'app_detail',
+      hidden: true
     }
   ]
 }
