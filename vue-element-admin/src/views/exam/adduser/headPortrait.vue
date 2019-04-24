@@ -1,6 +1,6 @@
 <template>
   <div>
-    <pan-thumb :image="image"/>
+    <pan-thumb :image="userInfo.avatar"/>
 
     <el-button
       type="primary"
