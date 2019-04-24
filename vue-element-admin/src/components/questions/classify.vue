@@ -6,6 +6,9 @@
       <el-table-column prop="questions_type_text" label="类型名称"></el-table-column>
       <el-table-column prop="address" label="操作"></el-table-column>
     </el-table>
+    <!-- <el-upload>
+
+    </el-upload> -->
   </div>
 </template>
 
@@ -33,7 +36,6 @@ export default {
     }),
     open3() {
       this.sort = this.QuestionsType.length
-      console.log(this.sort)
         this.$prompt("创建新类型", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
