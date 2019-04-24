@@ -3,33 +3,24 @@
         <p>出题人:<span>{{list.user_name}}</span></p>
         <p>题目信息</p>
         <div class="title_list">
-                <span>{{list.questions_type_text}}</span>
-                <span>{{list.subject_text}}</span>
-                <span>{{list.exam_name}}</span>
-            </div> 
-            <pre>{{list.title}}</pre>
-        <markdown-editor  height="300px" :value='list.questions_stem' />
-        <!-- <div class="left">
-            <div class="title_list">
-                <span>{{list.questions_type_text}}</span>
-                <span>{{list.subject_text}}</span>
-                <span>{{list.exam_name}}</span>
-            </div> 
-            <pre>{{list.title}}</pre>
-            <code class="left_msg">{{list.questions_stem}}</code>     
-        </div> -->
+            <span>{{list.questions_type_text}}</span>
+            <span>{{list.subject_text}}</span>
+            <span>{{list.exam_name}}</span>
+        </div>
+        <pre>{{list.title}}</pre>
+        <markdown-editor height="300px" :value='list.questions_stem' />
     </div>
 </template>
 <script>
     import MarkdownEditor from '@/components/MarkdownEditor'
-    import {mapState,mapActions} from 'vuex'
+    import { mapState, mapActions } from 'vuex'
     export default {
         name: 'MarkdownDemo',
         components: { MarkdownEditor },
         data() {
             return {
-                questions_id:'',
-                list:{}
+                questions_id: '',
+                list: {}
             }
         },
         computed: {
@@ -58,62 +49,72 @@
 </script>
 
 <style lang="scss" scoped>
-    *{
+    * {
         list-style: none;
     }
-    .box{
+
+    .box {
         width: 100%;
         display: flex;
-        .left{
+        flex-direction: column;
+        .left {
             width: 60%;
-            background:#fff;
-            margin-right:1.5%;
-            box-sizing:border-box;
+            background: #fff;
+            margin-right: 1.5%;
+            box-sizing: border-box;
             border-radius: 10px;
             padding: 2%;
-            .title_list{
+
+            .title_list {
                 display: flex;
                 box-sizing: border-box;
             }
         }
-        .right{
+
+        .right {
             width: 40%;
-            background:#fff;
+            background: #fff;
             border-radius: 10px;
             padding: 2%;
-            box-sizing:border-box;
+            box-sizing: border-box;
         }
     }
-    .title_list{
-        span{
+
+    .title_list {
+        span {
             padding: 5px 8px;
-            font-size:12px;
+            font-size: 12px;
         }
-        span:nth-child(1){
+
+        span:nth-child(1) {
             border: 1px solid #9DDAFF;
             background: #E6F7FF;
             color: #1890FF;
         }
-        span:nth-child(2){
+
+        span:nth-child(2) {
             border: 1px solid #ADC6FF;
             margin-left: 7px;
             background: #F0F5FF;
             color: #2F54EC;
         }
-        span:nth-child(3){
+
+        span:nth-child(3) {
             border: 1px solid #FFD591;
             margin-left: 7px;
             background: #FFF7E6;
             color: #FA8C16;
         }
     }
-    .left_msg{
+
+    .left_msg {
         max-height: 500px;
         overflow: hidden;
         overflow-y: scroll;
     }
-    .right_msg{
-        margin-top:23%;
+
+    .right_msg {
+        margin-top: 23%;
         max-height: 500px;
         overflow: hidden;
         overflow-y: scroll;
