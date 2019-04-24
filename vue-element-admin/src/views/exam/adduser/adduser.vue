@@ -412,7 +412,7 @@ export default {
       }
       await this.setIdentityView({
         identity_id: obj.identity_id,
-        view_authority_id: obj1.api_authority_id
+        view_authority_id: obj1.view_authority_id
       });
       this.hint();
       this.datas();
