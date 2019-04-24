@@ -1,8 +1,15 @@
 <template>
     <div class="box">
-        <div class="left">
-            <p>出题人:<span>{{list.user_name}}</span></p>
-            <p>题目信息</p>
+        <p>出题人:<span>{{list.user_name}}</span></p>
+        <p>题目信息</p>
+        <div class="title_list">
+                <span>{{list.questions_type_text}}</span>
+                <span>{{list.subject_text}}</span>
+                <span>{{list.exam_name}}</span>
+            </div> 
+            <pre>{{list.title}}</pre>
+        <markdown-editor  height="300px" :value='list.questions_stem' />
+        <!-- <div class="left">
             <div class="title_list">
                 <span>{{list.questions_type_text}}</span>
                 <span>{{list.subject_text}}</span>
@@ -10,18 +17,15 @@
             </div> 
             <pre>{{list.title}}</pre>
             <code class="left_msg">{{list.questions_stem}}</code>     
-        </div>
-        <div class="right">
-            <pre>答案信息</pre>
-            <code class="right_msg">
-                    {{list.questions_stem}}
-            </code>
-        </div>
+        </div> -->
     </div>
 </template>
 <script>
+    import MarkdownEditor from '@/components/MarkdownEditor'
     import {mapState,mapActions} from 'vuex'
     export default {
+        name: 'MarkdownDemo',
+        components: { MarkdownEditor },
         data() {
             return {
                 questions_id:'',
