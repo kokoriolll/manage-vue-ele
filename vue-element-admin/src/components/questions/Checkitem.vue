@@ -83,7 +83,6 @@
         condition: 'exam/condition'
       }),
       subject_id(item) {
-        console.log(item.subject_id)
         this.subjectid = item.subject_id;
       },
       submit() {
