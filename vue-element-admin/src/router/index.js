@@ -13,7 +13,8 @@ import tableRouter from './modules/table'
 import nestedRouter from './modules/nested'
 /* 添加试题列表 */
 import examRouter from './modules/exam/exam'
-import userRouter from './modules/exam/user'
+import examsRouter from './modules/exam/user'
+import userRouter from './modules/user'
 import manageRouter from './modules/exam/manage'
 import classsRouter from './modules/exam/classs'
 import approvalRouter from './modules/exam/approval'
@@ -118,6 +119,7 @@ export const asyncRoutes = [
   examRouter,
   userRouter,
   manageRouter,
+  examsRouter,
   classsRouter,
   approvalRouter
   // {

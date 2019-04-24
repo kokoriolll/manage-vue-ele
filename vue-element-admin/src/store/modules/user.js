@@ -1,7 +1,7 @@
 import { login, logout, getInfo, getviewAuthority } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
-
+import {updataUserInfo} from '@/api/userManagement'
 const state = {
   token: getToken(),
   name: '',
@@ -41,7 +41,6 @@ const actions = {
   async login({ commit }, userInfo) {
     const { username, password } = userInfo
     let res = await login({user_name:username,user_pwd:password})
-    console.log('res...',res)
     setToken(res.token)
     return res;
   },
@@ -55,14 +54,15 @@ const actions = {
 
   async getViewAuthoritys({commit},payload){
     let getviewAuthority_s = await getviewAuthority();
-    console.log(getviewAuthority_s,'asdas')
     if(getviewAuthority_s.code == 1){
       commit('viewAuthority',getviewAuthority_s.data)
       return getviewAuthority_s.data;
     }
     return [];
   },
-
+  async getUpdataUserInfo({commit},payload){
+    let updataUserInfo_s = await updataUserInfo(payload)
+  },
   // user logout
   logout({ commit, state }) {
     return new Promise((resolve, reject) => {

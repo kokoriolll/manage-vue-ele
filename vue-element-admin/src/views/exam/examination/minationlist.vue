@@ -1,10 +1,10 @@
 <template>
   <div class="minWraper">
-    <div class="head">试卷列表</div>
+    <p>试卷列表</p>
     <div class="top">
       <div class="examType">
         <span>考试类型:</span>
-        <el-select v-model="classtypeValue" @change="handleChange" style="width:200px">
+        <el-select v-model="classtypeValue" @change="handleChange" style="width:50%">
           <el-option
             v-for="item in ClassTypeState"
             :key="item.exam_id"
@@ -16,7 +16,7 @@
 
       <div class="classType">
         <span>课程:</span>
-        <el-select v-model="subjectValue" @change="handleSub" style="width:200px">
+        <el-select v-model="subjectValue" @change="handleSub" style="width:50%">
           <el-option
             v-for="item in SubjectState"
             :key="item.subject_id"
@@ -25,12 +25,7 @@
           ></el-option>
         </el-select>
       </div>
-
-      <div>
-        <el-row>
-          <el-button type="primary" class="search">搜索</el-button>
-        </el-row>
-      </div>
+      <el-button type="primary" icon="el-icon-search" class="search">查询</el-button>
     </div>
 
     <div class="content">
@@ -45,13 +40,15 @@
 
       <div class="center">
         <el-table :data="AllExamState" style="width: 100%">
-          <el-table-column prop="title" label="试卷信息" width="350"></el-table-column>
-          <el-table-column :data="AllExamState.grade_name" prop="grade_name" label="班级" width="280"></el-table-column>
-          <el-table-column prop="user_name" label="创建人" width="350"></el-table-column>
-          <el-table-column prop="start_time" label="开始时间" width="350"></el-table-column>
+          <el-table-column prop="title" label="试卷信息"></el-table-column>
+          <el-table-column :data="AllExamState.grade_name" prop="grade_name" label="班级"></el-table-column>
+          <el-table-column prop="user_name" label="创建人"></el-table-column>
+          <el-table-column prop="start_time" label="开始时间"></el-table-column>
           <el-table-column prop="end_time" label="结束时间"></el-table-column>
           <el-table-column label="操作" width="100">
-            <el-button @click="handleDetail" type="text" size="small">详情</el-button>
+            <template slot-scope="scope">
+            <el-button @click="handleDetail(scope.row)" type="text" size="small">详情</el-button>
+            </template>
           </el-table-column>
         </el-table>
       </div>
@@ -110,14 +107,14 @@ export default {
     handleSub(e) {
       this.SubjectID = e;
     },
-    handleDetail() {
+    handleDetail(row) {
+      console.log(row,'row')
       //获取exam_exam_id的ID
-      this.examID = this.CreateExamState.exam_exam_id;
-      console.log(this.examID)
       this.DetailExam({
-        examID: this.examID
+        examID: row.exam_exam_id
       });
-      //this.$router.push({ path: "/examination/detail" });
+      window.localStorage.setItem('examID',JSON.stringify(row.exam_exam_id))
+      this.$router.push({ path: "/examination/detail" });
     }
   },
   created() {
@@ -133,46 +130,31 @@ export default {
   width: 100%;
   height: 800px;
   background: #eee;
-}
-
-.head {
-  height: 80px;
-  padding: 30px;
-  box-sizing: border-box;
-  font-size: 30px;
+  >p{
+    font-size: 22px;
+  }
 }
 
 .top {
-  height: 150px;
+  height: 15%;
   background: #fff;
   border-radius: 15px;
   display: flex;
   .examType {
-    margin-top: 28px;
-    margin-left: 70px;
-    span {
-      margin: 0 15px;
-    }
-    .name {
-      width: 280px;
-    }
+    margin-top: 3%;
+    margin-left: 2%;
   }
 
   .classType {
-    margin-top: 28px;
-    margin-left: 100px;
-    span {
-      margin: 0 15px;
-    }
-    .name {
-      width: 280px;
-    }
-  }
+    margin-top: 3%;
+    margin-left: 2%;
+  } 
 
   .search {
-    width: 150px;
-    margin-top: 28px;
-    margin-left: 50px;
+    width: 120px;
+    height: 32px;
+    margin-top: 40px;
+    background: #0139FD;
   }
 }
 
