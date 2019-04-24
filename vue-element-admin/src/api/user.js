@@ -30,4 +30,10 @@ export function logout() {
     method: 'post'
   })
 }
-
+export function user_gx(data) {
+  return request({
+    url: '/user/user',
+    method: 'put',
+    data
+  })
+}

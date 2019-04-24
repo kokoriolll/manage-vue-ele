@@ -1,4 +1,4 @@
-import { login, logout, getInfo, getviewAuthority } from '@/api/user'
+import { login, logout, getInfo, getviewAuthority , user_gx } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
 import {updataUserInfo} from '@/api/userManagement'
@@ -37,6 +37,12 @@ const mutations = {
 }
 
 const actions = {
+  async user_user({commit},payload){
+    console.log(payload,'123')
+      await user_gx(payload);
+      let result = await getInfo();
+      commit('userInfo',result.data)
+  },
   // user login
   async login({ commit }, userInfo) {
     const { username, password } = userInfo

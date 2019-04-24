@@ -65,8 +65,7 @@ const actions = {
   //试卷详情
   async DetailExam({commit},payload){
     let result = await DetailExam(payload)
-    console.log(result,'res')
-    commit('getDetailExam',result)
+    commit('getDetailExam',result.data.questions)
   }
 }
 

@@ -5,32 +5,21 @@
       <div class="left">
         <div class="style_exam__2fYLs">
           <div class="style_questionitem">
-            <div class="style_questionitem__1TQyr">
-              <h4>1：使用类实现任务调度</h4>
+            <div
+              class="style_questionitem__1TQyr"
+              v-for="(item,index) in DetailExamState"
+              :key="index"
+            >
+              <h4>1、{{item.title}}</h4>
               <div class="react-markdown">
-                <h2>使用js实现以下效果</h2>
+                <h2>{{item.questions_type_text}}</h2>
                 <p>
-                  var priorityQueue = new PriorityQueue();
-                  <br>priorityQueue.enqueue('优先级1-1', 1);
-                  <br>priorityQueue.enqueue('优先级3-1', 3);
-                  <br>priorityQueue.enqueue('优先级1-2', 1);
-                  <br>priorityQueue.enqueue('优先级2-1', 2);
-                  <br>priorityQueue.print();
-                  <br>// 优先级1-1 优先级1-2 优先级2-1 优先级3-1 priorityQueue.dequeue();
+                  {{item.questions_answer}}
+                  <br>
                 </p>
                 <pre>
                     <code class="language-js">
-                        class PriorityQueue{
-                            constuctor(obj){
-                                this.arr=[];
-                            }
-                            enqueue(str,num){
-                                // write your code here
-                            }
-                            print(){
-                            // write your code here 
-                            }
-                        }
+                       {{item.questions_stem}}
                     </code>
                 </pre>
               </div>
@@ -44,7 +33,34 @@
 </template>
 
 <script>
-export default {};
+import { mapState, mapMutations, mapActions } from "vuex";
+
+export default {
+  data() {
+    return {
+      detailData: []
+    };
+  },
+  computed: {
+    ...mapState({
+      DetailExamState: state => {
+        return state.examination.DetailExamData;
+      }
+    })
+  },
+  methods: {
+    ...mapMutations({
+      DetailExamSave: "examination/getDetailExam"
+    }),
+    ...mapActions({
+      DetailExam: "examination/DetailExam"
+    })
+  },
+  mouted() {
+    //存入本地
+    this.detailData = JSON.parse(window.localStorage.getItem("examID"));
+  }
+};
 </script>
 
 <style lang="scss" scoped>

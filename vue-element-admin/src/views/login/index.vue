@@ -100,8 +100,8 @@ export default {
           type: [],
       },
       loginForm: {
-        username: 'wuhongyang',
-        password: 'Wuhongyang123!'
+        username: '',
+        password: ''
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur'},{trigger: 'blur',validator: validateUsername }],
