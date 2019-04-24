@@ -53,8 +53,8 @@ export default {
 
 <style scoped>
   .avatar{
-    width: 200px;
-    height: 200px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
   }
 </style>

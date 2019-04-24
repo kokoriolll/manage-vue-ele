@@ -45,6 +45,7 @@ export default {
     form: 'Formulario',
     createArticle: 'Crear artículo',
     editArticle: 'Editar artículo',
+    headPortrait:'head portrait',
     articleList: 'Listado de artículos',
     errorPages: 'Páginas de error',
     page401: '401',

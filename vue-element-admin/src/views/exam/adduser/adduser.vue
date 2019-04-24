@@ -269,7 +269,6 @@ export default {
           });
           return false;
         }
-        console.log(obj1.user_id)
         await this.setUpdataUserInfo({
           user_id: obj1.user_id,
           user_name: this.userName,
@@ -412,7 +411,7 @@ export default {
       }
       await this.setIdentityView({
         identity_id: obj.identity_id,
-        view_authority_id: obj1.api_authority_id
+        view_authority_id: obj1.view_authority_id
       });
       this.hint();
       this.datas();

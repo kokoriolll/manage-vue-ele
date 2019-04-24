@@ -6,7 +6,9 @@ import { asyncRoutes, constantRoutes } from '@/router'
  * @param route
  */
 function hasPermission(view_ids, route) {
+  //console.log(route.meta,'route.meta')
   if (route.meta && route.meta.view_id) {
+    console.log(view_ids,'view_ids')
     return view_ids.some(item => item === route.meta.view_id)
   } else {
     return true
@@ -20,12 +22,11 @@ function hasPermission(view_ids, route) {
  */
 export function filterAsyncRoutes(routes, view_ids) {
   const res = []
-
+  console.log(asyncRoutes,'asyncRoutes')
   routes.forEach(route => {
     const tmp = { ...route }
     if (hasPermission(view_ids, tmp)) {
       if (tmp.children) {
-        console.log(tmp.children,'tmp.children')
         tmp.children = filterAsyncRoutes(tmp.children, view_ids)
       }
       res.push(tmp)
@@ -51,6 +52,7 @@ const actions = {
   generateRoutes({ commit }, view_authority) {
     // 获取用户所拥有的view_ids
     let view_ids = view_authority.map(item=>item.view_id);
+    console.log(view_ids,'view_ids')
     // 在动态路由里过滤一遍，得到用户能访问的路由
     let accessedRoutes = filterAsyncRoutes(asyncRoutes, view_ids);
     // 更新路由

@@ -47,7 +47,6 @@
 <script>
     import MarkdownEditor from '@/components/MarkdownEditor'
     import { mapState, mapMutations, mapActions } from 'vuex'
-    const content = ``
     export default {
         name: 'MarkdownDemo',
         components: { MarkdownEditor },
@@ -113,7 +112,6 @@
             },
             getHtml() {
                 this.html = this.$refs.markdownEditor.getHtml()
-                console.log(this.html)
             },
             ...mapActions({
                 additem: 'exam/additems',

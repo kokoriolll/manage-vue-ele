@@ -22,7 +22,8 @@
 
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">
-          <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
+          <!-- <img :src="userInfo.avatar'" class="user-avatar"> -->
+          <pan-thumb :image="userInfo.avatar" />
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown">
@@ -41,12 +42,26 @@
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
+      <el-button type="primary" icon="upload" style="position: absolute;bottom:0px;z-index: 999;width: 60px;height: 60px;border-radius: 50%;opacity: 0;" @click="imagecropperShow=true" />
+  
+      <image-cropper
+        v-show="imagecropperShow"
+        :key="imagecropperKey"
+        :width="300"
+        :height="300"
+        url="http://123.206.55.50:11000/upload"
+        lang-type="en"
+        @close="close"
+        @crop-upload-success="cropSuccess"
+      />
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import ImageCropper from '@/components/ImageCropper'
+import PanThumb from '@/components/PanThumb'
+import { mapGetters , mapState , mapActions } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
 import ErrorLog from '@/components/ErrorLog'
@@ -56,6 +71,13 @@ import LangSelect from '@/components/LangSelect'
 import Search from '@/components/HeaderSearch'
 
 export default {
+  data() {
+    return {
+      imagecropperShow: false,
+      imagecropperKey: 0,
+      image: ''
+    }
+  },
   components: {
     Breadcrumb,
     Hamburger,
@@ -63,7 +85,9 @@ export default {
     Screenfull,
     SizeSelect,
     LangSelect,
-    Search
+    Search,
+    ImageCropper,
+    PanThumb 
   },
   computed: {
     ...mapGetters([
@@ -71,9 +95,15 @@ export default {
       'name',
       'avatar',
       'device'
-    ])
+    ]),
+    ...mapState({
+      userInfo:state=>state.user.userInfo
+    })
   },
   methods: {
+    ...mapActions({
+      user_user:'user/user_user'
+    }),
     toggleSideBar() {
       this.$store.dispatch('app/toggleSideBar')
     },
@@ -81,6 +111,16 @@ export default {
       await this.$store.dispatch('user/logout')
       console.log(this.$route.fullPath,'this.$route.fullPath')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+    },
+    cropSuccess(e) {
+      this.user_user({
+        user_id:this.userInfo.user_id,
+        user_name:this.userInfo.user_name,
+        avatar:e[0].path
+      })
+    },
+    close() {
+      this.imagecropperShow = false
     }
   }
 }
