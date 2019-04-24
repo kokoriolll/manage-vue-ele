@@ -5,24 +5,9 @@
     <div class="right-menu">
       <el-dropdown class="avatar-container right-menu-item">
         <div class="avatar-wrapper">
-<<<<<<< HEAD
-          <img style="width:40px;height:40px;border-radius:50%"  :src="userInfo.avatar" class="user-avatar">
-          <i class="el-icon-caret-bottom" trigger="click" />
-          <image-cropper
-            v-show="imagecropperShow"
-            :key="imagecropperKey"
-            :width="300"
-            :height="300"
-            url="http://123.206.55.50:11000/upload"
-            lang-type="en"
-            @close="close"
-            @crop-upload-success="cropSuccess"
-            />
-=======
           <!-- <img :src="userInfo.avatar'" class="user-avatar"> -->
           <pan-thumb :image="userInfo.avatar" />
           <i class="el-icon-caret-bottom" />
->>>>>>> 6c26d17625d74b8c8c38132ebdc4f603fadef647
         </div>
         <el-dropdown-menu slot="dropdown">
           <router-link to="/">
@@ -61,13 +46,7 @@
 </template>
 
 <script>
-<<<<<<< HEAD
-import {mapState, mapGetters,mapActions } from 'vuex'
-=======
-import ImageCropper from '@/components/ImageCropper'
-import PanThumb from '@/components/PanThumb'
 import { mapGetters , mapState , mapActions } from 'vuex'
->>>>>>> 6c26d17625d74b8c8c38132ebdc4f603fadef647
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
 import ErrorLog from '@/components/ErrorLog'
@@ -78,20 +57,11 @@ import Search from '@/components/HeaderSearch'
 import ImageCropper from '@/components/ImageCropper'
 import PanThumb from '@/components/PanThumb'
 export default {
-<<<<<<< HEAD
-
-  data(){
-    return {
-      imagecropperShow: false,
-      imagecropperKey: 0,
-      image: 'https://wpimg.wallstcn.com/577965b9-bb9e-4e02-9f0c-095b41417191'
-=======
   data() {
     return {
       imagecropperShow: false,
       imagecropperKey: 0,
       image: ''
->>>>>>> 6c26d17625d74b8c8c38132ebdc4f603fadef647
     }
   },
   components: {
@@ -103,11 +73,7 @@ export default {
     LangSelect,
     Search,
     ImageCropper,
-<<<<<<< HEAD
-    PanThumb
-=======
     PanThumb 
->>>>>>> 6c26d17625d74b8c8c38132ebdc4f603fadef647
   },
   computed: {
     ...mapGetters([
@@ -122,30 +88,8 @@ export default {
   },
   methods: {
     ...mapActions({
-<<<<<<< HEAD
-      getInfo:'user/getInfo',
-      getUpdataUserInfo:'user/getUpdataUserInfo'
-    }),
-    async cropSuccess(e) {
-        this.image = e[0].path
-        this.imagecropperShow = false
-        let res = await this.getInfo()
-        await this.getUpdataUserInfo({
-          user_id:res.user_id,
-          user_name:res.user_name,
-          user_pwd:res.user_pwd,
-          identity_id:res.identity_id,
-          avatar:this.image
-        })
-       await this.getInfo()
-    },
-    close() {
-        this.imagecropperShow = false
-    },
-=======
       user_user:'user/user_user'
     }),
->>>>>>> 6c26d17625d74b8c8c38132ebdc4f603fadef647
     toggleSideBar() {
       this.$store.dispatch('app/toggleSideBar')
     },

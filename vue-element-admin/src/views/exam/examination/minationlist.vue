@@ -4,11 +4,7 @@
     <div class="top">
       <div class="examType">
         <span>考试类型:</span>
-<<<<<<< HEAD
-        <el-select v-model="classtypeValue" @change="handleChange" style="width:50%">
-=======
         <el-select v-model="classtypeValue" @change="handleChange" style="width:55%">
->>>>>>> 6c26d17625d74b8c8c38132ebdc4f603fadef647
           <el-option
             v-for="item in ClassTypeState"
             :key="item.exam_id"
@@ -20,11 +16,7 @@
 
       <div class="classType">
         <span>课程:</span>
-<<<<<<< HEAD
-        <el-select v-model="subjectValue" @change="handleSub" style="width:50%">
-=======
         <el-select v-model="subjectValue" @change="handleSub" style="width:55%">
->>>>>>> 6c26d17625d74b8c8c38132ebdc4f603fadef647
           <el-option
             v-for="item in SubjectState"
             :key="item.subject_id"
@@ -116,10 +108,6 @@ export default {
       this.SubjectID = e;
     },
     handleDetail(row) {
-<<<<<<< HEAD
-      console.log(row,'row')
-=======
->>>>>>> 6c26d17625d74b8c8c38132ebdc4f603fadef647
       //获取exam_exam_id的ID
       this.DetailExam({
         examID: row.exam_exam_id
@@ -152,31 +140,19 @@ export default {
   border-radius: 15px;
   display: flex;
   .examType {
-<<<<<<< HEAD
-    margin-top: 3%;
-=======
     margin-top: 2.4%;
->>>>>>> 6c26d17625d74b8c8c38132ebdc4f603fadef647
     margin-left: 2%;
   }
 
   .classType {
-<<<<<<< HEAD
-    margin-top: 3%;
-=======
     margin-top: 2.4%;
->>>>>>> 6c26d17625d74b8c8c38132ebdc4f603fadef647
     margin-left: 2%;
   } 
 
   .search {
     width: 120px;
     height: 32px;
-<<<<<<< HEAD
-    margin-top: 40px;
-=======
     margin-top:40px;
->>>>>>> 6c26d17625d74b8c8c38132ebdc4f603fadef647
     background: #0139FD;
   }
 }
