@@ -20,7 +20,6 @@ export function updataUserInfo(data) {
 
 //添加身份
 export function addIdentity(data) {
-  // console.log(data,'token1')
   return request({
     url: '/user/identity/edit',
     method: 'get',
@@ -32,7 +31,6 @@ export function addIdentity(data) {
 
 //添加api接口权限
 export function addAuthorityApi(data) {
-  // console.log(data,'token2')
   return request({
     url: '/user/authorityApi/edit',
     method: 'get',
@@ -44,14 +42,12 @@ export function addAuthorityApi(data) {
 
 //添加视图权限
 export function addAuthorityView(data) {
-  // console.log(data,'token3')
   return request({
     url: '/user/authorityView/edit',
     method: 'get',
     params: {
       ...data
     }
-
   })
 }
 
@@ -94,7 +90,6 @@ export function apiAuthority() {
   return request({
     url: '/user/api_authority',
     method: 'get'
-
   })
 }
 
@@ -104,7 +99,6 @@ export function identityApiAuthorityRelation() {
   return request({
     url: '/user/identity_api_authority_relation',
     method: 'get'
-
   })
 }
 
@@ -113,7 +107,6 @@ export function viewAuthority() {
   return request({
     url: '/user/view_authority',
     method: 'get'
-
   })
 }
 
@@ -122,6 +115,5 @@ export function identityViewAuthorityRelation() {
   return request({
     url: '/user/identity_view_authority_relation',
     method: 'get'
-
   })
 }

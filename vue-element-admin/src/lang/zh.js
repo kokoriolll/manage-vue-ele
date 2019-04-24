@@ -72,6 +72,7 @@ export default {
     Checktheitem: '查看试题',
     Addusers: '添加用户',
     userdisplay: '用户展示',
+    headPortrait:'头像',
     thetest: '添加考试',
     testlist: '试卷列表',
     Testquestions: '班级管理',

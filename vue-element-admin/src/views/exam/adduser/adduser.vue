@@ -269,7 +269,6 @@ export default {
           });
           return false;
         }
-        console.log(obj1.user_id)
         await this.setUpdataUserInfo({
           user_id: obj1.user_id,
           user_name: this.userName,
