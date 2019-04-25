@@ -7,7 +7,8 @@
         <div class="avatar-wrapper">
           <!-- <img :src="userInfo.avatar'" class="user-avatar"> -->
           <pan-thumb :image="userInfo.avatar" />
-          <i class="el-icon-caret-bottom" />
+          <span>{{userInfo.user_name}}</span>
+          <!-- <i class="el-icon-caret-bottom" /> -->
         </div>
         <el-dropdown-menu slot="dropdown">
           <router-link to="/">

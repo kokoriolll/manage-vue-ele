@@ -90,51 +90,6 @@ export default {
       })
       this.getPage()
     },
-    async curSearch(){
-        if(!this.form.name && !this.form.room && !this.form.class){
-           this.getPage()
-        }else if(this.form.name){
-          let res = await this.curUpDateStudent()
-            let newData = res.filter(val=>{
-              return val.student_name == this.form.name
-            })
-            if(newData){
-              this.pageData(newData)
-            }else{
-              return;
-            }
-        }else if(this.form.room){
-          let res = await this.curUpDateStudent()
-            let newData = res.filter(val=>{
-              return val.room_text == this.form.room
-            })
-            if(newData){
-              this.pageData(newData)
-            }else{
-              return;
-            }
-        }else if(val.grade_name){
-          let res = await this.curUpDateStudent()
-            let newData = res.filter(val=>{
-              return val.grade_name == this.form.class
-            })
-            if(newData){
-              this.pageData(newData)
-            }else{
-              return;
-            }
-        }else if(this.form.name && this.form.room && this.form.class){
-            let res = await this.curUpDateStudent()
-            let newData = res.filter(val=>{
-              return val.student_name == this.form.name || val.room_text == this.form.room || val.grade_name == this.form.class
-            })
-            if(newData){
-              this.pageData(newData)
-            }else{
-              return;
-            }
-        }     
-    },
     async getPage(){
         this.updatePage({
           pageSize:this.pageSize,

@@ -26,6 +26,7 @@
         </el-select>
       </div>
       <el-button type="primary" icon="el-icon-search" class="search">查询</el-button>
+      <el-button @click="exportExcel" type="primary" icon="el-icon-search" class="search export">导出试卷</el-button>
     </div>
 
     <div class="content">
@@ -47,7 +48,8 @@
           <el-table-column prop="end_time" label="结束时间"></el-table-column>
           <el-table-column label="操作" width="100">
             <template slot-scope="scope">
-            <el-button @click="handleDetail(scope.row)" type="text" size="small">详情</el-button>
+               <el-button @click="handleDetail(scope.row)" type="text" size="small">详情</el-button>
+               
             </template>
           </el-table-column>
         </el-table>
@@ -114,6 +116,22 @@ export default {
       });
       window.localStorage.setItem('examID',JSON.stringify(row.exam_exam_id))
       this.$router.push({ path: "/examination/detail" });
+    },
+    exportExcel(){
+      // import('@/vendor/Export2Excel').then(excel => {
+      //   let list = this.AllExamState.map(item=>Object.values(item))
+      //   console.log(list,'list')
+      //   let newlist = list.map(item=>{
+      //     Object.keys
+      //   })
+      //   // excel.export_json_to_excel({
+      //   //   header: ['试卷信息', '班级', '创建人', '开始时间', '结束时间'],
+      //   //   data:this.AllExamState,
+      //   //   filename: this.filename,
+      //   //   autoWidth: this.autoWidth,
+      //   //   bookType: this.bookType
+      //   // })
+      // })
     }
   },
   created() {

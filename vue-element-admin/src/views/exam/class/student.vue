@@ -46,6 +46,7 @@ export default {
        classData:state => state.classManage.classData
       })
    },
+   
    mounted(){
     this.getPage()
     this.getCurAllRoom() 
@@ -75,33 +76,27 @@ export default {
        }
     },
     async curSearch(){
-        if(!this.form.name && !this.form.room && !this.form.class){
-           this.getPage()
-        }else if(!this.form.name){
-           let res = await this.curUpDateStudent()
-           let newData = res.filter(val=>{
-              return val.room_text == this.form.room || val.grade_name == this.form.class
-            })
-           this.getNewData(newData)
-        }else if(!this.form.room){
-            let res = await this.curUpDateStudent()
-            let newData = res.filter(val=>{
-              return val.student_name == this.form.name || val.grade_name == this.form.class
-            })
-            this.getNewData(newData)
-        }else if(!this.form.class){
-            let res = await this.curUpDateStudent()
-            let newData = res.filter(val=>{
-              return val.student_name == this.form.name || val.room_text == this.form.room
-            })
-            this.getNewData(newData)
-        }else if(this.form.name || this.form.room || this.form.class){
+        if(this.form.name && this.form.room && this.form.class){
             let res = await this.curUpDateStudent()
             let newData = res.filter(val=>{
               return val.student_name == this.form.name && val.room_text == this.form.room && val.grade_name == this.form.class
             })
             this.getNewData(newData)
-        }     
+        }else if(!this.form.name && !this.form.room && !this.form.class){
+            this.getPage()
+        }else if((this.form.name && this.form.room)||(this.form.name && this.form.class)||(this.form.room && this.form.class)){
+            let res = await this.curUpDateStudent()
+            let newData = res.filter(val=>{
+              return (val.student_name == this.form.name && val.room_text == this.form.room) || (val.student_name == this.form.name && val.grade_name == this.form.class) || (val.room_text == this.form.room && val.grade_name == this.form.class)
+            })
+            this.getNewData(newData)
+        }else {
+          let res = await this.curUpDateStudent()
+          let newData = res.filter(val=>{
+              return val.student_name == this.form.name || val.room_text == this.form.room || val.grade_name == this.form.class
+          })
+            this.getNewData(newData)
+        }  
     },
     async getPage(){
         this.updatePage({
