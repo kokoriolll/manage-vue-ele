@@ -64,12 +64,12 @@ export default {
       });
       await this.getInfo({ avatar: this.image });
       this.imagecropperShow = false;
-      console.log(this.userInfo, 7);
+      // console.log(this.userInfo, 7);
     }
   },
   async created() {
     await this.getQuestionsType();
-    console.log(this.userInfo, 7);
+    // console.log(this.userInfo, 7);
     this.userInfo.avatar ? (this.image = this.userInfo.avatar) : this.image;
   }
 };
