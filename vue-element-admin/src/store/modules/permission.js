@@ -6,9 +6,7 @@ import {usernew} from '@/api/user'
  * @param route
  */
 function hasPermission(view_ids, route) {
-  //console.log(route.meta,'route.meta')
   if (route.meta && route.meta.view_id) {
-    // console.log(view_ids,'view_ids')
     return view_ids.some(item => item === route.meta.view_id)
   } else {
     return true
@@ -21,6 +19,7 @@ function hasPermission(view_ids, route) {
  * @param roles
  */
 export function filterAsyncRoutes(routes, view_ids) {
+  console.log(routes,'view_idsview_idsview_ids')
   const res = []
   routes.forEach(route => {
     const tmp = { ...route }
@@ -30,7 +29,9 @@ export function filterAsyncRoutes(routes, view_ids) {
       }
       res.push(tmp)
     }
+    
   })
+
 
   return res
 }
@@ -57,12 +58,18 @@ const actions = {
     // 获取用户所拥有的view_ids
     let view_ids = view_authority.map(item=>item.view_id);
     // 在动态路由里过滤一遍，得到用户能访问的路由
-    // console.log(asyncRoutes,'asyncRoutesasdddddddddddddddddddddddddddddddddddddddddddddddddddd')
     let accessedRoutes = filterAsyncRoutes(asyncRoutes, view_ids);
+    let res = []
+    for(var i = 0;i<accessedRoutes.length;i++){
+      console.log(accessedRoutes[i].children)
+      if(accessedRoutes[i].children.length > 0){
+        res.push(accessedRoutes[i])
+      }
+    }
+    console.log(res,'123')
     // 更新路由
-    console.log(accessedRoutes,'accessedRoutes')
     commit('SET_ROUTES', accessedRoutes);
-    return accessedRoutes ;
+    return res;
   },
   async usernews({commit},payload){
     let res = await usernew(payload);
