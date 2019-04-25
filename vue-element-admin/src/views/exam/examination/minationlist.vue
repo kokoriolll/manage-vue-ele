@@ -26,6 +26,7 @@
         </el-select>
       </div>
       <el-button type="primary" icon="el-icon-search" class="search">查询</el-button>
+      <el-button type="primary" icon="el-icon-search" class="search" @click="ept">导出</el-button>
     </div>
 
     <div class="content">
@@ -47,7 +48,7 @@
           <el-table-column prop="end_time" label="结束时间"></el-table-column>
           <el-table-column label="操作" width="100">
             <template slot-scope="scope">
-            <el-button @click="handleDetail(scope.row)" type="text" size="small">详情</el-button>
+              <el-button @click="handleDetail(scope.row)" type="text" size="small">详情</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -64,7 +65,7 @@ export default {
     return {
       classtypeValue: "",
       subjectValue: "",
-      examID:''
+      examID: ""
     };
   },
   computed: {
@@ -81,7 +82,8 @@ export default {
       DetailExamState: state => {
         return state.examination.DetailExamData;
       },
-      CreateExamState: state => { //创建试卷
+      CreateExamState: state => {
+        //创建试卷
         return state.examination.CreateExamData;
       }
     })
@@ -112,8 +114,23 @@ export default {
       this.DetailExam({
         examID: row.exam_exam_id
       });
-      window.localStorage.setItem('examID',JSON.stringify(row.exam_exam_id))
+      window.localStorage.setItem("examID", JSON.stringify(row.exam_exam_id));
       this.$router.push({ path: "/examination/detail" });
+    },
+    //导出
+    ept() {
+      import("@/vendor/Export2Excel").then(excel => {
+        let header=Object.keys(this.AllExamState[0])
+        let data=this.AllExamState.map(item=>{
+          return Object.values(item).map(items=>JSON.stringify(items))
+        })
+        excel.export_json_to_excel({
+          header,
+          data,
+          filename:'',
+          bookType: 'xls'
+        });
+      });
     }
   },
   created() {
@@ -129,7 +146,7 @@ export default {
   width: 100%;
   height: 800px;
   background: #eee;
-  >p{
+  > p {
     font-size: 22px;
   }
 }
@@ -147,13 +164,13 @@ export default {
   .classType {
     margin-top: 2.4%;
     margin-left: 2%;
-  } 
+  }
 
   .search {
     width: 120px;
     height: 32px;
-    margin-top:40px;
-    background: #0139FD;
+    margin-top: 40px;
+    background: #0139fd;
   }
 }
 

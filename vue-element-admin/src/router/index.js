@@ -119,7 +119,7 @@ export const asyncRoutes = [
   userRouter,
   manageRouter,
   classsRouter,
-  approvalRouter
+  approvalRouter,
   // {
   //   path: '/permission',
   //   component: Layout,
