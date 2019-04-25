@@ -294,6 +294,7 @@ export default {
       });
       this.hint();
       this.datas();
+      await this.setidentity();
     },
     //api接口权限
     async jurisdiction() {
@@ -328,6 +329,7 @@ export default {
       });
       this.hint();
       this.datas();
+      await this.setApiAuthority();
     },
     //视图接口权限
     async view() {
@@ -430,12 +432,12 @@ export default {
         });
       }
     },
-    datas() {
-      this.setUserData();
-      this.setidentity();
-      this.setApiAuthority();
-      this.setViewAuthority();
-      this.setidentityViewAuthorityRelation();
+   async datas() {
+    //  await this.setUserData();
+    //  await this.setidentity();
+    //  await this.setApiAuthority();
+    //  await this.setViewAuthority();
+    //  await this.setidentityViewAuthorityRelation();
     }
   },
   async created() {
