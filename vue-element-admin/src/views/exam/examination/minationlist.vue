@@ -118,20 +118,19 @@ export default {
       this.$router.push({ path: "/examination/detail" });
     },
     exportExcel(){
-      // import('@/vendor/Export2Excel').then(excel => {
-      //   let list = this.AllExamState.map(item=>Object.values(item))
-      //   console.log(list,'list')
-      //   let newlist = list.map(item=>{
-      //     Object.keys
-      //   })
-      //   // excel.export_json_to_excel({
-      //   //   header: ['试卷信息', '班级', '创建人', '开始时间', '结束时间'],
-      //   //   data:this.AllExamState,
-      //   //   filename: this.filename,
-      //   //   autoWidth: this.autoWidth,
-      //   //   bookType: this.bookType
-      //   // })
-      // })
+      let header = Object.keys(this.AllExamState[0])
+      let list = this.AllExamState.map(item=>{
+        let newArr = Object.values(item)
+        return newArr.map(item=>JSON.stringify(item))
+      }) 
+      import('@/vendor/Export2Excel').then(excel => { 
+        excel.export_json_to_excel({
+          header: header,
+          data:list,
+          filename: '',
+          bookType:'xlsx'
+        })
+      })
     }
   },
   created() {
