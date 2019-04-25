@@ -38,10 +38,18 @@ router.beforeEach(async(to, from, next) => {
           // get user info
           // note: roles must be a object array! such as: ['admin'] or ,['developer','editor']
           const userInfo = await store.dispatch('user/getInfo')
-          const getViewAuthority = await store.dispatch('user/getViewAuthoritys');
+          // const Usernew = await store.dispatch('permission/view')
+          console.log(userInfo,'userInfouserInfouserInfouserInfo')
+          const getViewAuthority = await store.dispatch('user/getViewAuthoritys',userInfo.user_id);
           let generateRoutes = await store.dispatch('permission/generateRoutes',getViewAuthority)
-          // console.log(generateRoutes,'generateRoutes')
-          router.addRoutes(generateRoutes)
+          console.log(generateRoutes,'generateRoutesgenerateRoutesgenerateRoutesgenerateRoutesgenerateRoutes')
+          for(var i=0;i<generateRoutes.length;i++){
+            console.log(generateRoutes[i].children.length,'asdasdas12')
+            if(generateRoutes[i].children.length > 0){
+              console.log(generateRoutes[i].children,'123')
+              router.addRoutes(generateRoutes)
+            }
+          }
           next({ ...to, replace: true })
         } catch (error) {
             console.log(error)

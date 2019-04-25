@@ -75,7 +75,7 @@
 import { validUsername } from '@/utils/validate'
 import LangSelect from '@/components/LangSelect'
 import SocialSign from './socialSignin'
-import {mapActions} from 'vuex'
+import {mapActions,mapState} from 'vuex'
 
 export default {
   name: "Login",
@@ -137,8 +137,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      login:'login/login'
-      // generateRoutes:'permission/generateRoutes'
+      login:'login/login',
     }),
     showPwd() {
       if (this.passwordType === "password") {
