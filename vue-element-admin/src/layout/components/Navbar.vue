@@ -7,24 +7,15 @@
         <div class="avatar-wrapper">
           <!-- <img :src="userInfo.avatar'" class="user-avatar"> -->
           <pan-thumb :image="userInfo.avatar" />
-          <span style="font-size:14px;">{{userInfo.user_name}}</span>
-          <!-- <i class="el-icon-caret-bottom" /> -->
+          <!-- <span style="font-size:14px;">{{userInfo.user_name}}</span> -->
+          <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown">
-          <router-link to="/">
+          <a target="_blank" href="https://www.jd.com/?cu=true&utm_source=baidu-pinzhuan&utm_medium=cpc&utm_campaign=t_288551095_baidupinzhuan&utm_term=0f3d30c8dba7459bb52f2eb5eba8ac7d_0_ad617890dcbb4e22ad63c4dcd1ca3b5b">
             <el-dropdown-item>
-              {{ $t('navbar.dashboard') }}
-            </el-dropdown-item>
-          </router-link>
-          <a target="_blank" href="https://github.com/PanJiaChen/vue-element-admin/">
-            <el-dropdown-item>
-              {{ $t('navbar.github') }}
+              购物
             </el-dropdown-item>
           </a>
-          <el-dropdown-item>
-            <span @click="imagecropperShow=true">上传头像</span>
-            
-          </el-dropdown-item>
           <el-dropdown-item divided>
             <span style="display:block;" @click="logout">{{ $t('navbar.logOut') }}</span>
           </el-dropdown-item>

@@ -100,8 +100,8 @@ export default {
           type: [],
       },
       loginForm: {
-        username: 'chenmanjie',
-        password: 'Chenmanjie123!'
+        username: '',
+        password: ''
       },
       loginRules: {
         username: [],
