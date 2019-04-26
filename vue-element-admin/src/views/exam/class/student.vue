@@ -15,58 +15,16 @@
                   <el-button type="primary" @click="resetForm('form')">重置</el-button>
               </el-form>
             </div>
-            <el-table
-            :data="studentData"
-            style="width: 100%">
-            <el-table-column
-                prop="student_name"
-                label="姓名">
-            </el-table-column>
-            <el-table-column
-                prop="student_id"
-                label="学号">
-            </el-table-column>
-            <el-table-column
-                prop="grade_name"
-                label="班级">
-            </el-table-column>
-            <el-table-column
-                prop="room_text"
-                label="教室">
-            </el-table-column>
-            <el-table-column
-                prop="student_pwd"
-                label="密码">
-            </el-table-column>
-            <el-table-column
-            fixed="right"
-            label="操作"
-            width="100" style="colo:#000">
-            <template slot-scope="scope">
-                <el-button type="text" size="small" style="color:#606266" @click="curDelete(scope.row)">删除</el-button>
-            </template>
-            </el-table-column>
-            </el-table>
-            <div class="block">
-                <el-pagination
-                @size-change="handleSizeChange"
-                @current-change="handleCurrentChange"
-                :current-page="currentPage"
-                :page-sizes="pageSizes"
-                :page-size="pageNum"
-                layout=" prev, pager, next,sizes,jumper"
-                :total="553"
-                >
-                </el-pagination>
-            </div>
+            <studentList></studentList>
         </div>
     </div>
 </template>
 
 <script>
 import {mapState,mapMutations,mapActions} from 'vuex';
+import studentList from './components/studentList.vue';
 export default {
-     data() {
+    data() {
         return {
             data:[],
             form: {
@@ -76,64 +34,71 @@ export default {
             },
             currentPages:1,
             pageSizes:[5, 10, 20, 50,100],
-            pageSize:20,
+            pageSize:20
         }
+   },
+   components:{
+     studentList
    },
    computed:{
      ...mapState({
        allRoom:state => state.classManage.allRoom,
-       studentData:state => state.student.studentData,
-       classData:state => state.classManage.classData,
-       pageNum:state => state.student.pageNum,
-       currentPage:state => state.student.currentPage
-    })
+       classData:state => state.classManage.classData
+      })
    },
+   
    mounted(){
     this.getPage()
     this.getCurAllRoom() 
     this.curUpDateClass() 
    },
-  
-   methods:{
+    methods:{
      ...mapMutations({
        updatePage:'student/updatePage',
-       updateState:'student/updateState',
        pageData:'student/pageData'
      }),
      ...mapActions({
       curUpDateStudent:'student/curUpDateStudent',
       getCurAllRoom:'classManage/getCurAllRoom',
-      curDeleteStudent:'student/curDeleteStudent',
       curUpDateClass:'classManage/curUpDateClass'
      }),
-     getRoom(e){
+    getRoom(e){
        this.form.room = e ;
-     },
-     getClass(e){
+    },
+    getClass(e){
        this.form.class = e ;
-     },
-     curDelete(row){
-      this.curDeleteStudent({
-        student_id:row.student_id
-      })
-      this.getPage()
-     },
-     async curSearch(){
-        if(!this.form.name && !this.form.room && !this.form.class){
-           this.getPage()
+    },
+    getNewData(newData){
+       if(newData){
+          this.pageData(newData)
         }else{
+          return;
+       }
+    },
+    async curSearch(){
+        if(this.form.name && this.form.room && this.form.class){
             let res = await this.curUpDateStudent()
             let newData = res.filter(val=>{
-              return val.student_name == this.form.name || val.room_text == this.form.room || val.grade_name == this.form.class
+              return val.student_name == this.form.name && val.room_text == this.form.room && val.grade_name == this.form.class
             })
-            if(newData){
-              this.pageData(newData)
-            }else{
-              return;
-            }
-        }     
-     },
-     async getPage(){
+            this.getNewData(newData)
+        }else if(!this.form.name && !this.form.room && !this.form.class){
+            this.getPage()
+        }else if((this.form.name && this.form.room)||(this.form.name && this.form.class)||(this.form.room && this.form.class)){
+            let res = await this.curUpDateStudent()
+            let newData = res.filter(val=>{
+              return (val.student_name == this.form.name && val.room_text == this.form.room) || (val.student_name == this.form.name && val.grade_name == this.form.class) || (val.room_text == this.form.room && val.grade_name == this.form.class)
+            })
+            this.getNewData(newData)
+        }else {
+          let res = await this.curUpDateStudent()
+          let newData = res.filter(val=>{
+              return val.student_name == this.form.name || val.room_text == this.form.room || val.grade_name == this.form.class
+          })
+            this.getNewData(newData)
+        }  
+    },
+    async getPage(){
         this.updatePage({
           pageSize:this.pageSize,
           currentPage:this.currentPages
@@ -141,36 +106,21 @@ export default {
         let res = await this.curUpDateStudent()
         this.data = res.slice((this.currentPages-1) * this.pageSize,this.currentPages * this.pageSize)
         this.pageData(this.data)
-     },
-     handleSizeChange(val) {
-      this.pageSize = val
-      this.getPage()
-     },
-     handleCurrentChange(val) {
-        this.currentPages = val
-        this.getPage()
-      },
-      classValue(){
-        this.form.name = '';
-        this.form.room = '';
-        this.form.class = '';
-      },
-      resetForm(formName) {
-        this.$refs[formName].resetFields(); //移除校验结果并重置字段值
-        this.classValue()
-      }
+    },
+    classValue(){
+      this.form.name = '';
+      this.form.room = '';
+      this.form.class = '';
+    },
+    resetForm(formName) {
+      this.$refs[formName].resetFields(); //移除校验结果并重置字段值
+      this.classValue()
+    }
    }
   }
 </script>
 
 <style lang="scss" scoped>
-   .el-pagination{
-       text-align: right;
-       margin-top: 10px;
-        button.btn-prev{
-          border: 1px solid #CCC!important;
-        }
-    }
    .form{
        .el-button{
         width: 10%;

@@ -1,7 +1,7 @@
 import { login, logout, getInfo, getviewAuthority , user_gx} from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
-
+import {updataUserInfo} from '@/api/userManagement'
 const state = {
   token: getToken(),
   name: '',
@@ -66,7 +66,9 @@ const actions = {
     }
     return [];
   },
-
+  async getUpdataUserInfo({commit},payload){
+    let updataUserInfo_s = await updataUserInfo(payload)
+  },
   // user logout
   logout({ commit, state }) {
     return new Promise((resolve, reject) => {
