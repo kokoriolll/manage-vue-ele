@@ -269,7 +269,6 @@ export default {
           });
           return false;
         }
-        console.log(obj1.user_id)
         await this.setUpdataUserInfo({
           user_id: obj1.user_id,
           user_name: this.userName,
@@ -295,6 +294,7 @@ export default {
       });
       this.hint();
       this.datas();
+      await this.setidentity();
     },
     //api接口权限
     async jurisdiction() {
@@ -329,6 +329,7 @@ export default {
       });
       this.hint();
       this.datas();
+      await this.setApiAuthority();
     },
     //视图接口权限
     async view() {
@@ -412,7 +413,7 @@ export default {
       }
       await this.setIdentityView({
         identity_id: obj.identity_id,
-        view_authority_id: obj1.api_authority_id
+        view_authority_id: obj1.view_authority_id
       });
       this.hint();
       this.datas();
@@ -431,12 +432,12 @@ export default {
         });
       }
     },
-    datas() {
-      this.setUserData();
-      this.setidentity();
-      this.setApiAuthority();
-      this.setViewAuthority();
-      this.setidentityViewAuthorityRelation();
+   async datas() {
+    //  await this.setUserData();
+    //  await this.setidentity();
+    //  await this.setApiAuthority();
+    //  await this.setViewAuthority();
+    //  await this.setidentityViewAuthorityRelation();
     }
   },
   async created() {

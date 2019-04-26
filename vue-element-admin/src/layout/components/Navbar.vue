@@ -7,7 +7,7 @@
         <div class="avatar-wrapper">
           <!-- <img :src="userInfo.avatar'" class="user-avatar"> -->
           <pan-thumb :image="userInfo.avatar" />
-          <span>{{userInfo.user_name}}</span>
+          <span style="font-size:14px;margin-left:2%">{{userInfo.user_name}}</span>
           <!-- <i class="el-icon-caret-bottom" /> -->
         </div>
         <el-dropdown-menu slot="dropdown">
@@ -179,7 +179,8 @@ export default {
       .avatar-wrapper {
         margin-top: 5px;
         position: relative;
-
+        display: flex;
+        align-items: center;
         .user-avatar {
           cursor: pointer;
           width: 40px;

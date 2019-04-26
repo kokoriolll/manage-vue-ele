@@ -29,6 +29,7 @@ const actions = {
   }, payload) {
     let result = await addUsers(payload);
     commit('Tips', result)
+    // console.log(result,666666)
     return result;
   },
   //更新用户信息（用户名，用户密码，用户身份）
@@ -72,9 +73,8 @@ const actions = {
     return result;
   },
   //给身份设定视图权限
-  async setIdentityView({
-    commit
-  }, payload) {
+  async setIdentityView({commit}, payload) {
+    // console.log(payload,'identityView')
     let result = await identityView(payload);
     commit('Tips', result)
     return result;

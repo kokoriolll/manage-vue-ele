@@ -8,7 +8,7 @@
             <span>{{list.exam_name}}</span>
         </div>
         <pre>{{list.title}}</pre>
-        <markdown-editor height="300px" :value='list.questions_stem' />
+        <markdown-editor :value='list.questions_stem' />
     </div>
 </template>
 <script>

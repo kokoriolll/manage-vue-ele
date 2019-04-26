@@ -8,6 +8,7 @@ import { Message } from 'element-ui'
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
 import { getToken } from '@/utils/auth' // get token from cookie
+import { getviewAuthority } from './api/user';
 
 // NProgress.done NProgress.start 方法
 //配置进度条是否需要spinner
@@ -38,9 +39,9 @@ router.beforeEach(async(to, from, next) => {
           // get user info
           // note: roles must be a object array! such as: ['admin'] or ,['developer','editor']
           const userInfo = await store.dispatch('user/getInfo')
-          const getViewAuthority = await store.dispatch('user/getViewAuthoritys');
-          console.log(userInfo,'userInfo')
+          const getViewAuthority = await store.dispatch('user/getViewAuthoritys',userInfo.user_id);
           let generateRoutes = await store.dispatch('permission/generateRoutes',getViewAuthority)
+              
           router.addRoutes(generateRoutes)
           next({ ...to, replace: true })
         } catch (error) {

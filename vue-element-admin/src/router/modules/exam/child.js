@@ -7,6 +7,8 @@ const examRouter = {
   component: () => import('@/views/exam/questions/add'),
   redirect: 'noredirect',
   name: 'Exam',
+  alwaysShow: true,
+  hidden:false,
 }
 
 export default examRouter

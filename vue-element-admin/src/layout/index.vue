@@ -39,7 +39,8 @@ export default {
       device: state => state.app.device,
       showSettings: state => state.settings.showSettings,
       needTagsView: state => state.settings.tagsView,
-      fixedHeader: state => state.settings.fixedHeader
+      fixedHeader: state => state.settings.fixedHeader,
+      userInfo:state=>state.user.userInfo
     }),
     classObj() {
       return {
@@ -50,7 +51,15 @@ export default {
       }
     }
   },
+  created() {
+    this.usernew({
+      user_id:this.userInfo.user_id
+    })
+  },
   methods: {
+    ...mapActions({
+      usernew:'permission/usernews'
+    }),
     handleClickOutside() {
       this.$store.dispatch('app/closeSideBar', { withoutAnimation: false })
     }
