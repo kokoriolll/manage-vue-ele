@@ -59,17 +59,9 @@ const actions = {
     let view_ids = view_authority.map(item=>item.view_id);
     // 在动态路由里过滤一遍，得到用户能访问的路由
     let accessedRoutes = filterAsyncRoutes(asyncRoutes, view_ids);
-    let res = []
-    for(var i = 0;i<accessedRoutes.length;i++){
-      console.log(accessedRoutes[i].children)
-      if(accessedRoutes[i].children.length > 0){
-        res.push(accessedRoutes[i])
-      }
-    }
-    console.log(res,'123')
     // 更新路由
     commit('SET_ROUTES', accessedRoutes);
-    return res;
+    return accessedRoutes;
   },
   async usernews({commit},payload){
     let res = await usernew(payload);

@@ -26,6 +26,7 @@
         </el-select>
       </div>
       <el-button type="primary" icon="el-icon-search" class="search">查询</el-button>
+      <el-button type="primary" icon="el-icon-search" class="search" @click="exportExcel">导出试卷</el-button>
     </div>
 
     <div class="content">
@@ -114,6 +115,23 @@ export default {
       });
       window.localStorage.setItem('examID',JSON.stringify(row.exam_exam_id))
       this.$router.push({ path: "/examination/detail" });
+    },
+    // 导出试卷列表
+    exportExcel(){
+      let header = Object.keys(this.AllExamState[0]);
+      let list = this.AllExamState.map(item=>{
+        let arr = Object.values(item);
+        return arr.map(item=>JSON.stringify(item))
+      })
+      console.log('AllExamState...', this.AllExamState, list);
+      import('@/vendor/Export2Excel').then(excel => {
+        excel.export_json_to_excel({
+          header: header,
+          data: list,
+          filename: '',
+          bookType: 'xlsx'  //excel后缀，xlsx,csv,xls
+        })
+      })
     }
   },
   created() {
