@@ -14,49 +14,48 @@ import {mapState,mapMutations,mapActions} from 'vuex'
 import classList from './components/classList.vue';
 import classDialog from './components/classDialog.vue';
 export default {
-     data() {
+    data() {
         return {
           
         }
-   },
-   components:{
-     classList,
-     classDialog
-   },
-   async mounted(){
-     await this.curUpDateClass()
-    
-   },
-   computed:{
-     ...mapState({
-        classData:state => state.classManage.classData,
-        dialogFormVisible:state => state.classManage.dialogFormVisible
-     })
-   },
-   created(){
+    },
+    components:{
+      classList,
+      classDialog
+    },
+    async mounted(){
+      await this.curUpDateClass()
+      
+    },
+    computed:{
+      ...mapState({
+          classData:state => state.classManage.classData,
+          dialogFormVisible:state => state.classManage.dialogFormVisible
+      })
+    },
+    created(){
 
-   },
-   methods: {
-     ...mapMutations({
-        updateState:'classManage/updateState',
-        dialogForm:'classManage/dialogForm'
-     }),
-     ...mapActions({
-       curUpDateClass:'classManage/curUpDateClass',
-       addClass:'classManage/addClass'
-     }),
-     //添加班级
-    dialogVisible(type){
-        if(type == 'add'){
-          this.dialogForm({
-            dialogFormVisible:true,
-            type:type
-          })
+    },
+    methods: {
+      ...mapMutations({
+          updateState:'classManage/updateState',
+          dialogForm:'classManage/dialogForm'
+      }),
+      ...mapActions({
+        curUpDateClass:'classManage/curUpDateClass',
+        addClass:'classManage/addClass'
+      }),
+      //添加班级
+      dialogVisible(type){
+          if(type == 'add'){
+            this.dialogForm({
+              dialogFormVisible:true,
+              type:type
+            })
+          } 
         }
-         
       }
-    }
-   }
+  }
 </script>
 
 <style lang="scss" scoped>
