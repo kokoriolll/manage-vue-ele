@@ -258,7 +258,7 @@ export default {
           identity_id: obj.identity_id
         });
         this.hint();
-        this.datas();
+
       } else {
         //更新用户
         if (!this.identityId) {
@@ -277,7 +277,6 @@ export default {
         });
       }
       this.hint();
-      this.datas();
     },
     //身份
     async identity() {
@@ -293,7 +292,6 @@ export default {
         identity_text: this.identityName
       });
       this.hint();
-      this.datas();
       await this.setidentity();
     },
     //api接口权限
@@ -328,7 +326,6 @@ export default {
         api_authority_method: this.apiJurisdictionMethod
       });
       this.hint();
-      this.datas();
       await this.setApiAuthority();
     },
     //视图接口权限
@@ -350,7 +347,6 @@ export default {
         view_id: obj.view_id //视图id 字符串
       });
       this.hint();
-      this.datas();
     },
     // 给身份设置api接口权限
     async api() {
@@ -383,7 +379,6 @@ export default {
         api_authority_id: obj1.api_authority_id
       });
       this.hint();
-      this.datas();
     },
     //给身份设定视图权限
     async set() {
@@ -416,7 +411,6 @@ export default {
         view_authority_id: obj1.view_authority_id
       });
       this.hint();
-      this.datas();
     },
     //提示
     hint() {
@@ -432,13 +426,6 @@ export default {
         });
       }
     },
-   async datas() {
-    //  await this.setUserData();
-    //  await this.setidentity();
-    //  await this.setApiAuthority();
-    //  await this.setViewAuthority();
-    //  await this.setidentityViewAuthorityRelation();
-    }
   },
   async created() {
    await this.setUserData();

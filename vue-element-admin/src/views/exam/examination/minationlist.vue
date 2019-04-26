@@ -9,7 +9,7 @@
             v-for="item in ClassTypeState"
             :key="item.exam_id"
             :label="item.exam_name"
-            :value="item.exam_id"
+            :value="item.exam_name"
           ></el-option>
         </el-select>
       </div>
@@ -21,7 +21,7 @@
             v-for="item in SubjectState"
             :key="item.subject_id"
             :label="item.subject_text"
-            :value="item.subject_id"
+            :value="item.subject_text"
           ></el-option>
         </el-select>
       </div>
@@ -49,7 +49,6 @@
           <el-table-column label="操作" width="100">
             <template slot-scope="scope">
                <el-button @click="handleDetail(scope.row)" type="text" size="small">详情</el-button>
-               
             </template>
           </el-table-column>
         </el-table>
@@ -66,7 +65,10 @@ export default {
     return {
       classtypeValue: "",
       subjectValue: "",
-      examID:''
+      examID: "",
+      selectData: "",
+      classTypeFilter: [],
+      subjectFilter:[]
     };
   },
   computed: {
@@ -83,7 +85,8 @@ export default {
       DetailExamState: state => {
         return state.examination.DetailExamData;
       },
-      CreateExamState: state => { //创建试卷
+      CreateExamState: state => {
+        //创建试卷
         return state.examination.CreateExamData;
       }
     })
@@ -104,17 +107,17 @@ export default {
       DetailExam: "examination/DetailExam"
     }),
     handleChange(e) {
-      this.ClassTypeID = e;
+      this.classtypeValue = e;
     },
     handleSub(e) {
-      this.SubjectID = e;
+      this.subjectValue = e;
     },
     handleDetail(row) {
       //获取exam_exam_id的ID
       this.DetailExam({
         examID: row.exam_exam_id
       });
-      window.localStorage.setItem('examID',JSON.stringify(row.exam_exam_id))
+      window.localStorage.setItem("examID", JSON.stringify(row.exam_exam_id));
       this.$router.push({ path: "/examination/detail" });
     },
     // 导出试卷列表
@@ -124,7 +127,6 @@ export default {
         let arr = Object.values(item);
         return arr.map(item=>JSON.stringify(item))
       })
-      console.log('AllExamState...', this.AllExamState, list);
       import('@/vendor/Export2Excel').then(excel => {
         excel.export_json_to_excel({
           header: header,
@@ -148,7 +150,7 @@ export default {
   width: 100%;
   height: 800px;
   background: #eee;
-  >p{
+  > p {
     font-size: 22px;
   }
 }
@@ -166,13 +168,13 @@ export default {
   .classType {
     margin-top: 2.4%;
     margin-left: 2%;
-  } 
+  }
 
   .search {
     width: 120px;
     height: 32px;
-    margin-top:40px;
-    background: #0139FD;
+    margin-top: 40px;
+    background: #0139fd;
   }
 }
 
