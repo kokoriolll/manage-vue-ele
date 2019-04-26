@@ -36,10 +36,10 @@ export default {
             pageSizes:[5, 10, 20, 50,100],
             pageSize:20
         }
-   },
-   components:{
-     studentList
-   },
+    },
+    components:{
+      studentList
+    },
     computed:{
       ...mapState({
         allRoom:state => state.classManage.allRoom,
