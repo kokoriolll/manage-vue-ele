@@ -13,7 +13,8 @@ import tableRouter from './modules/table'
 import nestedRouter from './modules/nested'
 /* 添加试题列表 */
 import examRouter from './modules/exam/exam'
-import userRouter from './modules/exam/user'
+import examsRouter from './modules/exam/user'
+// import userRouter from './modules/user'
 import manageRouter from './modules/exam/manage'
 import classsRouter from './modules/exam/classs'
 import approvalRouter from './modules/exam/approval'
@@ -76,7 +77,7 @@ export const constantRoutes = [
   {
     path: '/',
     component: Layout,
-    redirect: 'Additem',
+    redirect: 'Additem/add',
     children: [{
       path: 'add',
       component: () => import('@/views/exam/questions/add'),
@@ -116,10 +117,11 @@ export const constantRoutes = [
  */
 export const asyncRoutes = [
   examRouter,
-  userRouter,
+  // userRouter,
   manageRouter,
+  examsRouter,
   classsRouter,
-  approvalRouter
+  approvalRouter,
   // {
   //   path: '/permission',
   //   component: Layout,
