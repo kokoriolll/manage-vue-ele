@@ -40,83 +40,82 @@ export default {
    components:{
      studentList
    },
-   computed:{
-     ...mapState({
-       allRoom:state => state.classManage.allRoom,
-       classData:state => state.classManage.classData
-      })
-   },
-   
-   mounted(){
-    this.getPage()
-    this.getCurAllRoom() 
-    this.curUpDateClass() 
-   },
-    methods:{
-     ...mapMutations({
-       updatePage:'student/updatePage',
-       pageData:'student/pageData'
-     }),
-     ...mapActions({
-      curUpDateStudent:'student/curUpDateStudent',
-      getCurAllRoom:'classManage/getCurAllRoom',
-      curUpDateClass:'classManage/curUpDateClass'
-     }),
-    getRoom(e){
-       this.form.room = e ;
-    },
-    getClass(e){
-       this.form.class = e ;
-    },
-    getNewData(newData){
-       if(newData){
-          this.pageData(newData)
-        }else{
-          return;
-       }
-    },
-    async curSearch(){
-        if(this.form.name && this.form.room && this.form.class){
-            let res = await this.curUpDateStudent()
-            let newData = res.filter(val=>{
-              return val.student_name == this.form.name && val.room_text == this.form.room && val.grade_name == this.form.class
-            })
-            this.getNewData(newData)
-        }else if(!this.form.name && !this.form.room && !this.form.class){
-            this.getPage()
-        }else if((this.form.name && this.form.room)||(this.form.name && this.form.class)||(this.form.room && this.form.class)){
-            let res = await this.curUpDateStudent()
-            let newData = res.filter(val=>{
-              return (val.student_name == this.form.name && val.room_text == this.form.room) || (val.student_name == this.form.name && val.grade_name == this.form.class) || (val.room_text == this.form.room && val.grade_name == this.form.class)
-            })
-            this.getNewData(newData)
-        }else {
-          let res = await this.curUpDateStudent()
-          let newData = res.filter(val=>{
-              return val.student_name == this.form.name || val.room_text == this.form.room || val.grade_name == this.form.class
-          })
-            this.getNewData(newData)
-        }  
-    },
-    async getPage(){
-        this.updatePage({
-          pageSize:this.pageSize,
-          currentPage:this.currentPages
+    computed:{
+      ...mapState({
+        allRoom:state => state.classManage.allRoom,
+        classData:state => state.classManage.classData
         })
-        let res = await this.curUpDateStudent()
-        this.data = res.slice((this.currentPages-1) * this.pageSize,this.currentPages * this.pageSize)
-        this.pageData(this.data)
     },
-    classValue(){
-      this.form.name = '';
-      this.form.room = '';
-      this.form.class = '';
+    mounted(){
+      this.getPage()
+      this.getCurAllRoom() 
+      this.curUpDateClass() 
     },
-    resetForm(formName) {
-      this.$refs[formName].resetFields(); //移除校验结果并重置字段值
-      this.classValue()
+    methods:{
+      ...mapMutations({
+        updatePage:'student/updatePage',
+        pageData:'student/pageData'
+      }),
+      ...mapActions({
+        curUpDateStudent:'student/curUpDateStudent',
+        getCurAllRoom:'classManage/getCurAllRoom',
+        curUpDateClass:'classManage/curUpDateClass'
+      }),
+      getRoom(e){
+        this.form.room = e ;
+      },
+      getClass(e){
+        this.form.class = e ;
+      },
+      getNewData(newData){
+        if(newData){
+            this.pageData(newData)
+          }else{
+            return;
+        }
+      },
+      async curSearch(){
+          if(this.form.name && this.form.room && this.form.class){
+              let res = await this.curUpDateStudent()
+              let newData = res.filter(val=>{
+                return val.student_name == this.form.name && val.room_text == this.form.room && val.grade_name == this.form.class
+              })
+              this.getNewData(newData)
+          }else if(!this.form.name && !this.form.room && !this.form.class){
+              this.getPage()
+          }else if((this.form.name && this.form.room)||(this.form.name && this.form.class)||(this.form.room && this.form.class)){
+              let res = await this.curUpDateStudent()
+              let newData = res.filter(val=>{
+                return (val.student_name == this.form.name && val.room_text == this.form.room) || (val.student_name == this.form.name && val.grade_name == this.form.class) || (val.room_text == this.form.room && val.grade_name == this.form.class)
+              })
+              this.getNewData(newData)
+          }else {
+            let res = await this.curUpDateStudent()
+            let newData = res.filter(val=>{
+                return val.student_name == this.form.name || val.room_text == this.form.room || val.grade_name == this.form.class
+            })
+              this.getNewData(newData)
+          }  
+      },
+      async getPage(){
+          this.updatePage({
+            pageSize:this.pageSize,
+            currentPage:this.currentPages
+          })
+          let res = await this.curUpDateStudent()
+          this.data = res.slice((this.currentPages-1) * this.pageSize,this.currentPages * this.pageSize)
+          this.pageData(this.data)
+      },
+      classValue(){
+        this.form.name = '';
+        this.form.room = '';
+        this.form.class = '';
+      },
+      resetForm(formName) {
+        this.$refs[formName].resetFields(); //移除校验结果并重置字段值
+        this.classValue()
+      }
     }
-   }
   }
 </script>
 
