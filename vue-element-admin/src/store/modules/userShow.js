@@ -23,7 +23,6 @@ const state = {
 const mutations = {
   //获取用户数据
   userDatas(state, payload) {
-    console.log(payload)
     loop(state.userData, payload)
     state.data = state.userData.slice(0, 10)
   },

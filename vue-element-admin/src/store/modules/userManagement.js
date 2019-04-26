@@ -73,7 +73,6 @@ const actions = {
   },
   //给身份设定视图权限
   async setIdentityView({commit}, payload) {
-    // console.log(payload,'identityView')
     let result = await identityView(payload);
     commit('Tips', result)
     return result;
