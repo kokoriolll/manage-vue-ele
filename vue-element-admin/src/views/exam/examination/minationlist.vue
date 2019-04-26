@@ -26,11 +26,7 @@
         </el-select>
       </div>
       <el-button type="primary" icon="el-icon-search" class="search">查询</el-button>
-<<<<<<< HEAD
-      <el-button @click="exportExcel" type="primary" icon="el-icon-search" class="search export">导出试卷</el-button>
-=======
       <el-button type="primary" icon="el-icon-search" class="search" @click="exportExcel">导出试卷</el-button>
->>>>>>> 2a821456b2d81bf0011fee8d14df1639b1db20cd
     </div>
 
     <div class="content">
