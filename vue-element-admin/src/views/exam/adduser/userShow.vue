@@ -95,7 +95,6 @@ export default {
       data: state => state.userShow.data,
       pageSize: state => state.userShow.pageSize,
       userData: state => state.userShow.userData,
-      // userIdValue: state => state.userShow.userIdValue,
       identitysData: state => state.userShow.identitysData,
       apiAuthoritysData: state => state.userShow.apiAuthoritysData,
       identityApiAuthorityRelationsData: state =>

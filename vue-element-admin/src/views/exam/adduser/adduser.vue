@@ -177,10 +177,10 @@ export default {
     ...mapState({
       identityViewAuthorityRelationsData: state =>
         state.userShow.identityViewAuthorityRelationsData, //已有视图值
-      apiAuthoritysData: state => state.userShow.apiAuthoritysData, //api接口权限id值
-      viewAuthoritysData: state => state.userShow.viewAuthoritysData, //视图权限id值
-      identitysData: state => state.userShow.identitysData, //身份id值
-      userData: state => state.userShow.userData, //用户id值
+      apiAuthoritysData: state => state.userShow.apiAuthoritysData, //api接口权限数据
+      viewAuthoritysData: state => state.userShow.viewAuthoritysData, //视图权限数据
+      identitysData: state => state.userShow.identitysData, //身份数据
+      userData: state => state.userShow.userData, //用户数据
       code: state => state.userManagement.code, //code
       msg: state => state.userManagement.msg //msg
     })
@@ -349,7 +349,7 @@ export default {
       }
       await this.setAddAuthorityView({
         view_authority_text: this.existingView,
-        view_id: obj.view_id //视图id 字符串
+        view_id: obj.view_id 
       });
       this.hint();
     },

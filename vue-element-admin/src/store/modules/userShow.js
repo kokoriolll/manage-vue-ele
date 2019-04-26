@@ -14,11 +14,6 @@ const state = {
   viewAuthoritysData: [], //获取视图权限数据
   identityViewAuthorityRelationsData: [], //获取身份和视图权限关系
   identityApiAuthorityRelationsData: [], //获取身份和api权限关系
-  // existingViewValue: [], //已有视图
-  // apiJurisdictionIdValue: [], //api接口权限id
-  // viewJurisdictionIdValue: [], //视图权限id
-  // identityIdValue: [], //身份id
-  // userIdValue: [], //用户id
   page: 1, //第几页
   pageSize: 10, //每页十条
   active: 0,
@@ -28,28 +23,17 @@ const state = {
 const mutations = {
   //获取用户数据
   userDatas(state, payload) {
+    console.log(payload)
     loop(state.userData, payload)
-    // state.userData.forEach(item => {
-    //   //用户id
-    //   state.userIdValue.push({user_name:item.user_name,user_id:item.user_id})
-    // })
     state.data = state.userData.slice(0, 10)
   },
   //获取身份数据
   identitys(state, payload) {
     loop(state.identitysData, payload)
-    // state.identitysData.forEach(item => {
-    //   //身份id
-    //   state.identityIdValue.push({identity_text:item.identity_text,identity_id:item.identity_id})
-    // })
   },
   //获取api接口权限数据
   apiAuthoritys(state, payload) {
     loop(state.apiAuthoritysData, payload)
-    // state.apiAuthoritysData.forEach(item => {
-    //   //api接口权限id
-    //   state.apiJurisdictionIdValue.push({api_authority_text:item.api_authority_text,api_authority_id:item.api_authority_id})
-    // })
   },
   //获取身份和api权限关系
   identityApiAuthorityRelations(state, payload) {
@@ -58,21 +42,10 @@ const mutations = {
   //获取视图权限数据
   viewAuthoritys(state, payload) {
     loop(state.viewAuthoritysData, payload)
-    // state.viewAuthoritysData.forEach(item => {
-    //   //视图权限id
-    //   state.viewJurisdictionIdValue.push({view_authority_text:item.view_authority_text,view_authority_id:item.view_authority_id})
-    // })
   },
-  //获取身份和视图权限关系view_authority_text
+  //获取身份和视图权限关系
   identityViewAuthorityRelations(state, payload) {
     loop(state.identityViewAuthorityRelationsData, payload)
-    // state.identityViewAuthorityRelationsData.forEach(item => {
-    //   //已有视图
-    //   state.existingViewValue.push({
-    //     authority: item.view_authority_text,
-    //     view_id: item.view_id
-    //   })
-    // })
   },
   list(state, payload) {
     state.data = pageList(payload.idx ? payload.pages = 1 : payload.pages, state[payload.data])
