@@ -1,6 +1,5 @@
 <template>
     <div>
-        <!-- <p v-if='list'>编辑试题</p> -->
         <p>添加试题</p>
         <div class="stem">
             <span class="stem_g">题干</span>
@@ -77,7 +76,6 @@
             })
         },
         async created() {
-            // await moment.unix(Number)
             this.questions_id = JSON.parse(sessionStorage.getItem('questions_id'));
             this.getitem();
             this.subjects();
