@@ -1,14 +1,12 @@
 import { asyncRoutes, constantRoutes } from '@/router'
-
+import {usernew} from '@/api/user'
 /**
  * 通过meta.role判断是否与当前用户权限匹配
  * @param roles
  * @param route
  */
 function hasPermission(view_ids, route) {
-  //console.log(route.meta,'route.meta')
   if (route.meta && route.meta.view_id) {
-    console.log(view_ids,'view_ids')
     return view_ids.some(item => item === route.meta.view_id)
   } else {
     return true
@@ -21,8 +19,8 @@ function hasPermission(view_ids, route) {
  * @param roles
  */
 export function filterAsyncRoutes(routes, view_ids) {
+  console.log(routes,'view_idsview_idsview_ids')
   const res = []
-  console.log(asyncRoutes,'asyncRoutes')
   routes.forEach(route => {
     const tmp = { ...route }
     if (hasPermission(view_ids, tmp)) {
@@ -31,20 +29,27 @@ export function filterAsyncRoutes(routes, view_ids) {
       }
       res.push(tmp)
     }
+    
   })
+
 
   return res
 }
 
 const state = {
   routes: [],
-  addRoutes: []
+  addRoutes: [],
+  view:[]
 }
 
 const mutations = {
   SET_ROUTES: (state, routes) => {
     state.addRoutes = routes
     state.routes = constantRoutes.concat(routes)
+  },
+  //获取每个人视图权限
+  USER_NEW(state,payload){
+    state.view = payload.data;
   }
 }
 
@@ -52,13 +57,17 @@ const actions = {
   generateRoutes({ commit }, view_authority) {
     // 获取用户所拥有的view_ids
     let view_ids = view_authority.map(item=>item.view_id);
-    console.log(view_ids,'view_ids')
     // 在动态路由里过滤一遍，得到用户能访问的路由
     let accessedRoutes = filterAsyncRoutes(asyncRoutes, view_ids);
     // 更新路由
-    console.log(accessedRoutes,'accessedRoutes')
     commit('SET_ROUTES', accessedRoutes);
-    return accessedRoutes ;
+    return accessedRoutes;
+  },
+  async usernews({commit},payload){
+    let res = await usernew(payload);
+    console.log(res,'asdasd')
+    commit('USER_NEW',res)
+    return res.data;
   }
 }
 

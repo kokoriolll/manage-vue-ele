@@ -44,13 +44,13 @@
           />
         </el-form-item>
       </el-tooltip>
-      <el-checkbox-group v-model="form.type">
+      <!-- <el-checkbox-group v-model="form.type">
         <el-checkbox label="记住密码" name="type"></el-checkbox>
-      </el-checkbox-group>
+      </el-checkbox-group> -->
       <el-button
         :loading="loading"
         type="primary"
-        style="width:100%;margin-top:20px;height:40px;background:#0139FD"
+        style="width:100%;margin-top:20px;height:40px;opacity: 0.3;"
         @click.native.prevent="handleLogin"
       >{{ $t('login.logIn') }}</el-button>
 
@@ -75,7 +75,7 @@
 import { validUsername } from '@/utils/validate'
 import LangSelect from '@/components/LangSelect'
 import SocialSign from './socialSignin'
-import {mapActions} from 'vuex'
+import {mapActions,mapState} from 'vuex'
 
 export default {
   name: "Login",
@@ -83,14 +83,14 @@ export default {
   data() {
     const validateUsername = ( rules,value, callback) => {
       if (!value) {
-        callback(new Error('Please enter the correct user name'))
+        // callback(new Error('Please enter the correct user name'))
       } else {
         callback();
       }
     }
     const validatePassword = (rules, value, callback) => {
       if (value.length < 6) {
-        callback(new Error("The password can not be less than 6 digits"));
+        // callback(new Error("The password can not be less than 6 digits"));
       } else {
         callback();
       }
@@ -104,8 +104,8 @@ export default {
         password: ''
       },
       loginRules: {
-        username: [{ required: true, trigger: 'blur'},{trigger: 'blur',validator: validateUsername }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+        username: [],
+        password: []
       },
       passwordType: "password",
       capsTooltip: false,
@@ -137,8 +137,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      login:'login/login'
-      // generateRoutes:'permission/generateRoutes'
+      login:'login/login',
     }),
     showPwd() {
       if (this.passwordType === "password") {
@@ -198,7 +197,7 @@ $cursor: #fff;
       -webkit-appearance: none;
       border-radius: 0px;
       padding: 12px 5px 12px 15px;
-      color: #000;
+      color: #fff;
       height: 40px;
       /* caret-color: $cursor; */
 
@@ -212,22 +211,22 @@ $cursor: #fff;
   .el-form-item {
     height: 45px;
     border: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgb(232, 240, 254) !important;
+    /* background: rgb(232, 240, 254) !important; */
     border-radius: 2px;
-    color: rgba(0, 0, 0, 0.65);
+    color: #fff;
   }
 }
 </style>
 
 <style lang="scss" scoped>
-$bg:navy;;
 $dark_gray: #889aa4;
 $light_gray: #eee;
 
 .login-container {
   min-height: 100%;
   width: 100%;
-  background-color: $bg;
+  background-image: url('https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1556199193055&di=3f1f5b2711c72b4010c2ab00cb829d90&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01c33b57415c9132f875b70f06e658.gif');
+  background-size: 100% 100%;
   overflow: hidden;
   
   .login-form {
@@ -240,7 +239,6 @@ $light_gray: #eee;
     box-sizing:border-box;
     margin: 0 auto;
     overflow: hidden;
-    background:#FFF;
   }
 
   .tips {

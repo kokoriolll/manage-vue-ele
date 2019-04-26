@@ -120,30 +120,21 @@ export default {
       window.localStorage.setItem("examID", JSON.stringify(row.exam_exam_id));
       this.$router.push({ path: "/examination/detail" });
     },
-    exportExcel() {
-
-     /*  import('@/vendor/Export2Excel').then(excel => {
+    // 导出试卷列表
+    exportExcel(){
+      let header = Object.keys(this.AllExamState[0]);
+      let list = this.AllExamState.map(item=>{
+        let arr = Object.values(item);
+        return arr.map(item=>JSON.stringify(item))
+      })
+      import('@/vendor/Export2Excel').then(excel => {
         excel.export_json_to_excel({
-          header:['试卷信息','班级','创建人','开始时间','结束时间'],
-          data:this.AllExamState,
-          filename: '试卷列表',
-          bookType: 'xls'
+          header: header,
+          data: list,
+          filename: '',
+          bookType: 'xlsx'  //excel后缀，xlsx,csv,xls
         })
-      }) */
-    },
-    searchFilter() {
-      //考试类型筛选
-      let temp = this.AllExamState.filter(item => {
-        return item.exam_name.indexOf(this.classtypeValue) !== -1;
-      });
-      this.classTypeFilter = temp;
-      console.log(this.classTypeFilter )
-      //考试课程筛选
-      let temp1 = this.AllExamState.filter(item => {
-        return item.subject_text.indexOf(this.subjectValue) !== -1;
-      });
-      this.subjectFilter = temp1;
-      console.log(this.subjectFilter)
+      })
     }
   },
   created() {

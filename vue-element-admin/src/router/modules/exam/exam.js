@@ -7,6 +7,8 @@ const examsRouter = {
   component: Layout,
   redirect: '/Additem/add',
   name: 'Exam',
+  alwaysShow: true,
+  hidden:false,
   meta: {
     title: 'Additem',
     icon: 'clipboard'

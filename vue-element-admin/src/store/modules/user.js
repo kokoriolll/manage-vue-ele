@@ -1,4 +1,4 @@
-import { login, logout, getInfo, getviewAuthority , user_gx } from '@/api/user'
+import { login, logout, getInfo, getviewAuthority , user_gx} from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
 
@@ -54,13 +54,14 @@ const actions = {
   // get user info
   async getInfo({ commit, state },payload) {
     let result = await getInfo();
+    console.log('result...............',result)
     let data={...result.data,...payload}
     commit('userInfo',data)
     return data;
   },
 
   async getViewAuthoritys({commit},payload){
-    let getviewAuthority_s = await getviewAuthority();
+    let getviewAuthority_s = await getviewAuthority({user_id:payload});
     console.log(getviewAuthority_s,'asdas')
     if(getviewAuthority_s.code == 1){
       commit('viewAuthority',getviewAuthority_s.data)
