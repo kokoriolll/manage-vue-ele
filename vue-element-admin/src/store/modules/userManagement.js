@@ -29,7 +29,6 @@ const actions = {
   }, payload) {
     let result = await addUsers(payload);
     commit('Tips', result)
-    // console.log(result,666666)
     return result;
   },
   //更新用户信息（用户名，用户密码，用户身份）
