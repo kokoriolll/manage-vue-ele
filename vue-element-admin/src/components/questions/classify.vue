@@ -36,25 +36,20 @@ export default {
         this.$prompt("创建新类型", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
-        center: true,
-        cancelButtonClass: "cancel",
-        confirmButtonClass: "confirm"
+        center: true
       })
-        .then(async ({ value }) => {
-          if(value){
-            this.sort++
-            await this.addtype({
-              text:value,
-              sort:this.sort
-            })
-            this.getQuestionsType();
-          }else{
-            alert('请添加类型名称 || Please add the type name')
-          }
-        })
-        .catch(() => {
-          
-        });
+      .then(async ({ value }) => {
+        if(value){
+          this.sort++
+          await this.addtype({
+            text:value,
+            sort:this.sort
+          })
+          this.getQuestionsType();
+        }else{
+          alert('请添加类型名称 || Please add the type name')
+        }
+      })
     }
   }
 };
