@@ -79,14 +79,14 @@ export default {
 
       dftPage: 1,
       totals: 0,
-      totalTit: [
-        "userIdValue",
-        "identityIdValue",
-        "apiJurisdictionIdValue",
-        "identityApiAuthorityRelationsData",
-        "viewJurisdictionIdValue",
-        "existingViewValue"
-      ]
+      // totalTit: [
+      //   "userIdValue",
+      //   "identityIdValue",
+      //   "apiJurisdictionIdValue",
+      //   "identityApiAuthorityRelationsData",
+      //   "viewJurisdictionIdValue",
+      //   "existingViewValue"
+      // ]
     };
   },
 
@@ -95,13 +95,13 @@ export default {
       data: state => state.userShow.data,
       pageSize: state => state.userShow.pageSize,
       userData: state => state.userShow.userData,
-      userIdValue: state => state.userShow.userIdValue,
-      identityIdValue: state => state.userShow.identityIdValue,
-      apiJurisdictionIdValue: state => state.userShow.apiJurisdictionIdValue,
+      // userIdValue: state => state.userShow.userIdValue,
+      identitysData: state => state.userShow.identitysData,
+      apiAuthoritysData: state => state.userShow.apiAuthoritysData,
       identityApiAuthorityRelationsData: state =>
         state.userShow.identityApiAuthorityRelationsData,
-      viewJurisdictionIdValue: state => state.userShow.viewJurisdictionIdValue,
-      existingViewValue: state => state.userShow.existingViewValue
+      viewAuthoritysData: state => state.userShow.viewAuthoritysData,
+      identityViewAuthorityRelationsData: state => state.userShow.identityViewAuthorityRelationsData
     })
   },
  async created() {
@@ -139,7 +139,7 @@ export default {
       this.tableList({ idx, data: this.pageTit[idx], pages: 1 });
       this.idx = idx;
       this.tit = this.nav[idx];
-      this.totals = this[this.totalTit[this.idx]].length;
+      this.totals = this[this.pageTit[this.idx]].length;
     }
   }
 };
