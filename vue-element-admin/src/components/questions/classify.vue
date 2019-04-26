@@ -6,9 +6,6 @@
       <el-table-column prop="questions_type_text" label="类型名称"></el-table-column>
       <el-table-column prop="address" label="操作"></el-table-column>
     </el-table>
-    <!-- <el-upload>
-
-    </el-upload> -->
   </div>
 </template>
 
