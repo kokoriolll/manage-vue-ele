@@ -73,7 +73,7 @@ export default {
       if (showingChildren.length === 1) {
         return true
       }
-      console.log(parent,'parent')
+
       if(parent.children <= 0){
         parent.alwaysShow = true;
         parent.hidden = true;

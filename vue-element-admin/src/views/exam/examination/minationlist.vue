@@ -25,7 +25,7 @@
           ></el-option>
         </el-select>
       </div>
-      <el-button type="primary" icon="el-icon-search" class="search" @click="searchFilter">查询</el-button>
+      <el-button type="primary" icon="el-icon-search" class="search">查询</el-button>
       <el-button type="primary" icon="el-icon-search" class="search" @click="exportExcel">导出试卷</el-button>
     </div>
 
@@ -48,7 +48,7 @@
           <el-table-column prop="end_time" label="结束时间"></el-table-column>
           <el-table-column label="操作" width="100">
             <template slot-scope="scope">
-              <el-button @click="handleDetail(scope.row)" type="text" size="small">详情</el-button>
+               <el-button @click="handleDetail(scope.row)" type="text" size="small">详情</el-button>
             </template>
           </el-table-column>
         </el-table>

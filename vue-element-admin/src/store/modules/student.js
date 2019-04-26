@@ -4,7 +4,8 @@ import {upDateStudent,upDateNewStudent,deleteStudent} from '@/api/class/student.
 const state = {
   studentData:[],
   pageNum:20,
-  currentPage:1
+  currentPage:1,
+  searchData:{}
 }
 
 const mutations={
@@ -21,6 +22,10 @@ const mutations={
    updatePage(state,payload){0
       state.pageNum = payload.pageSize
       state.currentPage = payload.currentPage
+   },
+   //搜索
+   getSearch(state,payload){
+    state.searchData = payload
    }
 
 }
