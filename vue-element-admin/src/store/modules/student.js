@@ -3,9 +3,11 @@ import {upDateStudent,upDateNewStudent,deleteStudent} from '@/api/class/student.
 
 const state = {
   studentData:[],
+  student1Data:[],
   pageNum:20,
   currentPage:1,
-  searchData:{}
+  searchData:{},
+  len:553
 }
 
 const mutations={
@@ -18,8 +20,14 @@ const mutations={
    pageData(state,payload){
      state.studentData = payload
    },
+   pageDatas(state,payload){
+    state.student1Data = payload
+    // state.student1Data = payload
+    state.len = payload.length
+    console.log(state.studentData,payload.length,'state.studentData')
+  },
    //获取页数，当前页
-   updatePage(state,payload){0
+   updatePage(state,payload){
       state.pageNum = payload.pageSize
       state.currentPage = payload.currentPage
    },

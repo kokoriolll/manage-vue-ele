@@ -40,7 +40,7 @@
             :page-sizes="pageSizes"
             :page-size="pageNum"
             layout=" prev, pager, next,sizes,jumper"
-            :total="553"
+            :total="len"
             >
         </el-pagination>
         </div>
@@ -57,16 +57,22 @@ export default {
         data:[],
         currentPages:1,
         pageSizes:[5, 10, 20, 50,100],
-        pageSize:20
+        pageSize:20,
+        pageTotal:553
      }
   },
   computed:{
-    ...mapState({
+     ...mapState({
        studentData:state => state.student.studentData,
+       student1Data:state => state.student.student1Data,
        pageNum:state => state.student.pageNum,
-       currentPage:state => state.student.currentPage
+       currentPage:state => state.student.currentPage,
+       len:state => state.student.len
     })
    },
+    mounted(){
+     
+    },
     methods:{
        ...mapMutations({
         updatePage:'student/updatePage',
@@ -95,8 +101,10 @@ export default {
           pageSize:this.pageSize,
           currentPage:this.currentPages
         })
+        
         let res = await this.curUpDateStudent()
         this.data = res.slice((this.currentPages-1) * this.pageSize,this.currentPages * this.pageSize)
+        this.data = this.student1Data.slice((this.currentPages-1) * this.pageSize,this.currentPages * this.pageSize)
         this.pageData(this.data)
     },
     handleSizeChange(val) {

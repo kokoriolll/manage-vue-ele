@@ -54,7 +54,8 @@ export default {
     methods:{
       ...mapMutations({
         updatePage:'student/updatePage',
-        pageData:'student/pageData'
+        pageData:'student/pageData',
+        pageDatas:'student/pageDatas'
       }),
       ...mapActions({
         curUpDateStudent:'student/curUpDateStudent',
@@ -68,11 +69,9 @@ export default {
         this.form.class = e ;
       },
       getNewData(newData){
-        if(newData){
-            this.pageData(newData)
-          }else{
-            return;
-        }
+        //console.log(newData,newData.length,'newData')
+        this.pageDatas(newData)
+        this.searchPage(newData)
       },
       async curSearch(){
           if(this.form.name && this.form.room && this.form.class){
@@ -81,6 +80,7 @@ export default {
                 return val.student_name == this.form.name && val.room_text == this.form.room && val.grade_name == this.form.class
               })
               this.getNewData(newData)
+              
           }else if(!this.form.name && !this.form.room && !this.form.class){
               this.getPage()
           }else if((this.form.name && this.form.room)||(this.form.name && this.form.class)||(this.form.room && this.form.class)){
@@ -96,6 +96,18 @@ export default {
             })
               this.getNewData(newData)
           }  
+      },
+      async searchPage(newData){
+        console.log(newData,newData.length,'newData')
+        if(newData && newData.length < 553){
+           this.updatePage({
+              pageSize:this.pageSize,
+              currentPage:this.currentPages
+            })
+          this.data = newData.slice((this.currentPages-1) * this.pageSize,this.currentPages * this.pageSize)
+          console.log(this.data,'this.data')
+           this.pageData(this.data)
+        }
       },
       async getPage(){
           this.updatePage({
