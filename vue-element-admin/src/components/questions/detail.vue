@@ -33,7 +33,6 @@
 </template>
 <script>
     var markdown = require( "markdown" ).markdown;
-    import MarkdownEditor from '@/components/MarkdownEditor'
     import { mapState, mapActions } from 'vuex'
     export default {
         name: 'MarkdownDemo',
