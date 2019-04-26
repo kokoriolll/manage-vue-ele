@@ -114,14 +114,6 @@
                     break;
                 }
             },
-            // sub(e) {
-            //     console.log(e)
-            //     this.sel_id.subject_id = e;
-            // },
-            // Questions(e) {
-            //     console.log(e)
-            //     this.sel_id.questions_type_id = e;
-            // },
             getHtml() {
                 this.html = this.$refs.markdownEditor.getHtml()
             },
