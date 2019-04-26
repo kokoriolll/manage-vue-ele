@@ -28,23 +28,23 @@
 import {mapState,mapMutations,mapActions} from 'vuex'
 import roomDialog from './components/roomDialog.vue'
 export default {
-     data() {
+    data() {
         return {
          
         }
-   },
-   components:{
-      roomDialog
-   },
-   mounted(){
-    this.getCurAllRoom()
-  },
-   computed:{
-    ...mapState({
-       allRoom:state => state.classManage.allRoom
-    })
-   },
-   methods: {
+    },
+    components:{
+        roomDialog
+    },
+    mounted(){
+       this.getCurAllRoom()
+    },
+    computed:{
+      ...mapState({
+        allRoom:state => state.classManage.allRoom
+      })
+    },
+    methods: {
       ...mapMutations({
           dialogForm:'classroom/dialogForm'
       }),
