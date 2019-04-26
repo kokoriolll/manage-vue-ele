@@ -67,11 +67,11 @@ export default {
         }
     }
    .el-dialog__header{
-    color: rgba(0, 0, 0, 0.65);
-    border-bottom: 1px solid #e8e8e8;
-    .el-dialog__title{
-      font-size: 16px;
-    }
+      color: rgba(0, 0, 0, 0.65);
+      border-bottom: 1px solid #e8e8e8;
+      .el-dialog__title{
+        font-size: 16px;
+      }
    }
    .classContent{
        width:100%;
