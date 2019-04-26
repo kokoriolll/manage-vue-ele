@@ -35,7 +35,6 @@ const mutations = {
     })
     deWeight(state.userIdValue)
     state.data = state.userData.slice(0, 10)
-
   },
   //获取身份数据
   identitys(state, payload) {
