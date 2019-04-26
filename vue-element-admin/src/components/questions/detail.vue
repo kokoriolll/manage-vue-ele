@@ -35,8 +35,6 @@
     var markdown = require( "markdown" ).markdown;
     import { mapState, mapActions } from 'vuex'
     export default {
-        name: 'MarkdownDemo',
-        components: { MarkdownEditor },
         data() {
             return {
                 questions_id: '',
