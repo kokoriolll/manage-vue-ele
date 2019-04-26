@@ -9,7 +9,7 @@
             v-for="item in ClassTypeState"
             :key="item.exam_id"
             :label="item.exam_name"
-            :value="item.exam_id"
+            :value="item.exam_name"
           ></el-option>
         </el-select>
       </div>
@@ -21,12 +21,12 @@
             v-for="item in SubjectState"
             :key="item.subject_id"
             :label="item.subject_text"
-            :value="item.subject_id"
+            :value="item.subject_text"
           ></el-option>
         </el-select>
       </div>
-      <el-button type="primary" icon="el-icon-search" class="search">查询</el-button>
-      <el-button type="primary" icon="el-icon-search" class="search" @click="ept">导出</el-button>
+      <el-button type="primary" icon="el-icon-search" class="search" @click="searchFilter">查询</el-button>
+      <el-button type="primary" icon="el-icon-search" class="search" @click="exportExcel">导出试卷</el-button>
     </div>
 
     <div class="content">
@@ -65,7 +65,10 @@ export default {
     return {
       classtypeValue: "",
       subjectValue: "",
-      examID: ""
+      examID: "",
+      selectData: "",
+      classTypeFilter: [],
+      subjectFilter:[]
     };
   },
   computed: {
@@ -104,10 +107,10 @@ export default {
       DetailExam: "examination/DetailExam"
     }),
     handleChange(e) {
-      this.ClassTypeID = e;
+      this.classtypeValue = e;
     },
     handleSub(e) {
-      this.SubjectID = e;
+      this.subjectValue = e;
     },
     handleDetail(row) {
       //获取exam_exam_id的ID
@@ -117,20 +120,21 @@ export default {
       window.localStorage.setItem("examID", JSON.stringify(row.exam_exam_id));
       this.$router.push({ path: "/examination/detail" });
     },
-    //导出
-    ept() {
-      import("@/vendor/Export2Excel").then(excel => {
-        let header=Object.keys(this.AllExamState[0])
-        let data=this.AllExamState.map(item=>{
-          return Object.values(item).map(items=>JSON.stringify(items))
-        })
+    // 导出试卷列表
+    exportExcel(){
+      let header = Object.keys(this.AllExamState[0]);
+      let list = this.AllExamState.map(item=>{
+        let arr = Object.values(item);
+        return arr.map(item=>JSON.stringify(item))
+      })
+      import('@/vendor/Export2Excel').then(excel => {
         excel.export_json_to_excel({
-          header,
-          data,
-          filename:'',
-          bookType: 'xls'
-        });
-      });
+          header: header,
+          data: list,
+          filename: '',
+          bookType: 'xlsx'  //excel后缀，xlsx,csv,xls
+        })
+      })
     }
   },
   created() {

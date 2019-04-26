@@ -16,12 +16,15 @@ export function getInfo(token) {
   })
 }
 
-export function getviewAuthority(token) {
-  return request({
-    url: '/user/view_authority',
-    method: 'get',
-    params: { token }
-  })
+// export function getviewAuthority(token) {
+//   return request({
+//     url: '/user/new',
+//     method: 'get',
+//     params: { token }
+//   })
+// }
+export let getviewAuthority = params => {
+  return request.get('/user/new',{params});
 }
 
 export function logout() {
@@ -36,4 +39,7 @@ export function user_gx(data) {
     method: 'put',
     data
   })
+}
+export let usernew = params => {
+  return request.get('/user/new',{params});
 }
