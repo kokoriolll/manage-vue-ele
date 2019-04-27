@@ -28,7 +28,7 @@
             label="操作"
             width="100" style="colo:#000">
         <template slot-scope="scope">
-            <el-button type="text" size="small" style="color:#606266" @click="curDelete(scope.row)">删除</el-button>
+            <el-button type="text" size="small" style="color:#606266" @click="curDelete(scope.$index,scope.row,studentData)">删除</el-button>
         </template>
         </el-table-column>
         </el-table>
@@ -88,12 +88,13 @@ export default {
     getClass(e){
        this.form.class = e ;
     },
-    async curDelete(row){
+    async curDelete(ind,row,rows){
       await this.curDeleteStudent({
         student_id:row.student_id
       })
+      rows.splice(ind, 1);
       this.getPage()
-      this.$forceUpdate()
+      
     },
     
     async getPage(){
@@ -106,7 +107,6 @@ export default {
         if(this.student1Data.length > 0){
           this.data = this.student1Data.slice((this.currentPages-1) * this.pageSize,this.currentPages * this.pageSize)         
           this.pageData(this.data)
-          
         }else{
           this.data = res.slice((this.currentPages-1) * this.pageSize,this.currentPages * this.pageSize)
           this.pageData(this.data)

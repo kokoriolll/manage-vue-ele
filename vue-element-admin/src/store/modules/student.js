@@ -57,9 +57,7 @@ const actions = {
     },
   //删除
   async curDeleteStudent({commit},payload){
-
-    let res = await deleteStudent(payload)
-    console.log('delete...',res)
+    await deleteStudent(payload)
 
   }
 }

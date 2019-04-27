@@ -44,7 +44,7 @@ export default {
       ...mapState({
         allRoom:state => state.classManage.allRoom,
         classData:state => state.classManage.classData
-      })
+        })
     },
     mounted(){
       this.getPage()
@@ -69,17 +69,18 @@ export default {
         this.form.class = e ;
       },
       getNewData(newData){
-        //console.log(newData,newData.length,'newData')
         this.pageDatas(newData)
         this.searchPage(newData)
       },
       async curSearch(){
-          let res = await this.curUpDateStudent()
+         let res = await this.curUpDateStudent()
           if(this.form.name && this.form.room && this.form.class){
+             
               let newData = res.filter(val=>{
                 return val.student_name == this.form.name && val.room_text == this.form.room && val.grade_name == this.form.class
               })
               this.getNewData(newData)
+              
           }else if(!this.form.name && !this.form.room && !this.form.class){
               this.getPage()
           }else if((this.form.name && this.form.room)||(this.form.name && this.form.class)||(this.form.room && this.form.class)){
@@ -95,14 +96,12 @@ export default {
           }  
       },
       async searchPage(newData){
-        if(newData && newData.length < 553){
            this.updatePage({
               pageSize:this.pageSize,
               currentPage:this.currentPages
             })
           this.data = newData.slice((this.currentPages-1) * this.pageSize,this.currentPages * this.pageSize)
           this.pageData(this.data)
-        }
       },
       async getPage(){
           this.updatePage({
