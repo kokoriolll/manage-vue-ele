@@ -44,7 +44,7 @@ export default {
       ...mapState({
         allRoom:state => state.classManage.allRoom,
         classData:state => state.classManage.classData
-        })
+      })
     },
     mounted(){
       this.getPage()
@@ -74,23 +74,20 @@ export default {
         this.searchPage(newData)
       },
       async curSearch(){
+          let res = await this.curUpDateStudent()
           if(this.form.name && this.form.room && this.form.class){
-              let res = await this.curUpDateStudent()
               let newData = res.filter(val=>{
                 return val.student_name == this.form.name && val.room_text == this.form.room && val.grade_name == this.form.class
               })
               this.getNewData(newData)
-              
           }else if(!this.form.name && !this.form.room && !this.form.class){
               this.getPage()
           }else if((this.form.name && this.form.room)||(this.form.name && this.form.class)||(this.form.room && this.form.class)){
-              let res = await this.curUpDateStudent()
               let newData = res.filter(val=>{
                 return (val.student_name == this.form.name && val.room_text == this.form.room) || (val.student_name == this.form.name && val.grade_name == this.form.class) || (val.room_text == this.form.room && val.grade_name == this.form.class)
               })
               this.getNewData(newData)
           }else {
-            let res = await this.curUpDateStudent()
             let newData = res.filter(val=>{
                 return val.student_name == this.form.name || val.room_text == this.form.room || val.grade_name == this.form.class
             })
@@ -98,15 +95,13 @@ export default {
           }  
       },
       async searchPage(newData){
-        console.log(newData,newData.length,'newData')
         if(newData && newData.length < 553){
            this.updatePage({
               pageSize:this.pageSize,
               currentPage:this.currentPages
             })
           this.data = newData.slice((this.currentPages-1) * this.pageSize,this.currentPages * this.pageSize)
-          console.log(this.data,'this.data')
-           this.pageData(this.data)
+          this.pageData(this.data)
         }
       },
       async getPage(){

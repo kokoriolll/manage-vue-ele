@@ -70,13 +70,11 @@ export default {
        len:state => state.student.len
     })
    },
-    mounted(){
-     
-    },
     methods:{
        ...mapMutations({
         updatePage:'student/updatePage',
-        pageData:'student/pageData'
+        pageData:'student/pageData',
+        pageDatas:'student/pageDatas'
        }),
        ...mapActions({
         curUpDateStudent:'student/curUpDateStudent',
@@ -90,12 +88,14 @@ export default {
     getClass(e){
        this.form.class = e ;
     },
-    curDelete(row){
-      this.curDeleteStudent({
+    async curDelete(row){
+      await this.curDeleteStudent({
         student_id:row.student_id
       })
       this.getPage()
+      this.$forceUpdate()
     },
+    
     async getPage(){
         this.updatePage({
           pageSize:this.pageSize,
@@ -103,9 +103,14 @@ export default {
         })
         
         let res = await this.curUpDateStudent()
-        this.data = res.slice((this.currentPages-1) * this.pageSize,this.currentPages * this.pageSize)
-        this.data = this.student1Data.slice((this.currentPages-1) * this.pageSize,this.currentPages * this.pageSize)
-        this.pageData(this.data)
+        if(this.student1Data.length > 0){
+          this.data = this.student1Data.slice((this.currentPages-1) * this.pageSize,this.currentPages * this.pageSize)         
+          this.pageData(this.data)
+          
+        }else{
+          this.data = res.slice((this.currentPages-1) * this.pageSize,this.currentPages * this.pageSize)
+          this.pageData(this.data)
+        }
     },
     handleSizeChange(val) {
       this.pageSize = val
