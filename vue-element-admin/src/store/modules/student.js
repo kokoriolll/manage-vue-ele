@@ -7,7 +7,7 @@ const state = {
   pageNum:20,
   currentPage:1,
   searchData:{},
-  len:543
+  len:0
 }
 
 const mutations={
@@ -25,7 +25,8 @@ const mutations={
    },
    pageDatas(state,payload){
     state.student1Data = payload
-    state.len = payload.length
+    // state.len = payload.length
+    // console.log(state.len,'state.len...')
   },
    //获取页数，当前页
    updatePage(state,payload){
@@ -48,11 +49,9 @@ const actions = {
         let nores = await upDateNewStudent()
         if(res.code == 1 || nores.code == 1){
           commit('updateState',{studentData:[...res.data,...nores.data]})
-        }
-        if(state.student1Data.length < 0){
           commit('pageTotal',{length:state.studentData.length})
         }
-       
+        
         return state.studentData;
     },
   //删除

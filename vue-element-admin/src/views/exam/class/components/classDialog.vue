@@ -91,13 +91,16 @@ export default {
       }) 
       this.clearData()
       this.$refs['ruleForm'].clearValidate() 
+      this.$message({
+          type: 'info',
+          message: '已取消'
+      });   
     },
     getRoomId(e){
      if(e){
        this.roomId = e;
        this.$refs['room'].clearValidate()
-     }
-     
+     } 
     },
     getSubjectId(e){
       if(e){
@@ -116,19 +119,37 @@ export default {
               })  
               this.clearData()
             }else if(this.type == 'edit'){
-              await this.curUpdateClasses({
-                grade_id:this.gradeID,
-                subject_id:this.subjectId,
-                room_id:this.roomId
-              })
+              if(this.editData.subject_id == this.subjectId && this.editData.room_id == this.roomId){
+                 this.$message({
+                    type: 'info',
+                    message: '您还没有修改'
+                  });
+                  this.$refs[formName].clearValidate() 
+              }else if(!this.subjectId && !this.roomId){
+                 this.$message({
+                    type: 'info',
+                    message: '您还没有修改'
+                  });
+              }else{
+                 await this.curUpdateClasses({
+                    grade_id:this.gradeID,
+                    subject_id:this.subjectId,
+                    room_id:this.roomId
+                  })
+                  this.$message({
+                    type: 'success',
+                    message: '修改成功!'
+                  });
+                  this.clearData()
+                  this.$refs[formName].clearValidate() 
+              }  
             }
             await this.curUpDateClass()
-            await this.dialogForm({
+            this.dialogForm({
               dialogFormVisible:false  
             })  
             this.$refs[formName].clearValidate() 
-            
-            //alert('submit!');
+
           } else {
             console.log('error submit!!');
             return false;
@@ -140,5 +161,18 @@ export default {
 </script>
 
 <style lang="scss">
-   
+   .dialog-footer{
+        text-align: center;
+        .submit{
+             width: 20%;
+             background: linear-gradient(-90deg,#4e75ff,#0139fd)!important;
+        }
+    }
+   .el-dialog__header{
+      color: rgba(0, 0, 0, 0.65);
+      border-bottom: 1px solid #e8e8e8;
+      .el-dialog__title{
+        font-size: 16px;
+      }
+   }
 </style>

@@ -73,10 +73,26 @@ export default {
    },
     //删除班级
    curDelete(index,row){
-       this.curDeleteClass({
-          grade_id:row.grade_id
-       })
-       this.curUpDateClass()
+       this.$confirm('确定要删除此班级吗？', '', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+          center: true
+        }).then(() => {
+            this.curDeleteClass({
+               grade_id:row.grade_id
+            })
+            this.curUpDateClass()
+            this.$message({
+               type: 'success',
+               message: '删除成功!'
+            });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });          
+        });   
     }
   }
 }

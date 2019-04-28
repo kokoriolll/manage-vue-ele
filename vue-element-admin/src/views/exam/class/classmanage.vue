@@ -59,20 +59,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    .dialog-footer{
-        text-align: center;
-        .submit{
-             width: 20%;
-             background: linear-gradient(-90deg,#4e75ff,#0139fd)!important;
-        }
-    }
-   .el-dialog__header{
-      color: rgba(0, 0, 0, 0.65);
-      border-bottom: 1px solid #e8e8e8;
-      .el-dialog__title{
-        font-size: 16px;
-      }
-   }
+    
    .classContent{
        width:100%;
        height:auto;
