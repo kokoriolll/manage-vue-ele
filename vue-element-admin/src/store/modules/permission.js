@@ -30,8 +30,6 @@ export function filterAsyncRoutes(routes, view_ids) {
     }
     
   })
-
-
   return res
 }
 

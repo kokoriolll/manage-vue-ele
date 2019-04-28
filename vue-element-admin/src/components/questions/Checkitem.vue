@@ -3,7 +3,7 @@
     <div class="header">
       <ul class="name_list">
         <span>课程类型:</span>
-        <li v-for='(item,index) in subject' :key='index' @click='subject_id(item)'>{{item.subject_text}}</li>
+        <li v-for='(item,index) in subject' :key='index' @click='subject_id(item,index)' :class="index == ind?'active':''">{{item.subject_text}}</li>
       </ul>
       <ul class="select">
         <li>
@@ -52,6 +52,7 @@
         exam_id: '',
         subjectid: '',
         questions_type_id: '',
+        ind:0
       }
     },
     computed: {
@@ -82,7 +83,8 @@
         questions: 'exam/questions',
         condition: 'exam/condition'
       }),
-      subject_id(item) {
+      subject_id(item,index) {
+        this.ind = index;
         this.subjectid = item.subject_id;
       },
       submit() {
@@ -207,5 +209,9 @@
     }
     .content_list:hover {
         background: #F7F8FF;
+    }
+    .active{
+      background: #0239FD;
+      color: #fff;
     }
 </style>

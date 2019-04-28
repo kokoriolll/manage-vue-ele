@@ -41,7 +41,6 @@ router.beforeEach(async(to, from, next) => {
           const userInfo = await store.dispatch('user/getInfo')
           const getViewAuthority = await store.dispatch('user/getViewAuthoritys',userInfo.user_id);
           let generateRoutes = await store.dispatch('permission/generateRoutes',getViewAuthority)
-              
           router.addRoutes(generateRoutes)
           next({ ...to, replace: true })
         } catch (error) {

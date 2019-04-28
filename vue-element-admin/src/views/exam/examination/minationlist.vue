@@ -53,14 +53,22 @@
           </el-table-column>
         </el-table>
       </div>
+      <div class="app-container">
+        <upload-excel-component :on-success="handleSuccess" :before-upload="beforeUpload" />
+        <el-table :data="tableData" border highlight-current-row style="width: 100%;margin-top:20px;">
+          <el-table-column v-for="item of tableHeader" :key="item" :prop="item" :label="item" />
+        </el-table>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import { mapState, mapMutations, mapActions } from "vuex";
-
+import UploadExcelComponent from '@/components/UploadExcel/index.vue'
 export default {
+  name: 'UploadExcel',
+  components: { UploadExcelComponent },
   data() {
     return {
       classtypeValue: "",
@@ -68,7 +76,9 @@ export default {
       examID: "",
       selectData: "",
       classTypeFilter: [],
-      subjectFilter:[]
+      subjectFilter:[],
+      tableData: [],
+      tableHeader: []
     };
   },
   computed: {
@@ -138,6 +148,23 @@ export default {
           bookType: 'xlsx'  //excel后缀，xlsx,csv,xls
         }) 
       })
+    },
+    beforeUpload(file) {
+      const isLt1M = file.size / 1024 / 1024 < 1
+
+      if (isLt1M) {
+        return true
+      }
+
+      this.$message({
+        message: 'Please do not upload files larger than 1m in size.',
+        type: 'warning'
+      })
+      return false
+    },
+    handleSuccess({ results, header }) {
+      this.tableData = results
+      this.tableHeader = header
     }
   },
   created() {
@@ -151,7 +178,6 @@ export default {
 <style lang="scss" scoped>
 .minWraper {
   width: 100%;
-  height: 800px;
   background: #eee;
   > p {
     font-size: 22px;

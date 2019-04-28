@@ -13,21 +13,21 @@
         </div>
         <div class="exam_style">
             <span>请选择考试类型:</span>
-            <el-select v-model="examTypes" placeholder="请选择" @change='Type'>
+            <el-select v-model="examTypes" placeholder="请选择" @change='Type($event,"exam")'>
                 <el-option v-for="(item,index) in examType" :key="item.exam_id" :label="item.exam_name" :value="item.exam_id">
                 </el-option>
             </el-select>
         </div>
         <div class="exam_style">
             <span>请选择课程类型:</span>
-            <el-select v-model="value" placeholder="请选择" @change='sub'>
+            <el-select v-model="value" placeholder="请选择" @change='Type($event,"sub")'>
                 <el-option v-for="item in subject" :key="item.subject_id" :label="item.subject_text" :value="item.subject_id">
                 </el-option>
             </el-select>
         </div>
         <div class="exam_style">
             <span>请选择题目类型:</span>
-            <el-select v-model="coures" placeholder="请选择" @change='Questions'>
+            <el-select v-model="coures" placeholder="请选择" @change='Type($event,"topic")'>
                 <el-option v-for="item in QuestionsType" :key="item.questions_type_id" :label="item.questions_type_text"
                     :value="item.questions_type_id">
                 </el-option>
@@ -99,14 +99,20 @@
             }
         },
         methods: {
-            Type(e) {
+            Type(e,type) {
+                console.log(e,type)
                 this.sel_id.exam_id = e;
-            },
-            sub(e) {
-                this.sel_id.subject_id = e;
-            },
-            Questions(e) {
-                this.sel_id.questions_type_id = e;
+                switch (type){
+                    case 'exam':
+                    this.sel_id.exam_id = e;
+                    break;
+                    case 'sub':
+                    this.sel_id.subject_id = e;
+                    break;
+                    case 'topic':
+                    this.sel_id.questions_type_id = e;
+                    break;
+                }
             },
             getHtml() {
                 this.html = this.$refs.markdownEditor.getHtml()
