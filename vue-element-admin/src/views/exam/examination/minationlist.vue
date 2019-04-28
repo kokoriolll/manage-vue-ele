@@ -136,7 +136,7 @@ export default {
           data: list,
           filename: '',
           bookType: 'xlsx'  //excel后缀，xlsx,csv,xls
-        })
+        }) 
       })
     }
   },
