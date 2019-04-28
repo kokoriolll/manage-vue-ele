@@ -54,7 +54,6 @@ const actions = {
   generateRoutes({ commit }, view_authority) {
     // 获取用户所拥有的view_ids
     let view_ids = view_authority.map(item=>item.view_id);
-    console.log(view_ids,'accessedRoutes')
     // 在动态路由里过滤一遍，得到用户能访问的路由
     let accessedRoutes = filterAsyncRoutes(asyncRoutes, view_ids);
     // 更新路由
