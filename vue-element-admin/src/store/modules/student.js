@@ -3,9 +3,11 @@ import {upDateStudent,upDateNewStudent,deleteStudent} from '@/api/class/student.
 
 const state = {
   studentData:[],
+  student1Data:[],
   pageNum:20,
   currentPage:1,
-  searchData:{}
+  searchData:{},
+  len:543
 }
 
 const mutations={
@@ -18,8 +20,15 @@ const mutations={
    pageData(state,payload){
      state.studentData = payload
    },
+   pageTotal(state,payload){
+    state.len = payload.length
+   },
+   pageDatas(state,payload){
+    state.student1Data = payload
+    state.len = payload.length
+  },
    //获取页数，当前页
-   updatePage(state,payload){0
+   updatePage(state,payload){
       state.pageNum = payload.pageSize
       state.currentPage = payload.currentPage
    },
@@ -40,12 +49,16 @@ const actions = {
         if(res.code == 1 || nores.code == 1){
           commit('updateState',{studentData:[...res.data,...nores.data]})
         }
-        
+        if(state.student1Data.length < 0){
+          commit('pageTotal',{length:state.studentData.length})
+        }
+       
         return state.studentData;
     },
   //删除
   async curDeleteStudent({commit},payload){
     await deleteStudent(payload)
+
   }
 }
 export default {
