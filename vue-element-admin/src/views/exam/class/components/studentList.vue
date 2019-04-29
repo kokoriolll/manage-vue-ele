@@ -28,7 +28,7 @@
             label="操作"
             width="100" style="colo:#000">
         <template slot-scope="scope">
-            <el-button type="text" size="small" style="color:#606266" @click="curDelete(scope.row)">删除</el-button>
+            <el-button type="text" size="small" style="color:#606266" @click="curDelete(scope.$index,scope.row,studentData)">删除</el-button>
         </template>
         </el-table-column>
         </el-table>
@@ -40,7 +40,7 @@
             :page-sizes="pageSizes"
             :page-size="pageNum"
             layout=" prev, pager, next,sizes,jumper"
-            :total="553"
+            :total="len"
             >
         </el-pagination>
         </div>
@@ -57,20 +57,24 @@ export default {
         data:[],
         currentPages:1,
         pageSizes:[5, 10, 20, 50,100],
-        pageSize:20
+        pageSize:20,
+        pageTotal:553
      }
   },
   computed:{
-    ...mapState({
+     ...mapState({
        studentData:state => state.student.studentData,
+       student1Data:state => state.student.student1Data,
        pageNum:state => state.student.pageNum,
-       currentPage:state => state.student.currentPage
+       currentPage:state => state.student.currentPage,
+       len:state => state.student.len
     })
    },
     methods:{
        ...mapMutations({
         updatePage:'student/updatePage',
-        pageData:'student/pageData'
+        pageData:'student/pageData',
+        pageDatas:'student/pageDatas'
        }),
        ...mapActions({
         curUpDateStudent:'student/curUpDateStudent',
@@ -84,20 +88,29 @@ export default {
     getClass(e){
        this.form.class = e ;
     },
-    curDelete(row){
-      this.curDeleteStudent({
+    async curDelete(ind,row,rows){
+      await this.curDeleteStudent({
         student_id:row.student_id
       })
+      rows.splice(ind, 1);
       this.getPage()
+      
     },
+    
     async getPage(){
         this.updatePage({
           pageSize:this.pageSize,
           currentPage:this.currentPages
         })
+        
         let res = await this.curUpDateStudent()
-        this.data = res.slice((this.currentPages-1) * this.pageSize,this.currentPages * this.pageSize)
-        this.pageData(this.data)
+        if(this.student1Data.length > 0){
+          this.data = this.student1Data.slice((this.currentPages-1) * this.pageSize,this.currentPages * this.pageSize)         
+          this.pageData(this.data)
+        }else{
+          this.data = res.slice((this.currentPages-1) * this.pageSize,this.currentPages * this.pageSize)
+          this.pageData(this.data)
+        }
     },
     handleSizeChange(val) {
       this.pageSize = val

@@ -10,19 +10,21 @@
               v-for="(item,index) in DetailExamState"
               :key="index"
             >
-              <h4>1、{{item.title}}</h4>
-              <div class="react-markdown">
-                <h2>{{item.questions_type_text}}</h2>
-                <p>
-                  {{item.questions_answer}}
-                  <br>
-                </p>
-                <pre>
-                    <code class="language-js">
-                       {{item.questions_stem}}
-                    </code>
-                </pre>
-              </div>
+              <textarea id="text-input" oninput="this.editor.update()" rows="19" cols="63">
+                  <h4>1、{{item.title}}</h4>
+                  <div class="react-markdown">
+                    <h2>{{item.questions_type_text}}</h2>
+                    <p>
+                      {{item.questions_answer}}
+                      <br>
+                    </p>
+                    <pre>
+                        <code class="language-js">
+                          {{item.questions_stem}}
+                        </code>
+                    </pre>
+                  </div>
+              </textarea>
             </div>
           </div>
         </div>
@@ -31,8 +33,9 @@
     </div>
   </div>
 </template>
-
+<script src="lib/markdown.js"></script> 
 <script>
+var markdown = require("markdown").markdown;
 import { mapState, mapMutations, mapActions } from "vuex";
 
 export default {
@@ -93,7 +96,7 @@ export default {
       padding: 40px;
       text-align: center;
       position: relative;
-      .style_questionitem {
+      /* .style_questionitem {
         .style_questionitem__1TQyr {
           text-align: left;
           border: 1px solid #ccc;
@@ -127,7 +130,7 @@ export default {
             }
           }
         }
-      }
+      } */
     }
   }
   .right {
