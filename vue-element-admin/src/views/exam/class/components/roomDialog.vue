@@ -22,7 +22,7 @@ export default {
     return {
         rules: {
           name: [
-            { required: true,message: '请输入教室名',trigger:blur}
+            { required: true,message: '请输入教室名',trigger:"blur"}
           ]
          },
         ruleForm: {
