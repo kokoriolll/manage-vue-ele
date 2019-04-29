@@ -4,7 +4,7 @@
         <div class="classContent">
             <el-button type="primary" @click="dialogVisible('add')">+ 添加班级</el-button>
             <classDialog></classDialog>
-            <classList :classData="classData"></classList>
+            <classList></classList>
         </div>
     </div>
 </template>

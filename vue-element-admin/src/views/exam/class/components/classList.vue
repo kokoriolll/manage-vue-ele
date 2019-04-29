@@ -38,17 +38,11 @@ export default {
       
      }
   },
-  props: {
-    classData:{
-        type: Array,
-        default() {
-            return []
-        }
-    }
-  },
   computed:{
-    
-  },
+      ...mapState({
+          classData:state => state.classManage.classData
+      })
+   },
   methods: {
     ...mapMutations({
       dialogForm:'classManage/dialogForm',

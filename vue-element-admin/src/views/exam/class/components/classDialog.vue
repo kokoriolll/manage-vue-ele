@@ -6,12 +6,12 @@
                 <el-input v-model="editData.grade_name" @input="getClass" placeholder="班级名" :disabled="disable"></el-input>
             </el-form-item>
             <el-form-item label="教室号:" prop="room_text" ref="room">
-                <el-select v-model="editData.room_text" style="width:100%" placeholder="请选择教室名" @change="getRoomId">
+                <el-select v-model="editData.room_id" style="width:100%" placeholder="请选择教室名" @change="getRoomId">
                 <el-option v-for="(item,ind) in allRoom" :key="ind" :label="item.room_text" :value="item.room_id" style="width:100%"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="课程号:" prop="subject_text" ref="subject">
-                <el-select v-model="editData.subject_text" style="width:100%" placeholder="课程名" @change="getSubjectId">
+                <el-select v-model="editData.subject_id" style="width:100%" placeholder="课程名" @change="getSubjectId">
                 <el-option v-for="(item,ind) in allSubject" :key="ind" :label="item.subject_text" :value="item.subject_id" style="width:100%"></el-option>
                 </el-select>
             </el-form-item>
@@ -50,11 +50,6 @@ export default {
        gradeID:state => state.classManage.gradeID
     })
   },
-  watch:{
-    
-  },
-  created(){
-  },
   mounted(){
     this.getCurAllRoom()
     this.getCurAllSubject()
@@ -86,9 +81,10 @@ export default {
       }) 
     },
     handleDialogClose(){
+      console.log(this.editData,'this.editData')
       this.dialogForm({
          dialogFormVisible:false 
-      }) 
+      })
       this.clearData()
       this.$refs['ruleForm'].clearValidate() 
       this.$message({
@@ -97,13 +93,15 @@ export default {
       });   
     },
     getRoomId(e){
-     if(e){
-       this.roomId = e;
-       this.$refs['room'].clearValidate()
-     } 
+     
+      if(e){ 
+        this.roomId = e;
+        this.$refs['room'].clearValidate()
+      } 
     },
     getSubjectId(e){
-      if(e){
+      
+      if(e){ 
         this.subjectId = e;
         this.$refs['subject'].clearValidate()
       }
@@ -131,6 +129,7 @@ export default {
                     message: '您还没有修改'
                   });
               }else{
+                console.log(this.gradeID,'this.gradeID..')
                  await this.curUpdateClasses({
                     grade_id:this.gradeID,
                     subject_id:this.subjectId,
