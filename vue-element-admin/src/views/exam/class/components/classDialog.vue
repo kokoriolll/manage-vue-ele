@@ -164,7 +164,7 @@ export default {
    .dialog-footer{
         text-align: center;
         .submit{
-             width: 20%;
+             width: 112px;
              background: linear-gradient(-90deg,#4e75ff,#0139fd)!important;
         }
     }

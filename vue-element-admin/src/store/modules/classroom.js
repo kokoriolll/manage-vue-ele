@@ -23,7 +23,7 @@ const actions = {
         room_id:res.room_id
     })
     }else{
-      console.log('班级重复')
+      console.log('教室名重复')
     }
     
   },
