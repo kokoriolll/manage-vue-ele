@@ -12,7 +12,8 @@ import {
 const service = axios.create({
   // baseURL: '/api', // api 的 base_url
   // withCredentials: true, // 跨域请求时发送 cookies
-  baseURL://.test()?'':''
+  baseURL:/jasonandjay\.com/.test(window.location.host)?'https://exam.jasonandjay.com/':'http://169.254.12.55:7001',
+
   timeout: 5000 // request timeout
 })
 

@@ -501,4 +501,10 @@ export default {
 .el-input {
   margin: 8px 0;
 }
+.btn .el-button+.el-button{
+  margin-left: 0!important;
+}
+.el-button{
+  margin:5px 0;
+}
 </style>
