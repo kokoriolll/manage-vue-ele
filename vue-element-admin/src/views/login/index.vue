@@ -150,6 +150,8 @@ export default {
       });
     },
     handleLogin() {
+      //加入事件统计
+      _hmt.push(['trackEvent','考试管理平台',tap,'登录按钮点击'])
       this.$refs.loginForm.validate(async valid => {
         if (valid) {
           let res = await this.login({
