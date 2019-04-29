@@ -185,24 +185,22 @@ export default {
 }
 
 .top {
-  height: 15%;
+  height: 80px;
   background: #fff;
   border-radius: 15px;
   display: flex;
+  align-items: center;
   .examType {
-    margin-top: 2.4%;
     margin-left: 2%;
   }
 
   .classType {
-    margin-top: 2.4%;
     margin-left: 2%;
   }
 
   .search {
     width: 120px;
     height: 32px;
-    margin-top: 40px;
     background: #0139fd;
   }
 }

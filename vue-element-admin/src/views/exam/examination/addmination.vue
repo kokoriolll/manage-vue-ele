@@ -41,9 +41,9 @@
           ></el-input-number>
         </el-form-item>
 
-        <el-form-item label="考试时间" required class="ExamName datatime">
-          <br>
-          <el-col :span="6">
+        <el-form-item label="考试时间" required class="ExamName datatime"></el-form-item>
+        <div class="timeWrpe">
+          <div class="date1">
             <el-form-item prop="date1">
               <el-date-picker
                 type="datetime"
@@ -52,9 +52,9 @@
                 style="width:300px"
               ></el-date-picker>
             </el-form-item>
-          </el-col>
-          <el-col class="line" :span="1">-</el-col>
-          <el-col :span="1">
+          </div>
+          <span class="line" :span="1">-</span>
+          <div class="date2">
             <el-form-item prop="date2">
               <el-date-picker
                 type="datetime"
@@ -63,8 +63,8 @@
                 style="width:300px"
               ></el-date-picker>
             </el-form-item>
-          </el-col>
-        </el-form-item>
+          </div>
+        </div>
         <el-form-item class="btn">
           <el-button type="primary" @click="submitForm('ruleForm')">创建试卷</el-button>
         </el-form-item>
@@ -89,27 +89,13 @@ export default {
         delivery: false
       },
       rules: {
-        name: [{ required: true, message: "请输入试卷名称", trigger: "blur" }],
-        type: [{ required: true, message: "请选择考试类型", trigger: "blur" }],
-        region: [{ required: true, message: "请选择课程", trigger: "blur" }],
+        name: [{ required: true, message: "请输入试卷名称", trigger: "change" }],         
+        type: [{ required: true, message: "请选择考试类型", trigger: "change" }],             
+        region: [{ required: true, message: "请选择课程", trigger: "change" }],
         Topic: [{ required: true, message: "请选择题量", trigger: "blur" }],
-        date1: [
-          {
-            type: "date",
-            required: true,
-            message: "请选择日期",
-            trigger: "change"
-          }
-        ],
-        date2: [
-          {
-            type: "date",
-            required: true,
-            message: "请选择时间",
-            trigger: "change"
-          }
-        ]
-      },
+        date1: [{type: "date",required: true,message: "请选择日期",trigger: "change"}],     
+        date2: [ {type: "date",required: true, message: "请选择时间",trigger: "change"}]
+       },
       createExamParams: {},
       ClassTypeID: "",
       SubjectID: ""
@@ -181,7 +167,7 @@ export default {
   width: 100%;
   height: 800px;
   background: #eee;
-  >p{
+  > p {
     font-size: 22px;
   }
 }
@@ -202,11 +188,18 @@ export default {
       margin-left: 40px;
       margin-top: 20px;
     }
+    .timeWrpe {
+      display: flex;
+      margin-left: 40px;
+      margin-top: -25px;
+      .line {
+        margin: 5px 15px;
+      }
+    }
     .btn {
       margin-left: 40px;
       margin-top: 20px;
     }
-   
   }
 }
 </style>

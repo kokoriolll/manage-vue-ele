@@ -2,43 +2,37 @@
   <div class="newExam">
     <div class="head">创建试卷</div>
     <div class="bigBox">
-      <el-row class="add">
-        <el-button>添加新题</el-button>
-      </el-row>
+      <el-button class="add" @click="showDialog">添加试题</el-button>
       <div class="style_exam">
         <h2>{{CreateExamDataFunState.title}}</h2>
         <p class="top">考试时间：1小时30分钟 监考人：刘于 开始考试时间：2018.9.10 10:00 阅卷人：刘于</p>
         <div class="style_questionitem" v-for="(item,index) in this.createDate" :key="index">
-          <div class="style_questionitem__3ETlC">
-            <h4>
-              "1"
-              <a href="javascript:;" @click="handleDel(index)">删除</a>
-            </h4>
-            <div class="react-markdown">
-              <p>{{item.title}}</p>
-              <p></p>
-              <p>示例 1:</p>
-              <pre>
-                  <code>
-                    {{item.questions_stem}}
-                  </code>
-              </pre>
-              <p>示例 2:</p>
-              <pre>
-                  <code>
-                    {{item.questions_answer}}
-                  </code>
-              </pre>
-              <p></p>
-              <p>
-                {{item.questions_type_text}}
-                <br>
-              </p>
-              <p>{{item.questions_answer}}</p>
-            </div>
-          </div>
+          <h4>
+            "{{index+1}}"
+            <a href="javascript:;" @click="handleDel(index)">删除</a>
+          </h4>
+          <vue-markdown class="text-input">
+            {{item.title}}
+            {{item.questions_answer}}
+            {{item.questions_stem}}
+            {{item.questions_stem}}
+            <p>示例 1:</p>
+            {{item.questions_type_text}}
+            <p>示例 2:</p>
+            {{item.questions_answer}}
+          </vue-markdown>
         </div>
         <button @click="handleClick">创建试卷</button>
+      </div>
+    </div>
+
+    <div v-show="flag" class="add-drawer">
+      <div class="mask" @click="showDialog"></div>
+      <div class="add-drawer-right">
+        <h3>添加试题</h3>
+        <ul>
+          <li v-for="(item, ind) in this.createDate" :key="ind">{{item.title}}</li>
+        </ul>
       </div>
     </div>
   </div>
@@ -46,24 +40,32 @@
 
 <script>
 import { mapState, mapMutations, mapActions } from "vuex";
+import VueMarkdown from "vue-markdown";
 
 export default {
   data() {
     return {
       createDate: [],
       obj: "",
-      examID:""
+      examID: "",
+      show: true,
+      flag: false
     };
+  },
+  components: {
+    VueMarkdown
   },
   computed: {
     ...mapState({
-      CreateExamState: state => { //创建试卷
+      CreateExamState: state => {
+        //创建试卷
         return state.examination.CreateExamData;
       },
       CreateExamDataFunState: state => {
         return state.examination.CreateExamDataFun;
       },
-      UpdateExamState: state => { //更新试卷
+      UpdateExamState: state => {
+        //更新试卷
         return state.examination.UpdateExamData;
       }
     })
@@ -79,9 +81,9 @@ export default {
       UpdateExamSave: "examination/getUpdateExam"
     }),
     ...mapActions({
-      CreateExam: "examination/CreateExam",//创建试卷
+      CreateExam: "examination/CreateExam", //创建试卷
       UpdateExam: "examination/UpdateExam", //更新试卷
-      AllExam: "examination/AllExam"      
+      AllExam: "examination/AllExam"
     }),
     //点击删除
     handleDel(index) {
@@ -102,7 +104,7 @@ export default {
     },
     handleClick() {
       //获取exam_exam_id的ID
-      this.examID = this.CreateExamState.exam_exam_id
+      this.examID = this.CreateExamState.exam_exam_id;
       //获取questions的ID
       this.CreateExamState.questions.map(item => {
         this.obj = item.questions_id;
@@ -110,13 +112,19 @@ export default {
       });
       //更新试卷：传入参数
       this.UpdateExam({
-        question_ids:{
-           question_ids:JSON.stringify(this.obj)
+        question_ids: {
+          question_ids: JSON.stringify(this.obj)
         },
-        examID:this.examID
+        examID: this.examID
       });
-      this.AllExam()
-      this.$router.push({ path: "/examination/minationlist" })
+      this.AllExam();
+      this.$router.push({ path: "/examination/minationlist" });
+    },
+    async showDialog() {
+      this.flag = !this.flag;
+      /* if (this.flag) {
+        this.createDate = await this.createDate();
+      } */
     }
   },
   created() {}
@@ -124,8 +132,62 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.style_exam /deep/ code {
+  white-space: normal;
+}
+
+.add-drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+}
+.mask {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.65);
+}
+.add-drawer-right {
+  width: 40%;
+  height: 100%;
+  position: relative;
+  float: right;
+  background-color: #fff;
+  border: 0;
+  background-clip: padding-box;
+  z-index: 1;
+  overflow-y: scroll;
+  h3 {
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    margin-left: 15px;
+  }
+  > ul {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-left: 0;
+    padding-left: 0;
+    li {
+      height: 40px;
+      line-height: 40px;
+      border-bottom: 1px solid #eee;
+      color: #999;
+      text-indent: 2em;
+      list-style: none;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+}
 .examination {
   width: 100%;
+  height: 100%;
   background: #eee;
 }
 
@@ -142,13 +204,13 @@ export default {
   margin: 0 auto;
   border-radius: 15px;
   .add {
-    padding: 20px;
+    margin: 20px;
   }
   .style_exam {
     min-height: 980px;
     margin: auto;
-    padding: 80px;
-    padding-top: 40px;
+    padding: 40px;
+    padding-top: 5px;
     text-align: center;
     position: relative;
     h2 {
@@ -168,23 +230,20 @@ export default {
       border: solid 1px #ccc;
       padding: 0 20px;
       margin-top: 30px;
-
-      .style_questionitem__3ETlC {
-        h4 {
-          margin-block-start: 1.33em;
-          margin-block-end: 1.33em;
-          margin-inline-start: 0px;
-          margin-inline-end: 0px;
-          display: flex;
-          justify-content: space-between;
-          a {
-            color: #1890ff;
-            background-color: initial;
-            text-decoration: none;
-            outline: none;
-            cursor: pointer;
-            transition: color 0.3s;
-          }
+      h4 {
+        margin-block-start: 1.33em;
+        margin-block-end: 1.33em;
+        margin-inline-start: 0px;
+        margin-inline-end: 0px;
+        display: flex;
+        justify-content: space-between;
+        a {
+          color: #1890ff;
+          background-color: initial;
+          text-decoration: none;
+          outline: none;
+          cursor: pointer;
+          transition: color 0.3s;
         }
       }
     }
