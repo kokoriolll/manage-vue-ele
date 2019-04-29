@@ -10,8 +10,9 @@ import {
 
 // create an axios instance
 const service = axios.create({
-  baseURL: '/api', // api 的 base_url
+  // baseURL: '/api', // api 的 base_url
   // withCredentials: true, // 跨域请求时发送 cookies
+  baseURL://.test()?'':''
   timeout: 5000 // request timeout
 })
 
