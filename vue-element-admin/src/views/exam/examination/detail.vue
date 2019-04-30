@@ -10,21 +10,12 @@
               v-for="(item,index) in DetailExamState"
               :key="index"
             >
-              <textarea id="text-input" oninput="this.editor.update()" rows="19" cols="63">
-                  <h4>1、{{item.title}}</h4>
-                  <div class="react-markdown">
-                    <h2>{{item.questions_type_text}}</h2>
-                    <p>
-                      {{item.questions_answer}}
-                      <br>
-                    </p>
-                    <pre>
-                        <code class="language-js">
-                          {{item.questions_stem}}
-                        </code>
-                    </pre>
-                  </div>
-              </textarea>
+              <vue-markdown class="text-input">
+                {{index+1}}、{{item.title}}
+                {{item.questions_type_text}}
+                {{item.questions_answer}}
+                {{item.questions_stem}}
+              </vue-markdown>
             </div>
           </div>
         </div>
@@ -33,16 +24,18 @@
     </div>
   </div>
 </template>
-<script src="lib/markdown.js"></script> 
 <script>
-var markdown = require("markdown").markdown;
 import { mapState, mapMutations, mapActions } from "vuex";
+import VueMarkdown from "vue-markdown";
 
 export default {
   data() {
     return {
       detailData: []
     };
+  },
+  components: {
+    VueMarkdown
   },
   computed: {
     ...mapState({
@@ -67,6 +60,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.left /deep/ code {
+  white-space: normal;
+}
+
+.left /deep/ ul li{
+  list-style: none;
+}
 .detail {
   width: 100%;
   background: #eee;
@@ -83,54 +83,19 @@ export default {
   flex: auto;
   min-height: 0;
   display: flex;
+  margin-left: 35px;
+
   .left {
     background: rgb(255, 255, 255);
-    width: 70%;
+    width: 68%;
     padding: 24px;
-    margin: 0px 20px 20px 0px;
+    margin: 0px 10px 20px 0px;
     border-radius: 10px;
 
     .style_exam__2fYLs {
       min-height: 980px;
       margin: auto;
-      padding: 40px;
       text-align: center;
-      position: relative;
-      /* .style_questionitem {
-        .style_questionitem__1TQyr {
-          text-align: left;
-          border: 1px solid #ccc;
-          padding: 20px;
-          margin-bottom: 20px;
-          h4 {
-            margin-top: 0;
-            margin-bottom: 10px;
-            color: rgba(0, 0, 0, 0.85);
-            font-weight: 500;
-          }
-          .react-markdown {
-            line-height: 1.6;
-            word-wrap: break-word;
-            h2 {
-              padding-bottom: 10px;
-              border-bottom: 1px solid #eee;
-            }
-            pre {
-              display: block;
-              padding: 1em;
-              overflow: auto;
-              line-height: 1.3;
-              max-height: 35em;
-              color: #657b83;
-              code {
-                font-family: "SFMono-Regular", Consolas, "Liberation Mono",
-                  Menlo, Courier, monospace;
-                font-size: 1em;
-              }
-            }
-          }
-        }
-      } */
     }
   }
   .right {
