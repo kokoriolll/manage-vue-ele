@@ -73,16 +73,16 @@ export default {
         this.searchPage(newData)
       },
       async curSearch(){
-         let res = await this.curUpDateStudent()
+          let res = await this.curUpDateStudent()
+          console.log('this.form.name',this.form.name)
           if(this.form.name && this.form.room && this.form.class){
-             
               let newData = res.filter(val=>{
                 return val.student_name == this.form.name && val.room_text == this.form.room && val.grade_name == this.form.class
               })
               this.getNewData(newData)
               
           }else if(!this.form.name && !this.form.room && !this.form.class){
-              this.getPage()
+              this.getNewData(res)
           }else if((this.form.name && this.form.room)||(this.form.name && this.form.class)||(this.form.room && this.form.class)){
               let newData = res.filter(val=>{
                 return (val.student_name == this.form.name && val.room_text == this.form.room) || (val.student_name == this.form.name && val.grade_name == this.form.class) || (val.room_text == this.form.room && val.grade_name == this.form.class)

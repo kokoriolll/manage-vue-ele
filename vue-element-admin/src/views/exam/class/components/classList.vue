@@ -94,7 +94,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="css">
    .el-table{
        margin-top: 15px;
       
