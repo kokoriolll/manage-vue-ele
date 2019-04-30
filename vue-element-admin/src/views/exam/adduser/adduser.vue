@@ -1,7 +1,7 @@
 <template>
   <div class="wrap">
-    <p>添加用户</p>
-    <div class="box">
+    <p id="addUsers">添加用户</p>
+    <div class="box" id="box">
       <div class="user">
         <p>
           <span :id="idx===0?'blue':'gray'" @click="change(0)">添加用户</span>
@@ -152,9 +152,14 @@
 </template>
 
 <script>
+import Driver from 'driver.js' // import driver.js
+import 'driver.js/dist/driver.min.css' // import driver.js css
+import steps from './defineSteps'
+
 import { mapState, mapActions, mapMutations } from "vuex";
 import { constants } from "fs";
 export default {
+  name: 'Guide',
   data() {
     return {
       userId: "", //用户id
@@ -170,7 +175,8 @@ export default {
       existingView: "", //已有视图
       apiJurisdictionId: "", //api接口权限id
       viewJurisdictionId: "", //视图权限id
-      idx: 0 //tab切换
+      idx: 0 ,//tab切换
+      driver: null
     };
   },
   computed: {
@@ -184,6 +190,8 @@ export default {
       code: state => state.userManagement.code, //code
       msg: state => state.userManagement.msg //msg
     })
+  }, mounted() {
+    this.driver = new Driver()
   },
   methods: {
     ...mapActions({
@@ -430,7 +438,7 @@ export default {
           type: "error"
         });
       }
-    },
+    },   
   },
   async created() {
     await this.setidentityViewAuthorityRelation();
@@ -438,6 +446,16 @@ export default {
     await this.setidentity();
     await this.setApiAuthority();
     await this.setViewAuthority();
+    let guide=localStorage.getItem('guide_addUser')
+    if(!guide){
+            this.driver.defineSteps(steps)
+      this.driver.start()
+      localStorage.setItem('guide_addUser','true')
+    }
+    //  guide() {
+    //   this.driver.defineSteps(steps)
+    //   this.driver.start()
+    // }
   }
 };
 </script>
@@ -500,5 +518,11 @@ export default {
 }
 .el-input {
   margin: 8px 0;
+}
+.btn .el-button+.el-button{
+  margin-left: 0!important;
+}
+.el-button{
+  margin:5px 0;
 }
 </style>

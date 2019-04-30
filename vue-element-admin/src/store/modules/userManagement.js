@@ -24,49 +24,37 @@ const mutations = {
 
 const actions = {
   //添加用户
-  async setAddUsers({
-    commit
-  }, payload) {
+  async setAddUsers({commit}, payload) {
     let result = await addUsers(payload);
     commit('Tips', result)
     return result;
   },
   //更新用户信息（用户名，用户密码，用户身份）
-  async setUpdataUserInfo({
-    commit
-  }, payload) {
+  async setUpdataUserInfo({commit}, payload) {
     let result = await updataUserInfo(payload);
     commit('Tips', result)
     return result;
   },
   //添加身份
-  async setAddIdentity({
-    commit
-  }, payload) {
+  async setAddIdentity({commit}, payload) {
     let result = await addIdentity(payload);
     commit('Tips', result)
     return result;
   },
   //添加api接口权限
-  async setAddAuthorityApi({
-    commit
-  }, payload) {
+  async setAddAuthorityApi({commit}, payload) {
     let result = await addAuthorityApi(payload);
     commit('Tips', result)
     return result;
   },
   //添加视图权限
-  async setAddAuthorityView({
-    commit
-  }, payload) {
+  async setAddAuthorityView({commit}, payload) {
     let result = await addAuthorityView(payload);
     commit('Tips', result)
     return result;
   },
   //给身份设定api接口权限
-  async setIdentityApi({
-    commit
-  }, payload) {
+  async setIdentityApi({commit}, payload) {
     let result = await identityApi(payload);
     commit('Tips', result)
     return result;

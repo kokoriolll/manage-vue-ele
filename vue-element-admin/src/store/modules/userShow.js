@@ -53,51 +53,39 @@ const mutations = {
 
 const actions = {
   // 展示用户数据
-  async setUserData({
-    commit,state
-  }, payload) {
+  async setUserData({commit,state}, payload) {
     state.userData=[];
     let result = await userData(payload);
     commit('userDatas', result.data)
     return result
   },
   //展示身份数据
-  async setidentity({
-    commit,state
-  }, payload) {
+  async setidentity({commit,state}, payload) {
     state.identitysData=[];
     let result = await identity(payload);
     commit('identitys', result.data)
   },
   //展示api接口权限数据
-  async setApiAuthority({
-    commit,state
-  }, payload) {
+  async setApiAuthority({commit,state}, payload) {
     state.apiAuthoritysData=[];
     let result = await apiAuthority(payload);
     commit('apiAuthoritys', result.data)
   },
   // 展示身份和api权限关系
-  async setIdentityApiAuthorityRelation({
-    commit,state
-  }, payload) {
+  async setIdentityApiAuthorityRelation({commit,state}, payload) {
     state.identityApiAuthorityRelationsData=[];
     let result = await identityApiAuthorityRelation(payload);
     commit('identityApiAuthorityRelations', result.data)
   },
   // 获取视图权限数据
-  async setViewAuthority({
-    commit,state
-  }, payload) {
+  async setViewAuthority({commit,state}, payload) {
     state.viewAuthoritysData=[];
     let result = await viewAuthority(payload);
 
     commit('viewAuthoritys', result.data)
   },
   //展示身份和视图权限关系
-  async setidentityViewAuthorityRelation({
-    commit,state
-  }, payload) {
+  async setidentityViewAuthorityRelation({commit,state}, payload) {
     state.identityViewAuthorityRelationsData=[];
     let result = await identityViewAuthorityRelation(payload);
     commit('identityViewAuthorityRelations', result.data)

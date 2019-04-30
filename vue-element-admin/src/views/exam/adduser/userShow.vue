@@ -1,7 +1,7 @@
 <template>
   <div class="wrap">
-    <p>用户展示</p>
-    <div class="nav">
+    <p id="userShow">用户展示</p>
+    <div class="nav" id="nav">
       <span
         :class="idx===index?'blue':''"
         @click="change(index)"
@@ -10,7 +10,10 @@
         :key="index"
       >{{item}}</span>
     </div>
-    <h2>{{tit}}</h2>
+    <h2 id="tits">{{tit}}</h2>
+    <div id="table">
+
+    
     <el-table :data="data" style="width: 100%" v-if="idx">
       <el-table-column
         v-for="(item,index) in tits[idx]"
@@ -21,11 +24,11 @@
       ></el-table-column>
     </el-table>
     <el-table v-else :data="data" style="width: 100%">
-      <el-table-column prop="user_name" label="用户名"  :width="('100%'-650)/2"></el-table-column>
-      <el-table-column prop="user_pwd" label="密码"  width="650"></el-table-column>
-      <el-table-column prop="identity_text" label="身份"  :width="('100%'-650)/2"></el-table-column>
-    </el-table>
-    <div class="pagination">
+      <el-table-column prop="user_name" label="用户名" :width="('100%'-650)/2"></el-table-column>
+      <el-table-column prop="user_pwd" label="密码" width="650"></el-table-column>
+      <el-table-column prop="identity_text" label="身份" :width="('100%'-650)/2"></el-table-column>
+    </el-table></div>
+    <div id="pagination">
       <el-pagination
         :current-page.sync="dftPage"
         @current-change="handleCurrentChange"
@@ -37,8 +40,12 @@
 </template>
 
 <script>
+import Driver from "driver.js"; // import driver.js
+import "driver.js/dist/driver.min.css"; // import driver.js css
+import steps from "./defineSteps";
 import { mapState, mapActions, mapMutations } from "vuex";
 export default {
+  name: "Guide",
   data() {
     return {
       nav: [
@@ -83,6 +90,7 @@ export default {
       ],
 
       dftPage: 1,
+      driver: null,
       totals: 0
       // totalTit: [
       //   "userIdValue",
@@ -94,7 +102,9 @@ export default {
       // ]
     };
   },
-
+  mounted() {
+    this.driver = new Driver();
+  },
   computed: {
     ...mapState({
       data: state => state.userShow.data,
@@ -117,6 +127,12 @@ export default {
     await this.setViewAuthority();
     await this.setidentityViewAuthorityRelation();
     this.totals = this.userData.length;
+    let guide = localStorage.getItem("guide_userShow");
+    if (!guide) {
+      this.driver.defineSteps(steps);
+      this.driver.start();
+      localStorage.setItem("guide_userShow", "true");
+    }
   },
   methods: {
     ...mapActions({
@@ -182,7 +198,7 @@ export default {
       color: #0139fd;
     }
   }
-  .pagination {
+  #pagination {
     margin-top: 20px;
     display: flex;
     justify-content: flex-end;

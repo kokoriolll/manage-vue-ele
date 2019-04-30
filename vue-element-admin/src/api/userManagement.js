@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-//添加用户vvv
+//添加用户
 export function addUsers(data) {
   return request({
     url: '/user',
@@ -9,7 +9,7 @@ export function addUsers(data) {
   })
 }
 
-//更新用户信息（用户名，用户密码，用户身份）vvv
+//更新用户信息（用户名，用户密码，用户身份）
 export function updataUserInfo(data) {
   return request({
     url: '/user/user',
@@ -51,7 +51,7 @@ export function addAuthorityView(data) {
   })
 }
 
-//给身份设定api接口权限vvv
+//给身份设定api接口权限
 export function identityApi(data) {
   return request({
     url: '/user/setIdentityApi',
@@ -60,7 +60,7 @@ export function identityApi(data) {
   })
 }
 
-//给身份设定视图权限vvv
+//给身份设定视图权限
 export function identityView(data) {
   return request({
     url: '/user/setIdentityView',
