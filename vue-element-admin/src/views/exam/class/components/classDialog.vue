@@ -129,7 +129,6 @@ export default {
                     message: '您还没有修改'
                   });
               }else{
-                console.log(this.gradeID,'this.gradeID..')
                  await this.curUpdateClasses({
                     grade_id:this.gradeID,
                     subject_id:this.subjectId,

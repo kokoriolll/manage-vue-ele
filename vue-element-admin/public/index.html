@@ -15,7 +15,20 @@
         var s = document.getElementsByTagName("script")[0]; 
         s.parentNode.insertBefore(hm, s);
       })();
-    </script>      
+    </script>
+    <script src="https://browser.sentry-cdn.com/5.1.1/bundle.min.js" crossorigin="anonymous"></script>
+
+    <script>
+      Sentry.init({
+        dsn: 'https://59035e88a4104f4091d82ba0e57579d9@sentry.io/1449248'
+      });
+    </script>
+
+    <!-- <script>
+       setInterval(function(){
+         console.log(a)
+       },2000)
+    </script> -->
   </head>
   <body>
     <script src="<%= BASE_URL %>static/tinymce4.7.5/tinymce.min.js"></script>
