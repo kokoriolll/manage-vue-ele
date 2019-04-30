@@ -3,7 +3,7 @@
         <p>待批班级</p>
         <div class="classContent">
             <el-table
-            :data="view_list.data"
+            :data="data"
             style="width: 100%">
             <el-table-column
             prop="grade_name"
@@ -36,10 +36,11 @@
            </el-table>
            <div class="block">
                 <el-pagination
-                :page-sizes="[5, 10, 20, 50,100]"
-                :page-size="10"
+                :page-sizes="[5,10]"
+                :page-size="5"
                 layout=" prev, pager, next,sizes,jumper"
-                :total="1"
+                :total="totals"
+                @size-change='page'
                 >
                 </el-pagination>
             </div>
@@ -50,6 +51,13 @@
 <script>
   import {mapActions,mapState} from 'vuex'
    export default {
+    data(){
+        return{
+            totals:0,
+            data:[],
+            page_size:5
+        }
+    },
    computed: {
      ...mapState({
        view_list:state=>state.approval.view_list
@@ -57,8 +65,14 @@
    },
    async created(){
      await this.grade();
+     this.totals = this.view_list.data.length;
+     this.data = this.view_list.data.slice(0,5);
    },
    methods: {
+       page(e){
+           console.log(this.totals)
+            this.data = this.view_list.data.slice(0,e);
+       },
       ...mapActions({
           grade:'approval/grades'
       }),

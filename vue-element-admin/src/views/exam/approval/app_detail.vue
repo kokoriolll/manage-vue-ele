@@ -1,6 +1,5 @@
 <template>
     <div>
-        批卷详情
         <Detail />
     </div>
 </template>

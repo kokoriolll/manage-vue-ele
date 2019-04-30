@@ -150,6 +150,7 @@ export default {
       });
     },
     handleLogin() {
+      _hmt.push('trackEvent','后台管理','tap','登录')
       this.$refs.loginForm.validate(async valid => {
         if (valid) {
           let res = await this.login({

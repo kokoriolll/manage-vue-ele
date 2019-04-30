@@ -137,9 +137,14 @@
                             user_id: this.getusers.user_id,
                             questions_answer: this.sel_id.questions_answer,
                             title: this.sel_id.title
-                        })
+                        }),
+                        this.$alert('添加成功', {
+                            confirmButtonText: '确定'
+                        });
                     } else {
-                        alert('请填写所有类型或项目')
+                        this.$alert('请填写所有文本', {
+                            confirmButtonText: '确定'
+                        });
                     }
                 } else {
                     if (this.sel_id.questions_stem && this.sel_id.questions_answer && this.sel_id.title) {
@@ -152,9 +157,14 @@
                             title: this.sel_id.title,
                             questions_id: this.questions_id
                         })
+                        this.$alert('编辑成功', {
+                            confirmButtonText: '确定',
+                        });
                         sessionStorage.setItem('questions_id',JSON.stringify(''))
                     } else {
-                        alert('请填写所有类型或项目')
+                        this.$alert('请填写所有文本', {
+                            confirmButtonText: '确定'
+                        });
                     }
                 }
             }

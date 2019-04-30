@@ -52,7 +52,7 @@
         exam_id: '',
         subjectid: '',
         questions_type_id: '',
-        ind:0
+        ind:-1
       }
     },
     computed: {
@@ -70,6 +70,12 @@
       this.questions();
     },
     methods: {
+      submits(name,ids){
+        let names = name;
+        this.condition({
+          names:ids
+        })
+      },
       Questions(e) {
         this.questions_type_id = e;
       },
@@ -88,11 +94,13 @@
         this.subjectid = item.subject_id;
       },
       submit() {
-        this.condition({
-          subject_id: this.subjectid,
-          exam_id: this.exam_id,
-          questions_type_id: this.questions_type_id
-        })
+        if(this.subjectid && this.exam_id && this.questions_type_id) this.condition({subject_id:this.subjectid,exam_id:this.exam_id,questions_type_id:this.questions_type_id})
+        else if(this.subjectid && this.exam_id) this.condition({subject_id:this.subjectid,exam_id:this.exam_id})
+        else if(this.subjectid && this.questions_type_id) this.condition({subject_id:this.subjectid,questions_type_id:this.questions_type_id})
+        else if(this.exam_id && this.questions_type_id) this.condition({exam_id:this.exam_id,questions_type_id:this.questions_type_id})
+        else if(this.subjectid) this.condition({subject_id:this.subjectid})
+        else if(this.exam_id) this.condition({exam_id:this.exam_id})
+        else if(this.questions_type_id) this.condition({questions_type_id:this.questions_type_id})
       },
       compile(item) {
         this.$router.push({ path: '/Additem/adds'})

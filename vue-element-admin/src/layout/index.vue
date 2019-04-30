@@ -21,7 +21,6 @@
 import { AppMain, Navbar, Sidebar, TagsView } from './components'
 import ResizeMixin from './mixin/ResizeHandler'
 import { mapState ,mapActions} from 'vuex'
-
 export default {
   name: 'Layout',
   components: {
