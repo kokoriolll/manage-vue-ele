@@ -44,7 +44,8 @@ const actions = {
     //添加班级
     async curAddClass({commit},payload){ 
         let res = await addClass(payload)
-        if(!res){
+        console.log(res,'res....')
+        if(res.code == 0){
             console.log('班级名重复！！！')
         }
     },
@@ -55,6 +56,7 @@ const actions = {
     },
     //删除班级
     async curDeleteClass({commit},payload){
+        console.log(payload,'payload..')
         await deleteClass(payload)
     },
     //获取所有教室

@@ -6,12 +6,12 @@
                 <el-input v-model="editData.grade_name" @input="getClass" placeholder="班级名" :disabled="disable"></el-input>
             </el-form-item>
             <el-form-item label="教室号:" prop="room_text" ref="room">
-                <el-select v-model="editData.room_text" style="width:100%" placeholder="请选择教室名" @change="getRoomId">
+                <el-select v-model="editData.room_id" style="width:100%" placeholder="请选择教室名" @change="getRoomId">
                 <el-option v-for="(item,ind) in allRoom" :key="ind" :label="item.room_text" :value="item.room_id" style="width:100%"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="课程号:" prop="subject_text" ref="subject">
-                <el-select v-model="editData.subject_text" style="width:100%" placeholder="课程名" @change="getSubjectId">
+                <el-select v-model="editData.subject_id" style="width:100%" placeholder="课程名" @change="getSubjectId">
                 <el-option v-for="(item,ind) in allSubject" :key="ind" :label="item.subject_text" :value="item.subject_id" style="width:100%"></el-option>
                 </el-select>
             </el-form-item>
@@ -50,11 +50,6 @@ export default {
        gradeID:state => state.classManage.gradeID
     })
   },
-  watch:{
-    
-  },
-  created(){
-  },
   mounted(){
     this.getCurAllRoom()
     this.getCurAllSubject()
@@ -86,21 +81,27 @@ export default {
       }) 
     },
     handleDialogClose(){
+      console.log(this.editData,'this.editData')
       this.dialogForm({
          dialogFormVisible:false 
-      }) 
+      })
       this.clearData()
       this.$refs['ruleForm'].clearValidate() 
+      this.$message({
+          type: 'info',
+          message: '已取消'
+      });   
     },
     getRoomId(e){
-     if(e){
-       this.roomId = e;
-       this.$refs['room'].clearValidate()
-     }
      
+      if(e){ 
+        this.roomId = e;
+        this.$refs['room'].clearValidate()
+      } 
     },
     getSubjectId(e){
-      if(e){
+      
+      if(e){ 
         this.subjectId = e;
         this.$refs['subject'].clearValidate()
       }
@@ -116,19 +117,37 @@ export default {
               })  
               this.clearData()
             }else if(this.type == 'edit'){
-              await this.curUpdateClasses({
-                grade_id:this.gradeID,
-                subject_id:this.subjectId,
-                room_id:this.roomId
-              })
+              if(this.editData.subject_id == this.subjectId && this.editData.room_id == this.roomId){
+                 this.$message({
+                    type: 'info',
+                    message: '您还没有修改'
+                  });
+                  this.$refs[formName].clearValidate() 
+              }else if(!this.subjectId && !this.roomId){
+                 this.$message({
+                    type: 'info',
+                    message: '您还没有修改'
+                  });
+              }else{
+                 await this.curUpdateClasses({
+                    grade_id:this.gradeID,
+                    subject_id:this.subjectId,
+                    room_id:this.roomId
+                  })
+                  this.$message({
+                    type: 'success',
+                    message: '修改成功!'
+                  });
+                  this.clearData()
+                  this.$refs[formName].clearValidate() 
+              }  
             }
             await this.curUpDateClass()
-            await this.dialogForm({
+            this.dialogForm({
               dialogFormVisible:false  
             })  
             this.$refs[formName].clearValidate() 
-            
-            //alert('submit!');
+
           } else {
             console.log('error submit!!');
             return false;
@@ -140,5 +159,18 @@ export default {
 </script>
 
 <style lang="scss">
-   
+   .dialog-footer{
+        text-align: center;
+        .submit{
+             width: 112px;
+             background: linear-gradient(-90deg,#4e75ff,#0139fd)!important;
+        }
+    }
+   .el-dialog__header{
+      color: rgba(0, 0, 0, 0.65);
+      border-bottom: 1px solid #e8e8e8;
+      .el-dialog__title{
+        font-size: 16px;
+      }
+   }
 </style>

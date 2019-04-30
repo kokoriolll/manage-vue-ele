@@ -15,7 +15,7 @@ const service = axios.create({
   baseURL: /jasonandjay\.com/.test(window.location.host)?'https://exam.jasonandjay.com/':'/api',
   timeout: 5000 // request timeout
 })
-
+// /jasonandjay\.com/.test(window.location.host)?'https://exam.jasonandjay.com/':'http://169.254.12.55:7001'
 // request interceptor
 service.interceptors.request.use(
   config => {

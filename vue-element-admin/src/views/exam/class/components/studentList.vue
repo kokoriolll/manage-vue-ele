@@ -40,7 +40,7 @@
             :page-sizes="pageSizes"
             :page-size="pageNum"
             layout=" prev, pager, next,sizes,jumper"
-            :total="len"
+            :total="student1Data.length > 0 ? student1Data.length : len"
             >
         </el-pagination>
         </div>
@@ -57,9 +57,11 @@ export default {
         data:[],
         currentPages:1,
         pageSizes:[5, 10, 20, 50,100],
-        pageSize:20,
-        pageTotal:553
+        pageSize:20
      }
+  },
+  mounted(){
+    this.curUpDateStudent()
   },
   computed:{
      ...mapState({
@@ -88,12 +90,29 @@ export default {
     getClass(e){
        this.form.class = e ;
     },
-    async curDelete(ind,row,rows){
-      await this.curDeleteStudent({
-        student_id:row.student_id
-      })
-      rows.splice(ind, 1);
-      this.getPage()
+    curDelete(ind,row,rows){
+      this.$confirm('确定要删除此学生吗？', '', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+          center: true
+        }).then(() => {
+            this.curDeleteStudent({
+              student_id:row.student_id
+            })
+            rows.splice(ind, 1);
+            this.getPage()
+            this.$message({
+               type: 'success',
+               message: '删除成功!'
+            });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });          
+        });   
+      
       
     },
     
@@ -128,5 +147,13 @@ export default {
     .el-pagination{
        text-align: right;
        margin-top: 10px;
+    }
+    .el-table{
+       margin-top: 15px;
+      
+    }
+    .el-table thead{
+        color: #000;
+        font-weight: 200;
     }
 </style>

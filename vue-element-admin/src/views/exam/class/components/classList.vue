@@ -38,17 +38,11 @@ export default {
       
      }
   },
-  props: {
-    classData:{
-        type: Array,
-        default() {
-            return []
-        }
-    }
-  },
   computed:{
-    
-  },
+      ...mapState({
+          classData:state => state.classManage.classData
+      })
+   },
   methods: {
     ...mapMutations({
       dialogForm:'classManage/dialogForm',
@@ -62,6 +56,7 @@ export default {
     }),
    //点击修改
    dialogVisible(row,type){
+      if(type == 'edit'){
          this.dialogForm({
             dialogFormVisible:true,
             type:type,
@@ -69,14 +64,31 @@ export default {
             gradeID:row.grade_id 
          })  
          this.editClass(row)
-         this.curAddClass(row)
+         //this.curAddClass(row)
+      }     
    },
     //删除班级
    curDelete(index,row){
-       this.curDeleteClass({
-          grade_id:row.grade_id
-       })
-       this.curUpDateClass()
+       this.$confirm('确定要删除此班级吗？', '', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+          center: true
+        }).then(() => {
+            this.curDeleteClass({
+               grade_id:row.grade_id
+            })
+            this.curUpDateClass()
+            this.$message({
+               type: 'success',
+               message: '删除成功!'
+            });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });          
+        });   
     }
   }
 }

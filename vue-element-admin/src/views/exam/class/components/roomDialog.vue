@@ -22,7 +22,7 @@ export default {
     return {
         rules: {
           name: [
-            { required: true,message: '请输入教室名',trigger:blur}
+            { required: true,message: '请输入教室名',trigger:"blur"}
           ]
          },
         ruleForm: {
@@ -89,7 +89,7 @@ export default {
    .dialog-footer{
         text-align: center;
         .submit{
-             width: 20%;
+             width: 112px;
              background: linear-gradient(-90deg,#4e75ff,#0139fd)!important;
         }
     }
