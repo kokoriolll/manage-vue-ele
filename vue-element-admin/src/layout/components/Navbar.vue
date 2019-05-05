@@ -28,11 +28,7 @@
         :key="imagecropperKey"
         :width="300"
         :height="300"
-<<<<<<< HEAD
         url="https://service.jasonandjay.com"
-=======
-        url="https://service.jasonandjay.com/upload"
->>>>>>> 23f2614075a647a4a3e3bc9a4c9b6b76f2487f8c
         lang-type="en"
         @close="close"
         @crop-upload-success="cropSuccess"
